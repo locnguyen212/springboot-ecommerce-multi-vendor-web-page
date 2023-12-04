@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{/users/layout/index :: mainContent('Product Detail', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+	<meta charset="UTF-8">
+	<th:block id="style">
+		<style>
+			#product-detail .star-rating {
+				list-style: none;
+				padding: 0;
+				display: flex;
+				cursor: pointer;
+			}
+
+			#product-detail .star {
+				font-size: 28px;
+				margin: 0 10px;
+				color: #d3d3d3;
+				transition: color 0.3s;
+			}
+
+
+			#product-detail .star.active {
+				color: #f8ce0b;
+			}
+
+			.review_post_meta {
+				font-size: 14px !important;
+			}
+		</style>
+	</th:block>
+</head>
+
+<body>
+	<th:block id="content-wrapper">
+		<div class="body_content_wrapper position-relative" id="product-detail">
+			<!-- Shop Single Content -->
+			<section class="shop-single-content pb80 pt0 ovh">
+				<div class="container">
+					<div class="row wrap">
+						<div class="col-xl-7">
+							<div class="column">
+								<div class="shop_single_natabmenu">
+									<div class="d-block d-sm-flex align-items-start posr pb100-xs">
+										<div class="tab-content ms-0 m-xl-auto custom_tab_contents"
+											id="v-pills-tabContent">
+											<div class="tab-pane fade show active" id="v-pills-messages" role="tabpanel"
+												aria-labelledby="v-pills-messages-tab">
+												<div class="shop_single_navmenu_content justify-content-center"
+													style="position: relative;">
+													<div style="position: absolute; top: 0; left: 0; z-index: 1;"
+														th:if="${product.stockQuantity <= 0}">
+														<img src="https://cdn-icons-png.flaticon.com/128/5129/5129345.png"
+															width="60" height="60" class="replaced-svg">
+
+													</div>
+													<a class="product_popup"
+														th:href="@{'/upload/' + ${product.productImage}}"><span
+															class="flaticon-full-screen"></span></a>
+													<div style="opacity: 0.5;" th:if="${product.stockQuantity <= 0}"
+														class="zoomimg_wrapper m-auto hizoom hi3">
+														<img class="zoom-img" id="zoom_03"
+															th:src="@{'/upload/' + ${product.productImage}}"
+															th:attr="data-zoom-image='/upload/' + ${product.productImage}"
+															width="300" height="500" alt="Shop Single Image" />
+													</div>
+													<div th:unless="${product.stockQuantity <= 0}"
+														class="zoomimg_wrapper m-auto hizoom hi3">
+														<img class="zoom-img" id="zoom_03"
+															th:src="@{'/upload/' + ${product.productImage}}"
+															th:attr="data-zoom-image='/upload/' + ${product.productImage}"
+															width="450" height="450" alt="Shop Single Image" />
+													</div>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="shortcode_widget_accprdons shop_single_accordion px-0 mt-5">
+									<div class="faq_according text-start">
+										<div class="shop_single_description">
+											<h4 class="title">Shop</h4>
+											<a th:href="@{'/user/shop-list/v_shop?shopId=' + ${product.shopowner.ownerId}}"
+												class="para div-border-shop-name" style="padding: 5px;">
+												[[${product.shopowner.shopName}]]
+											</a>
+										</div>
+										<hr>
+										<div class="shop_single_description">
+											<h4 class="title">Overview</h4>
+											<p class="para">
+												[(${product.description})]
+											</p>
+										</div>
+										<hr>
+										<div class="accordion" id="accordionExample">
+											<div class="card mb-0">
+												<div class="card-header" id="headingSeven">
+													<h2 class="mb-0">
+														<button class="btn btn-link collapsed text-start" type="button"
+															data-bs-toggle="collapse" data-bs-target="#collapseSeven"
+															aria-expanded="false"
+															aria-controls="collapseSeven">Reviews</button>
+													</h2>
+												</div>
+												<div id="collapseSeven" class="collapse" aria-labelledby="headingSeven"
+													data-parent="#accordionExample">
+													<div class="card-body">
+														<div class="row">
+															<div class="col-lg-10 col-xl-7">
+																<div class="review_average mb30">
+																	<div class="d-flex align-items-center">
+																		<div class="flex-shrink-0">
+																			<div class="title" th:if="${averageRating != null}"> [[${
+																				#numbers.formatDecimal( averageRating,
+																				1, 'DEFAULT', 1, 'DEFAULT' )}]]</p>
+																			</div>
+																			<div class="title" th:unless="${averageRating != null}">0</p>
+																			</div>
+																		</div>
+																		<div class="flex-grow-1 ms-3">
+																			<div class="sspd_postdate">
+																				<div>
+																					<ul class="mb0 star-rating">
+																						<li th:each="starNumber : ${#numbers.sequence(1, 5)}"
+																							th:class="${starNumber le averageRating} ? 'star active' : 'star'">
+																							<i class="fas">⚝</i>
+																						</li>
+																					</ul>
+																				</div>
+																			</div>
+																			<div class="total_review">[[${countRating}]]
+																				review</div>
+																		</div>
+																	</div>
+																</div>
+																<th:width>
+																	<div
+																		class="d-flex justify-content-between align-items-center single_line_review pr0-lg mb10">
+																		<div class="me-1">5 star</div>
+																		<div class="progress-bar mx-3">
+																			<div class="progress-bar__bg"></div>
+																			<div class="progress-bar__bar"
+																				th:style="'width: ' + ${percentageFiveStar} + '%;'">
+																			</div>
+																		</div>
+																		<div class="heading-color"
+																			th:text="${percentageFiveStar + '%'}"></div>
+																	</div>
+
+																	<div
+																		class="d-flex justify-content-between align-items-center single_line_review pr0-lg mb10">
+																		<div class="me-1">4 star</div>
+																		<div class="progress-bar mx-3">
+																			<div class="progress-bar__bg"></div>
+																			<div class="progress-bar__bar"
+																				th:style="'width: ' + ${percentageFourStar} + '%;'">
+																			</div>
+																		</div>
+																		<div class="heading-color"
+																			th:text="${percentageFourStar + '%'}"></div>
+																	</div>
+
+																	<div
+																		class="d-flex justify-content-between align-items-center single_line_review pr0-lg mb10">
+																		<div class="me-1">3 star</div>
+																		<div class="progress-bar mx-3">
+																			<div class="progress-bar__bg"></div>
+																			<div class="progress-bar__bar"
+																				th:style="'width: ' + ${percentageThreeStar} + '%;'">
+																			</div>
+																		</div>
+																		<div class="heading-color"
+																			th:text="${percentageThreeStar + '%'}">
+																		</div>
+																	</div>
+
+																	<div
+																		class="d-flex justify-content-between align-items-center single_line_review pr0-lg mb10">
+																		<div class="me-1">2 star</div>
+																		<div class="progress-bar mx-3">
+																			<div class="progress-bar__bg"></div>
+																			<div class="progress-bar__bar"
+																				th:style="'width: ' + ${percentageTwoStar} + '%;'">
+																			</div>
+																		</div>
+																		<div class="heading-color"
+																			th:text="${percentageTwoStar + '%'}"></div>
+																	</div>
+
+																	<div
+																		class="d-flex justify-content-between align-items-center single_line_review pr0-lg mb30">
+																		<div class="me-1">1 star</div>
+																		<div class="progress-bar mx-3">
+																			<div class="progress-bar__bg"></div>
+																			<div class="progress-bar__bar"
+																				th:style="'width: ' + ${percentageOneStar} + '%;'">
+																			</div>
+																		</div>
+																		<div class="heading-color"
+																			th:text="${percentageOneStar + '%'}"></div>
+																	</div>
+
+																</th:width>
+															</div>
+															<div class="col-lg-12">
+																<div class="product_single_content mb30">
+																	<div class="mbp_pagination_comments"
+																		style="height: 400px; overflow-y: scroll;">
+																		<div class="mbp_first d-flex align-items-center mb20"
+																			th:each="e : ${review}">
+																			<div class="flex-shrink-0"
+																				style="align-self: flex-end;">
+																				<img th:if="${e.user.avatar == null}"
+																					th:src="@{'/upload/no_image.jpg'}"
+																					class="mr-3 round-image"
+																					alt="reviewer">
+																				<img th:unless="${e.user.avatar == null}"
+																					th:src="@{'/upload/'+${e.user.avatar}}"
+																					class="mr-3 round-image"
+																					alt="reviewer">
+																			</div>
+																			<div class="flex-grow-1 ms-4">
+																				<div>
+																					<img th:if="${e.reviewImage == null}"
+																						th:src="@{'/upload/no_image.jpg'}"
+																						width="100" height="100"
+																						style="width: auto;"
+																						alt="reviewer">
+																					<img th:unless="${e.reviewImage == null}"
+																						th:src="@{'/upload/'+${e.reviewImage}}"
+																						width="100" height="100"
+																						style="width: auto;"
+																						alt="reviewer">
+																				</div>
+																				<div class="d-block d-md-flex"
+																					style="flex-direction: column;">
+																					<div
+																						class="sspd_postdate me-2 mb10-sm">
+																						<div>
+																							<ul class="mb0 star-rating">
+																								<li class="star"
+																									th:each="starNumber : ${#numbers.sequence(1, 5)}"
+																									th:class="${starNumber le e.rating} ? 'star active' : 'star'"
+																									th:data-value="${starNumber}">
+																									<i class="fas">⚝</i>
+																								</li>
+																							</ul>
+																						</div>
+																					</div>
+																					<h5 class="mt15 sub_title">
+																						[[${e.comment}]]</h5>
+																				</div>
+																				<div class="review_post_meta">Reviewed
+																					by [[${e.user.firstName}]]
+																					[[${e.user.lastName}]]
+																					[[${#dates.format(e.createdAt,
+																					'dd-MM-yyyy HH:mm:ss') }]]</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-4 offset-xl-1 d-none d-xl-block z0">
+							<div class="column">
+								<th:block sec:authorize="isAuthenticated()">
+									<div
+										th:class="${product.status == false || product.stockQuantity <= 0 || session.user.userId == product.shopowner.ownerId} ? 'shop_single_product_details sidebar mb-3 mb-xl-0 disabled-div' : 'shop_single_product_details sidebar mb-3 mb-xl-0'">
+										<h4 class="title mb15">Product: [[${product.productName}]]</h4>
+										<hr>
+										<div class="sspd_price mb25 mt20">
+											<th:block
+												th:if="${#lists.isEmpty(product.promotions) || product.promotions == null}">
+												<div class="price">[[${'$' + product.price}]]</div>
+											</th:block>
+											<th:block
+												th:if="${#lists.size(product.promotions) > 0 && product.promotions != null}">
+												<th:block th:each="promotion : ${product.promotions}">
+													<th:block
+														th:if="${promotion.startDate.before(#dates.createNow()) && promotion.endDate.after(#dates.createNow())}">
+														<div class="price">[[${'$' +
+															#numbers.formatDecimal((product.price *
+															(1 -
+															promotion.discountAmount /
+															100)), 0, 'DEFAULT', 2, 'DEFAULT' )}]]
+															<small><del>[[${'$' +
+																	product.price}]]</del></small>
+														</div>
+													</th:block>
+													<th:block
+														th:if="${promotion.startDate.after(#dates.createNow()) || promotion.endDate.before(#dates.createNow())}">
+														<div class="price">[[${'$' +
+															product.price}]]</div>
+													</th:block>
+												</th:block>
+											</th:block>
+										</div>
+										<ul class="cart_btns ui_kit_button mb15 d-flex justify-content-between">
+											<li>
+												<div class="cart_btn home_page_sidebar">
+													<div class="quantity-block home_page_sidebar">
+														<button id="decrementButton"
+															class="quantity-arrow-minus2 shop_single_page_sidebar"
+															style="background: unset;">
+															<svg xmlns="http://www.w3.org/2000/svg" height="1em"
+																viewBox="0 0 448 512">
+																<style>
+																	svg {
+																		fill: #f5c34b !important
+																	}
+																</style>
+																<path
+																	d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
+															</svg>
+														</button>
+														<input th:if="${product.stockQuantity} > 0" id="quantityInput"
+															class="quantity-num2 shop_single_page_sidebar" type="number"
+															min="1" th:value="1">
+														<input th:unless="${product.stockQuantity} > 0"
+															id="quantityInput"
+															class="quantity-num2 shop_single_page_sidebar" type="number"
+															min="1" th:value="${product.stockQuantity}">
+														<button id="incrementButton"
+															class="quantity-arrow-plus2 shop_single_page_sidebar"
+															style="transform: unset; background: unset;">
+															<svg xmlns="http://www.w3.org/2000/svg" height="1em"
+																viewBox="0 0 448 512">
+																<style>
+																	svg {
+																		fill: #f5c34b !important
+																	}
+																</style>
+																<path
+																	d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+															</svg>
+														</button>
+													</div>
+												</div>
+											</li>
+											<li>
+												<th:block sec:authorize="!isAuthenticated()">
+													<a th:href="@{/login}" id="addToCartButton">
+														<button type="button" class="btn btn-thm">Add to cart</button>
+													</a>
+												</th:block>
+												<th:block sec:authorize="isAuthenticated()">
+													<a onclick="addToCartDetail()" id="addToCartButton">
+														<button type="button" class="btn btn-thm">Add to cart</button>
+													</a>
+												</th:block>
+											</li>
+										</ul>
+										<ul class="shop_single_wishlist_area d-block d-sm-flex align-items-center">
+											<th:block sec:authorize="!isAuthenticated()">
+												<li class="pe-2 ms-2 ms-sm-0 icon-copy-detail-p "><a
+														th:href="@{/login}"><span
+															class="flaticon-heart"></span>Wishlist</a>
+												</li>
+											</th:block>
+											<th:block sec:authorize="isAuthenticated()">
+												<li class="pe-2 ms-2 ms-sm-0 icon-copy-detail-p ">
+													<a
+														th:onclick="'AddToWishList(' + ${product.productId} + ', ' + ${session.user.userId} + ')'">
+														Wishlist
+													</a>
+
+												</li>
+											</th:block>
+											<li class="ms-2 icon-copy-detail-p " onclick="copyLink()"><a><span
+														class="flaticon-share"></span>Copy
+													link</a>
+											</li>
+										</ul>
+										<hr>
+									</div>
+								</th:block>
+								<th:block  sec:authorize="!isAuthenticated()">
+									<div
+										th:class="${product.status == false || product.stockQuantity <= 0 } ? 'shop_single_product_details sidebar mb-3 mb-xl-0 disabled-div' : 'shop_single_product_details sidebar mb-3 mb-xl-0'">
+										<h4 class="title mb15">Product: [[${product.productName}]]</h4>
+										<hr>
+										<div class="sspd_price mb25 mt20">
+											<th:block
+												th:if="${#lists.isEmpty(product.promotions) || product.promotions == null}">
+												<div class="price">[[${'$' + product.price}]]</div>
+											</th:block>
+											<th:block
+												th:if="${#lists.size(product.promotions) > 0 && product.promotions != null}">
+												<th:block th:each="promotion : ${product.promotions}">
+													<th:block
+														th:if="${promotion.startDate.before(#dates.createNow()) && promotion.endDate.after(#dates.createNow())}">
+														<div class="price">[[${'$' +
+															#numbers.formatDecimal((product.price *
+															(1 -
+															promotion.discountAmount /
+															100)), 0, 'DEFAULT', 2, 'DEFAULT' )}]]
+															<small><del>[[${'$' +
+																	product.price}]]</del></small>
+														</div>
+													</th:block>
+													<th:block
+														th:if="${promotion.startDate.after(#dates.createNow()) || promotion.endDate.before(#dates.createNow())}">
+														<div class="price">[[${'$' +
+															product.price}]]</div>
+													</th:block>
+												</th:block>
+											</th:block>
+										</div>
+										<ul class="cart_btns ui_kit_button mb15 d-flex justify-content-between">
+											<li>
+												<div class="cart_btn home_page_sidebar">
+													<div class="quantity-block home_page_sidebar">
+														<button id="decrementButton"
+															class="quantity-arrow-minus2 shop_single_page_sidebar"
+															style="background: unset;">
+															<svg xmlns="http://www.w3.org/2000/svg" height="1em"
+																viewBox="0 0 448 512">
+																<style>
+																	svg {
+																		fill: #f5c34b !important
+																	}
+																</style>
+																<path
+																	d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
+															</svg>
+														</button>
+														<input th:if="${product.stockQuantity} > 0" id="quantityInput"
+															class="quantity-num2 shop_single_page_sidebar" type="number"
+															min="1" th:value="1">
+														<input th:unless="${product.stockQuantity} > 0"
+															id="quantityInput"
+															class="quantity-num2 shop_single_page_sidebar" type="number"
+															min="1" th:value="${product.stockQuantity}">
+														<button id="incrementButton"
+															class="quantity-arrow-plus2 shop_single_page_sidebar"
+															style="transform: unset; background: unset;">
+															<svg xmlns="http://www.w3.org/2000/svg" height="1em"
+																viewBox="0 0 448 512">
+																<style>
+																	svg {
+																		fill: #f5c34b !important
+																	}
+																</style>
+																<path
+																	d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
+															</svg>
+														</button>
+													</div>
+												</div>
+											</li>
+											<li>
+												<th:block sec:authorize="!isAuthenticated()">
+													<a th:href="@{/login}" id="addToCartButton">
+														<button type="button" class="btn btn-thm">Add to cart</button>
+													</a>
+												</th:block>
+												<th:block sec:authorize="isAuthenticated()">
+													<a onclick="addToCartDetail()" id="addToCartButton">
+														<button type="button" class="btn btn-thm">Add to cart</button>
+													</a>
+												</th:block>
+											</li>
+										</ul>
+										<ul class="shop_single_wishlist_area d-block d-sm-flex align-items-center">
+											<th:block sec:authorize="!isAuthenticated()">
+												<li class="pe-2 ms-2 ms-sm-0 icon-copy-detail-p "><a
+														th:href="@{/login}"><span
+															class="flaticon-heart"></span>Wishlist</a>
+												</li>
+											</th:block>
+											<th:block sec:authorize="isAuthenticated()">
+												<li class="pe-2 ms-2 ms-sm-0 icon-copy-detail-p ">
+													<a
+														th:onclick="'AddToWishList(' + ${product.productId} + ', ' + ${session.user.userId} + ')'">
+														Wishlist
+													</a>
+
+												</li>
+											</th:block>
+											<li class="ms-2 icon-copy-detail-p " onclick="copyLink()"><a><span
+														class="flaticon-share"></span>Copy
+													link</a>
+											</li>
+										</ul>
+										<hr>
+									</div>
+								</th:block>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<input type="hidden" id="productId-pay" th:value="${product.productId}">
+			<input type="hidden" id="quantity-pay" th:value="1">
+			<input type="hidden" id="totalQuantityInCarts" th:value="${totalQuantityInCarts}">
+			<input type="hidden" id="stockQuantity" th:value="${product.stockQuantity}">
+	</th:block>
+
+	<th:block id="jsScript">
+		<script>
+			const decrementButton = document.getElementById('decrementButton');
+			const incrementButton = document.getElementById('incrementButton');
+			const quantityInput = document.getElementById('quantityInput');
+			const totalQuantityInCarts = document.getElementById('totalQuantityInCarts').value;
+			const stockQuantity = document.getElementById('stockQuantity').value;
+
+
+			quantityInput.addEventListener('input', () => {
+				const newQuantity = parseInt(quantityInput.value);
+				let productId = $('#productId-pay').val();
+				getQuantityProduct(productId)
+					.then(function (response) {
+						if (newQuantity > 0 && newQuantity <= response) {
+							updateURL();
+						} else {
+							quantityInput.value = response;
+							let message = 'Sorry, there are ' + response + ' products left in stock';
+							WarningAlert(message);
+						}
+						return;
+					})
+					.catch(function (error) {
+						console.error(error);
+					});
+			});
+			decrementButton.addEventListener('click', () => {
+				if (quantityInput.value > 1) {
+					quantityInput.value = parseInt(quantityInput.value) - 1;
+					updateURL();
+				} else {
+					WarningAlert('Please enter a product quantity greater than 0');
+				}
+			});
+
+			incrementButton.addEventListener('click', () => {
+				quantityInput.value = parseInt(quantityInput.value) + 1;
+				const newQuantity = parseInt(quantityInput.value);
+				let productId = $('#productId-pay').val();
+				getQuantityProduct(productId)
+					.then(function (response) {
+						if (newQuantity > 0 && newQuantity <= response) {
+							updateURL();
+						} else {
+							quantityInput.value = response;
+							let message = 'Sorry, there are ' + response + ' products left in stock';
+							WarningAlert(message);
+						}
+						return;
+					})
+					.catch(function (error) {
+						console.error(error);
+					});
+			});
+
+			function updateURL() {
+				const urlParams = new URLSearchParams(window.location.search);
+				const productId = urlParams.get('id');
+				const quantity = quantityInput.value;
+				$('#quantity-pay').val(quantity);
+			}
+			function addToCartDetail() {
+				const id = $('#productId-pay').val();
+				const quantity = $('#quantity-pay').val();
+				addToCart(id, quantity);
+			}
+			function copyLink() {
+				var copyText = window.location.href;
+				var tempInput = document.createElement("input");
+				tempInput.value = copyText;
+				navigator.clipboard.writeText(copyText).then(function () {
+					SuccessAlert("Product link copied!");
+				}).catch(function (err) {
+					console.error('Unable to copy text', err);
+				});
+			}
+			function AddToWishList(productId, userId) {
+				$.ajax({
+					url: "/user/api/products/addWishList",
+					data: {
+						productId: productId,
+						userId: userId,
+					},
+					method: "POST",
+					success: function (response) {
+						if (response == "Add Success") {
+							SuccessAlert(response);
+						} else {
+							WarningAlert(response);
+						}
+					},
+				});
+			}
+		</script>
+	</th:block>
+</body>
+
+</html>

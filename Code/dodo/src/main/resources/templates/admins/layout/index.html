@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="mainContent(title, content, script)">
+
+<head>
+  <div th:replace="~{admins/layout/partials/head :: #headLayout}"></div>
+</head>
+
+<body>
+  <!-- container-scroller -->
+  <div class="container-scroller">
+    <!-- top-navbar -->
+    <div th:replace="~{admins/layout/partials/topNavbar :: #topNavbar}"></div>
+    <!-- top-navbar ends -->
+
+    <!-- page-body-wrapper -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- theme-setting -->
+      <div th:replace="~{admins/layout/partials/themeSetting :: .theme-setting-wrapper}"></div>
+      <!-- theme-setting ends -->
+
+      <!-- right-sidebar -->
+      <div th:replace="~{admins/layout/partials/rightSidebar :: #right-sidebar}"></div>
+      <!-- right-sidebar ends -->
+
+      <!-- sidebar -->
+      <div th:replace="~{admins/layout/partials/sidebar :: #sidebar}"></div>
+      <!-- sidebar ends -->
+
+      <!-- main-panel -->
+      <div class="main-panel">
+
+        <!-- content-wrapper -->
+        <div th:replace="${content}"></div>
+        <!-- content-wrapper ends -->
+
+        <!-- footer -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2021. Premium <a
+                href="https://www.bootstrapdash.com/" target="_blank">Bootstrap admin template</a> from BootstrapDash.
+              All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- footer ends -->
+
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller ends-->
+
+
+  <div th:replace="~{admins/layout/partials/js :: #jsLayout}"></div>
+  <div th:replace="${script}"></div>
+</body>
+
+</html>

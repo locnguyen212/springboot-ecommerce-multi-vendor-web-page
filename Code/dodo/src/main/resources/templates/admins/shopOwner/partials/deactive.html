@@ -1,0 +1,39 @@
+<th:block id="deactiveLayout">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Logo</th>
+                <th>Username</th>
+                <th>Created at</th>
+                <th>Updated at</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.size(shops) != 0}" th:each="e : ${shops}">
+                <td>[[${e.shopName}]]</td>
+                <td>
+                    <img class="indexImg" th:src="@{'/upload/'+${e.shopLogoPath}}" width="50" height="50">
+                </td>
+                <td>[[${e.user.username}]]</td>
+                <td>[[${#dates.format(e.createdAt, 'dd-MM-yyyy') }]]</td>
+                <td>[[${e.updatedAt!=null? #dates.format(e.updatedAt, 'dd-MM-yyyy') : "None" }]]</td>
+                <td>
+                    <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenuSizeButton4"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4">
+                        <a class="dropdown-item" th:href="@{'/admin/shop-owner/active/'+${e.ownerId}}">Active</a>
+                        <a class="dropdown-item" th:href="@{'/admin/shop-owner/edit/'+${e.ownerId}}">Edit</a>
+                    </div>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.size(shops) == 0}">
+                <th colspan="100%" style="text-align:center;">No Data</th>
+            </tr>
+        </tbody>
+    </table>
+</th:block>

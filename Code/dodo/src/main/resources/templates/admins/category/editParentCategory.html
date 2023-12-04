@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('Category Edit', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Category</h3>
+                        <h6 class="font-weight-normal mb-0">Edit Category</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/category/edit-parent-category}" method="post">
+                            <input th:each="e : ${selectedCategories}" type="hidden" name="selectedCategories" th:value="${e}">
+ 
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Parent Category</label>
+                                <select class="form-control" name="selectedParentCategory">
+                                    <option th:each="e : ${parentCategories}" th:value="${e.parentCategoryId}">[[${e.parentCategoryName}]]</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-primary mr-2" >Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

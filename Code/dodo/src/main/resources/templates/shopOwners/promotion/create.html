@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html
+    th:replace="~{/shopOwners/layout/index :: mainContent('Promotion Create', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(function () {
+                    var id = $('#id').val();
+                    var dateFormat = "dd/mm/yy",
+                        from = $("#startDate")
+                            .datepicker({
+                                defaultDate: new Date(),
+                                changeMonth: true,
+                                changeYear: true,
+                                numberOfMonths: 1,
+                                dateFormat: 'dd/mm/yy'
+                            })
+                            .on("change", function () {
+                                to.datepicker("option", "minDate", getDate(this));
+                            }).attr('readonly', 'readonly'),
+                        to = $("#endDate").datepicker({
+                            defaultDate: new Date(),
+                            changeMonth: true,
+                            changeYear: true,
+                            dateFormat: 'dd/mm/yy',
+                            numberOfMonths: 1
+                        })
+                            .on("change", function () {
+                                from.datepicker("option", "maxDate", getDate(this));
+                            }).attr('readonly', 'readonly');
+
+                    function getDate(element) {
+                        var date;
+                        try {
+                            date = $.datepicker.parseDate(dateFormat, element.value);
+                        } catch (error) {
+                            date = null;
+                        }
+
+                        return date;
+                    }
+                });
+
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .then(editor => {
+                        editor.editing.view.change(writer => {
+                            writer.setStyle('min-height', '250px', editor.editing.view.document.getRoot());
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+
+
+        </script>
+    </th:block>
+
+    <th:block id="style">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content-wrapper">
+        <div class="dashboard__content bgc-gmart-gray">
+            <div class="row pb50">
+                <div class="col-lg-12">
+                    <div class="dashboard_title_area">
+                        <h2>Create Promotion</h2>
+                    </div>
+                    <br>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="dashboard_product_list account_user_deails">
+                            <form th:action="@{'/shop-owners/promotion/create'}" method="post" th:object="${promotion}">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Start Date</label>
+                                            <input type="text" class="form-control" th:field="*{startDate}" />
+                                            <div th:if="${#fields.hasErrors('startDate')}">
+                                                <p style="color:red;" th:errors="*{startDate}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">End Date</label>
+                                            <input type="text" class="form-control" th:field="*{endDate}" />
+                                            <div th:if="${#fields.hasErrors('endDate')}">
+                                                <p style="color:red;" th:errors="*{endDate}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Discount Amount: Percent(%)</label>
+                                            <input class="form-control" th:field="*{discountAmount}" />
+                                            <div th:if="${#fields.hasErrors('discountAmount')}">
+                                                <p style="color:red;" th:errors="*{discountAmount}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Product</label>
+                                            <select class="form-control" th:field="*{product.productId}">
+                                                <option th:each="product : ${products}" th:value="${product.productId}"
+                                                    th:text="${product.productName}"></option>
+                                            </select>
+                                        </div>
+                                        </br>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Description(optional)</label>
+                                            <textarea class="form-control" th:field="*{description}" cols="30"
+                                                rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group d-flex mb0">
+                                            <input type="submit" value="Create" class="btn btn-thm me-3">
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-12">
+                                        <div class="form-group d-grid d-sm-flex mb0">
+                                            <button id="createButton" type="submit"
+                                                class="style2 btn btn-thm me-3 mb15-520">Create</button>
+                                            <script>
+                                                document.getElementById('createButton').addEventListener('click', function (event) {
+                                                    var startDate = document.querySelector('input[name="startDate"]').value;
+                                                    var endDate = document.querySelector('input[name="endDate"]').value;
+                                                    var discountAmount = document.querySelector('input[name="Discount Amount"]').value;
+
+                                                    var errorMessage = '';
+
+                                                    if (startDate.trim() === '' && endDate.trim() === '' && discountAmount.trim() === '') {
+                                                        errorMessage = 'Please enter Start Date, End Date, and Discount Amount.';
+                                                    } else if (startDate.trim() === '') {
+                                                        errorMessage = 'Start Date is required.';
+                                                    } else if (endDate.trim() === '') {
+                                                        errorMessage = 'End Date is required.';
+                                                    } else if (discountAmount.trim() === '') {
+                                                        errorMessage = 'Discount Amount is required.';
+                                                    }
+
+                                                    if (errorMessage !== '') {
+                                                        event.preventDefault(); // Ngăn chặn việc gửi form đi nếu có lỗi
+
+                                                        // Hiển thị thông báo lỗi
+                                                        var errorElement = document.getElementById('errorMessages');
+                                                        errorElement.innerText = errorMessage;
+                                                        errorElement.style.color = 'red';
+                                                    }
+                                                });
+                                            </script>
+
+
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </th:block>
+</body>
+
+</html>

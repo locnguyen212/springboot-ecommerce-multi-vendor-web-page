@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('Shopowner Edit', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+        <script>
+            ClassicEditor
+                .create(document.querySelector('#shopDescription'))
+                .then(editor => {
+                    editor.editing.view.change(writer => {
+                        writer.setStyle('min-height', '250px', editor.editing.view.document.getRoot());
+                    });
+                    editor.enableReadOnlyMode("shopDescription");
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        </script>
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Shop Owner</h3>
+                        <h6 class="font-weight-normal mb-0">Edit Shop</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/shop-owner/edit}" method="post"
+                            th:object="${shopowner}">
+
+                            <input type="hidden" th:field="*{ownerId}">
+                            <input type="hidden" th:field="*{shopName}">
+                            <input type="hidden" th:field="*{shopLogoPath}">
+                            <input type="hidden" th:field="*{createdAt}">
+                            <input type="hidden" th:field="*{user.userId}">
+
+                            <div class="form-group">
+                                <label for="exampleSelectGender">Status</label>
+                                <select class="form-control" name="statusField">
+                                    <th:block th:if="${subtitle!='Waiting For Approval'}">
+                                        <option value="1" th:selected="${status==1}">Active</option>
+                                        <option value="2" th:selected="${status==2}">Deactive</option>
+                                    </th:block>
+
+                                    <th:block th:if="${subtitle=='Waiting For Approval'}">
+                                        <option value="4">Approve</option>
+                                        <option value="3">Refuse</option>
+                                    </th:block>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea class="form-control form-control-lg" cols="30" rows="10"
+                                    placeholder="Description" th:field="*{shopDescription}"></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

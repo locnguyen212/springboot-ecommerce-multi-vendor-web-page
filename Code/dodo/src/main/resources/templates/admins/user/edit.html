@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('User Edit', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script>
+            $(function () {
+                $("#dob").datepicker({
+                    dateFormat: "dd/mm/yy",
+                    maxDate: '0',
+                    changeMonth: true,
+                    changeYear: true
+                }).prop("readonly", true);
+            });
+        </script>
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">User</h3>
+                        <h6 class="font-weight-normal mb-0">Edit User</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/user/edit}" method="post" th:object="${user}"
+                            enctype="multipart/form-data">
+                            <input type="hidden" th:field="*{userId}">
+                            <input type="hidden" th:field="*{role.roleId}">
+                            <input type="hidden" th:field="*{avatar}">
+                            <input type="hidden" th:field="*{createdAt}">
+                            <input type="hidden" th:field="*{updatedAt}">
+                            <input type="hidden" th:field="*{status}" th:if="${profile}">
+
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Username</label>
+                                <input type="text" class="form-control" placeholder="Username" th:field="*{username}">
+                                <div th:if="${#fields.hasErrors('username')}">
+                                    <p class="text-danger" th:errors="*{username}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Email</label>
+                                <input type="text" class="form-control" placeholder="Email" th:field="*{email}">
+                                <div th:if="${#fields.hasErrors('email')}">
+                                    <p class="text-danger" th:errors="*{email}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Password</label>
+                                <input type="password" class="form-control" placeholder="Password"
+                                    th:field="*{password}">
+                                <div th:if="${#fields.hasErrors('password')}">
+                                    <p class="text-danger" th:errors="*{password}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">First Name</label>
+                                <input type="text" class="form-control" placeholder="First Name"
+                                    th:field="*{firstName}">
+                                <div th:if="${#fields.hasErrors('firstName')}">
+                                    <p class="text-danger" th:errors="*{firstName}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Last Name</label>
+                                <input type="text" class="form-control" placeholder="Last Name" th:field="*{lastName}">
+                                <div th:if="${#fields.hasErrors('lastName')}">
+                                    <p class="text-danger" th:errors="*{lastName}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Address</label>
+                                <input type="text" class="form-control" placeholder="Address" th:field="*{address}">
+                                <div th:if="${#fields.hasErrors('address')}">
+                                    <p class="text-danger" th:errors="*{address}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Phone Number</label>
+                                <input type="text" class="form-control" placeholder="Phone Number"
+                                    th:field="*{phoneNumber}">
+                                <div th:if="${#fields.hasErrors('phoneNumber')}">
+                                    <p class="text-danger" th:errors="*{phoneNumber}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Date Of Birth</label>
+                                <input type="text" class="form-control" placeholder="Date Of Birth" th:field="*{dob}">
+                                <div th:if="${#fields.hasErrors('dob')}">
+                                    <p class="text-danger" th:errors="*{dob}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Gender</label>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" value="female"
+                                            th:field="*{gender}">
+                                        Female
+                                        <i class="input-helper"></i></label>
+                                </div>
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="radio" class="form-check-input" value="male" th:field="*{gender}">
+                                        Male
+                                        <i class="input-helper"></i></label>
+                                </div>
+                            </div>
+
+                            <div th:if="${notProfile}">
+                                <div class="form-group">
+                                    <label for="exampleInputUsername1">Status</label>
+                                    <select class="form-control" th:field="*{status}">
+                                        <option value="0">False</option>
+                                        <option value="1">True</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>File upload</label>
+                                <input type="file" name="image" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled=""
+                                        placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                    </span>
+                                </div>
+                                <div th:if="${#fields.hasErrors('avatar')}">
+                                    <p class="text-danger" th:errors="*{avatar}"></p>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

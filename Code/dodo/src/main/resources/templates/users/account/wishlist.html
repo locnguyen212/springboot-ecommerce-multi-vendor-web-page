@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('Wishlist', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+      .wishlist_style{
+        height: 100% !important;
+        margin: 0 10px;
+        min-width: 316px;
+      }
+    @media (min-width: 1200px) {
+      .col-xl {
+          flex: 0 0 0% !important;
+      }
+    }
+    </style>
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+
+                  <h2 class="title mb30">Wishlist</h2>
+
+                  <!-- Content -->
+                  <div class="row">
+                    <div class="col-sm-6 col-lg-6 col-xl p0" th:each="e : ${wishlists}">
+                      <div class="shop_item bdr1 wishlist_style">
+                        <div class="close_list">
+                          <span class="flaticon-close">
+                            <a class="btn-close" th:href="@{'/user/account/wishlist/remove/'+${e.wishlistId}}"></a>
+                          </span>
+                        </div>
+                        <div class="thumb pb30">
+                          <img th:src="@{'/upload/'+${e.product.productImage}}" width="230" height="230">
+                        </div>
+                        <div class="details">
+                          <div class="title"><a th:href="@{'/user/product/detail?id='+${e.product.productId}}">[[${e.product.productName}]]</a></div>
+                          <div class="review d-flex">
+                            <ul class="mb0 me-2">
+                              <th:block th:if="${e.product.reviews == null || #lists.size(e.product.reviews) == 0}">
+                                <li class="list-inline-item">No rating yet &nbsp;&nbsp;|</li>
+                              </th:block>
+
+                              <th:block th:if="${e.product.reviews != null && #lists.size(e.product.reviews) != 0}">
+                                <li class="list-inline-item">[[${#aggregates.avg(e.product.reviews.![rating])}]]</li>
+                                <li class="list-inline-item"><a href="#"><i class="fas fa-star"></i></a> &nbsp;&nbsp;|</li>
+                              </th:block>
+                            </ul>
+                            <div class="review_count"><a href="#">[[${#lists.size(e.product.reviews)}]] reviews</a></div>
+                          </div>
+                          <div class="si_footer" th:if="${#lists.size(e.product.promotions) == 0 || e.product.promotions == null}">
+                            <div class="price">[[${'$'+e.product.price}]]</div>
+                          </div>
+
+                          <div class="si_footer" th:if="${#lists.size(e.product.promotions) != 0 && e.product.promotions != null}">
+                            <th:block th:if="${e.product.promotions[0].startDate.before(#dates.createNow()) && e.product.promotions[0].endDate.after(#dates.createNow())}">
+                              <div class="price">[[${'$'+(e.product.price*(1-e.product.promotions[0].discountAmount/100))}]] <small><del>[[${'$'+e.product.price}]]</del></small></div>
+                            </th:block>
+                            
+                            <th:block th:if="${e.product.promotions[0].startDate.after(#dates.createNow()) || e.product.promotions[0].endDate.before(#dates.createNow())}">
+                              <div class="price">[[${'$'+e.product.price}]]</div>
+                            </th:block>                           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Content Ends -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+
+  </th:block>
+</body>
+
+</html>

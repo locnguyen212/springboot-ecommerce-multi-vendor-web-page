@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html th:replace="~{/users/layout/index :: mainContent('Home', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+    <meta charset="UTF-8">
+    <th:block id="style">
+        <style>
+            .navi_pagi_bottom_center.owl-theme .owl-nav .owl-prev,
+            .navi_pagi_bottom_center.owl-theme .owl-nav .owl-next {
+                padding: 7px 10px 10px 10px !important;
+                margin-left: 35px;
+            }
+
+            .shop_item_5grid_slider.owl-theme.owl-loaded .owl-prev:hover,
+            .shop_item_5grid_slider.owl-theme.owl-loaded .owl-next:hover {
+
+                border: unset;
+            }
+
+            .navi_pagi_bottom_center.owl-theme.owl-carousel .owl-controls {
+                width: 98%;
+                margin: unset;
+            }
+
+            .owl-dots {
+                display: none !important;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content-wrapper">
+        <section class="home-one">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="main-banner-wrapper home1_style bdrs6 ovh">
+                            <div class="banner-style-one owl-theme owl-carousel">
+                                <div class="slide slide-one"
+                                    style="background-image:url(/users/images/home/1.jpg);height:600px">
+                                    <div class="container">
+                                        <div class="row home-content">
+                                            <div class="col-lg-6 offset-lg-1 col-xl-5"><span class="tag">Limited
+                                                    Edition</span>
+                                                <h3 class="banner-title"><span class="fw400">Sport
+                                                        Essentials</span><br>Yoga Mats, Weights<br
+                                                        class="d-none d-xl-block">& more</h3>
+                                                <p>Discover our new items. Up to<span class="fw500">25% Off !</span>
+                                                </p><a class="btn banner-btn btn-thm">Shop
+                                                    Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slide slide-one"
+                                    style="background-image:url(/users/images/home/1.jpg);height:600px">
+                                    <div class="container">
+                                        <div class="row home-content">
+                                            <div class="col-lg-5 offset-lg-1"><span class="tag">Limited
+                                                    Edition</span>
+                                                <h3 class="banner-title"><span class="fw400">Game Consoles
+                                                        and</span><br>Accessories Super Deals</h3>
+                                                <p>Discover our new items. Up to<span class="fw500">25% Off !</span>
+                                                </p><a class="btn banner-btn btn-thm">Shop
+                                                    Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="slide slide-one bgpc"
+                                    style="background-image:url(/users/images/home/1.jpg);height:600px">
+                                    <div class="container">
+                                        <div class="row home-content">
+                                            <div class="col-lg-5 offset-lg-1"><span class="tag">New Arrivals</span>
+                                                <h3 class="banner-title"><span class="fw400">Wall
+                                                        clock</span><br>renaissance</h3>
+                                                <p>Discover our new items. Up to<span class="fw500">25% Off !</span>
+                                                </p><a class="btn banner-btn btn-thm">Shop
+                                                    Now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-btn-block banner-carousel-btn"><span class="carousel-btn left-btn"><i
+                                        class="fas fa-chevron-left left"></i></span><span
+                                    class="carousel-btn right-btn"><i class="fas fa-chevron-right right"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="inner_main">
+            <th:block
+                th:with="listCategory = ${session.allCategory}, listProduct = ${allProducts}, listDetailProduct = ${allDetailProduct}">
+                <section class="featured-product pt0" th:each="category : ${listCategory}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="main-title mb0-sm">
+                                    <h2
+                                        th:if="${#lists.size(listProduct.?[category.categoryId == category.categoryId]) > 0}">
+                                        [[${category.categoryName}]]
+                                    </h2>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="popular_listing_sliders row ui_kit_tab style2">
+                                    <div class="tab-content col-lg-12" id="nav-tabContent2">
+                                        <div class="tab-pane fade show active" id="nav-narive" role="tabpanel"
+                                            aria-labelledby="nav-narive-tab">
+                                            <div
+                                                class="best_item_slider_shop_lising_page shop_item_5grid_slider slider_dib_sm nav_none_400 dots_none owl-theme owl-carousel">
+                                                <div th:each="product : ${listProduct}"
+                                                    th:if="${product.category.categoryId == category.categoryId}"
+                                                    th:class="${product.status == false || product.stockQuantity <= 0} ? 'item ovh disabled-div-home' : 'item ovh'"style="height: 480px;">
+                                                    <div class="shop_item bdrtrb1 px-2 px-sm-3 wow fadeIn"
+                                                        th:attr="data-groupId=${product.productId}"
+                                                        data-wow-duration="1.3s"
+                                                        style="position: relative; height: 100%;">
+                                                        <div class="div-discount"
+                                                            th:if="${#lists.size(product.promotions) > 0 && product.promotions != null}">
+                                                            <th:block th:each="promotion : ${product.promotions}">
+                                                                <th:block
+                                                                    th:if="${promotion.startDate.before(#dates.createNow()) && promotion.endDate.after(#dates.createNow())}">
+                                                                    <small class="sm-style-discount">-
+                                                                        [[${promotion.discountAmount +'%'}]]</small>
+                                                                    <img src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png"
+                                                                        data-src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png"
+                                                                        alt="Sale " title="Sale " width="64" height="64"
+                                                                        class="lzy lazyload--done"
+                                                                        srcset="https://cdn-icons-png.flaticon.com/128/10737/10737162.png 4x">
+                                                                </th:block>
+                                                            </th:block>
+                                                        </div>
+                                                        <div class="thumb pb30" style="padding: 15px 70px;"><img
+                                                                width="150" height="150"
+                                                                th:src="@{'/upload/' + ${product.productImage}}"
+                                                                alt="Furniture Product">
+                                                            <div class="shop_item_cart_btn d-grid">
+                                                                <th:block sec:authorize="!isAuthenticated()">
+                                                                    <a class="btn btn-thm" th:href="@{/login}">
+                                                                        Add to Cart
+                                                                    </a>
+                                                                </th:block>
+                                                                <th:block sec:authorize="isAuthenticated()">
+                                                                    <a class="btn btn-thm"
+                                                                        th:onclick="'addToCart(' + ${product.productId} + ', ' + 1 + ')'">
+                                                                        Add to Cart
+                                                                    </a>
+                                                                </th:block>
+                                                            </div>
+                                                        </div>
+                                                        <div class="details">
+                                                            <div class="sub_title"></div>
+                                                            <a
+                                                                th:href="@{'/user/product/detail?id=' + ${product.productId}}">
+                                                                <div th:text="${product.productName}" class="title">
+                                                                </div>
+                                                            </a>
+                                                            <a class="parent-border-shop-name"
+                                                                th:href="@{'/user/shop-list/listProductsByShopName?ownerId=' + ${product.shopowner.ownerId} + '&shopName=' + ${product.shopowner.shopName} + '&shopLogoPath=' + ${product.shopowner.shopLogoPath}}">
+                                                                <div th:text="${product.shopowner.shopName}"
+                                                                    class="title div-border-shop-name"></div>
+                                                            </a>
+                                                            <div class="review d-flex db-500"
+                                                                style="flex-direction: column;">
+                                                                <th:block
+                                                                    th:if="${#lists.isEmpty(product.reviews) || product.reviews == null}">
+                                                                    <div class="price"> No reviews yet </div>
+                                                                </th:block>
+                                                                <th:block
+                                                                    th:if="${#lists.size(product.reviews) > 0 && product.reviews != null}">
+                                                                    <ul class="mb0 me-2" style="display: flex;">
+                                                                        <li class="list-inline-item">
+                                                                            [[${#numbers.formatDecimal(#aggregates.avg(product.reviews.![rating]),
+                                                                            1,
+                                                                            'DEFAULT', 1, 'DEFAULT')}]]</a></li>
+                                                                        <li th:each="starNumber : ${#numbers.sequence(1, 5)}"
+                                                                            th:class="${starNumber le #aggregates.avg(product.reviews.![rating])} ? 'star active' : 'star'">
+                                                                            <i class="fas">⚝</i>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <div th:if="${#lists.size(product.reviews) == 1}"
+                                                                        class="review_count">
+                                                                        <a>[[${product.reviews.size()}]]
+                                                                            review</a>
+                                                                    </div>
+                                                                    <div th:unless="${#lists.size(product.reviews) == 1}"
+                                                                        class="review_count">
+                                                                        <a>[[${product.reviews.size()}]]
+                                                                            reviews</a>
+                                                                    </div>
+                                                                </th:block>
+                                                            </div>
+                                                            <div class="si_footer">
+                                                                <th:block
+                                                                    th:if="${#lists.isEmpty(product.promotions) || product.promotions == null}">
+                                                                    <div class="price">[[${'$' + product.price}]]</div>
+                                                                </th:block>
+                                                                <th:block
+                                                                    th:if="${#lists.size(product.promotions) > 0 && product.promotions != null}">
+                                                                    <th:block
+                                                                        th:each="promotion : ${product.promotions}">
+                                                                        <th:block
+                                                                            th:if="${promotion.startDate.before(#dates.createNow()) && promotion.endDate.after(#dates.createNow())}">
+                                                                            <div class="price">[[${'$' +
+                                                                                #numbers.formatDecimal((product.price *
+                                                                                (1 -
+                                                                                promotion.discountAmount /
+                                                                                100)), 0, 'DEFAULT', 2, 'DEFAULT' )}]]
+                                                                                <small><del>[[${'$' +
+                                                                                        product.price}]]</del></small>
+                                                                            </div>
+                                                                        </th:block>
+                                                                        <th:block
+                                                                            th:if="${promotion.startDate.after(#dates.createNow()) || promotion.endDate.before(#dates.createNow())}">
+                                                                            <div class="price">[[${'$' +
+                                                                                product.price}]]</div>
+                                                                        </th:block>
+                                                                    </th:block>
+                                                                </th:block>
+                                                                <div class="sell_stock mt10 sold">
+                                                                    <th:block
+                                                                        th:if="${#lists.size(listDetailProduct) > 0}"
+                                                                        th:with="totalQuantity=0">
+                                                                        <th:block
+                                                                            th:each="productDetail : ${listDetailProduct}">
+                                                                            <th:block
+                                                                                th:if="${productDetail.product.productId == product.productId}">
+                                                                                <span style="display: none;"
+                                                                                    th:id="'sold-product-'+${product.productId}"
+                                                                                    th:with="totalQuantity=${totalQuantity + productDetail.quantity}">[[${totalQuantity}]]</span>
+                                                                            </th:block>
+                                                                        </th:block>
+                                                                    </th:block>
+
+                                                                    <div class="sell">Sold <span
+                                                                            th:class="'totalQuantityDisplay-'+${product.productId}">0</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </th:block>
+        </div>
+    </th:block>
+
+    <th:block id="jsScript">
+        <script th:src="@{/users/js/home-user.js}"></script>
+        <!-- <script th:src="@{/users/js/single-counter.js}"></script> -->
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("[id^='sold-product']").each(function () {
+                    var productId = $(this).attr("id").replace("sold-product-", "");
+                    var totalQuantity = 0;
+                    var checkEach = false;
+                    $("[id='sold-product-" + productId + "']").each(function () {
+                        var quantity = parseInt($(this).text());
+                        if (!isNaN(quantity)) {
+                            totalQuantity += quantity;
+                        }
+                    });
+                    if(totalQuantity % 3 === 0){
+                            checkEach = true;
+                        }
+                    if(checkEach){
+                        totalQuantity = totalQuantity / 3;
+                        $(".totalQuantityDisplay-" + productId).text(totalQuantity);
+                    }else {
+                        $(".totalQuantityDisplay-" + productId).text(totalQuantity);
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</body>
+
+</html>

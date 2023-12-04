@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html th:replace="~{/users/layout/index :: mainContent('Home', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+    <meta charset="UTF-8">
+    <th:block id="style">
+        <style>
+            .pagination-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            .pagination-link {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                text-decoration: none;
+                color: #333;
+            }
+
+            .pagination-link:hover {
+                background-color: #f5f5f5;
+            }
+
+            .pagination-current {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #007bff;
+                border-radius: 5px;
+                color: #fff;
+                background-color: #007bff;
+            }
+
+            .pagination-disabled {
+                margin: 0 5px;
+                padding: 5px 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                color: #ccc;
+                cursor: not-allowed;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content-wrapper">
+        <div class="inner_main" th:if="${#lists.isEmpty(listSearchProducts)}">
+            <div class="mt10">
+                <div style="text-align: center;">
+                    <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/search/a60759ad1dabe909c46a817ecbf71878.png" width="150" height="150">
+                </div>
+                <h4 class="p20 text-center" style="color: #586eed;">
+                    No result is found in Category
+                </h4>
+            </div>
+        </div>
+        <div class="inner_main" th:unless="${#lists.isEmpty(listSearchProducts)}" th:with="listDetailProduct = ${allDetailProduct}">
+            <div class="ml100 mt10">
+                <h3>Category: [[${s_categoryName}]] </h3>
+            </div>
+            <div class="row" style="padding:10px 100px;">
+                <div class="col-6 col-lg-4 col-xl-3 p0 pl15-520" th:each="product : ${listSearchProducts}"
+                    style="padding: 10px !important;"  th:class="${product.stockQuantity <= 0} ? 'col-6 col-lg-4 col-xl-3 p0 pl15-520 disabled-div-home' : 'col-6 col-lg-4 col-xl-3 p0 pl15-520'">
+                    <div class="shop_item bdr1 m--1" style="height: 100%;">
+                        <div class="div-discount" th:if="${product.pr_discountAmount != null}">
+                            <th:block
+                                th:if="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                <small class="sm-style-discount">-
+                                    [[${product.pr_discountAmount +'%'}]]</small>
+                                <img src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png"
+                                    data-src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png" alt="Sale "
+                                    title="Sale " width="64" height="64" class="lzy lazyload--done"
+                                    srcset="https://cdn-icons-png.flaticon.com/128/10737/10737162.png 4x">
+                            </th:block>
+                        </div>
+                        <div class="div-sold-out" th:if="${product.stockQuantity <= 0}" style="">
+                            <img src="https://cdn-icons-png.flaticon.com/128/5110/5110176.png" width="50" height="50" class="replaced-svg">
+                        </div>
+                        <div class="thumb pb30">
+                            <img th:src="@{'/upload/' + ${product.productImage}}" height="150"
+                                width="150" alt="Shop Item1">
+                            <div class="shop_item_cart_btn d-grid">
+                                <th:block sec:authorize="!isAuthenticated()">
+                                    <a class="btn btn-thm" th:href="@{/login}">
+                                        Add to Cart
+                                    </a>
+                                </th:block>
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <a class="btn btn-thm" th:if="${session.user.userId != product.sh_shopId}"
+                                        th:onclick="'addToCart(' + ${product.productId} + ', ' + 1 + ')'">
+                                        Add to Cart
+                                    </a>
+                                </th:block>
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="title">
+                                <a style="text-decoration: none;" th:href="@{'/user/product/detail?id=' + ${product.productId}}">
+                                    <div th:text="${product.productName}" class="title">
+                                    </div>
+                                </a>
+                                <a th:href="@{'/user/shop-list/v_shop?shopId=' + ${product.sh_shopId} }" style="text-decoration: none;" class="parent-border-shop-name">
+                                    <div th:text="${product.sh_shopName}" class="title div-border-shop-name"></div>
+                                </a>
+                            </div>
+                            <div class="review d-flex db-500 tab-star-rv" style="flex-direction: column;">
+                                <th:block th:if="${product.totalComments == 0}">
+                                    <div class="price"> No reviews yet </div>
+                                </th:block>
+                                <th:block th:unless="${product.totalComments == 0}">
+                                    <ul class="mb0 me-2" style="display: flex;">
+                                        <li class="list-inline-item">
+                                            [[${#numbers.formatDecimal(product.averageRating,
+                                            1,
+                                            'DEFAULT', 1, 'DEFAULT')}]]</a></li>
+                                        <li th:each="starNumber : ${#numbers.sequence(1, 5)}"
+                                            th:class="${starNumber le product.averageRating} ? 'star active' : 'star'">
+                                            <i class="fas">⚝</i>
+                                        </li>
+                                    </ul>
+                                    <div th:if="${product.totalComments == 1}" class="review_count">
+                                        <a>[[${product.totalComments}]]
+                                            review</a>
+                                    </div>
+                                    <div th:unless="${product.totalComments == 1}" class="review_count">
+                                        <a>[[${product.totalComments}]]
+                                            reviews</a>
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="si_footer">
+                                <th:block th:if="${product.pr_discountAmount == null}">
+                                    <div class="price">[[${'$' + product.price}]]</div>
+                                </th:block>
+                                <th:block th:if="${product.pr_discountAmount != null}">
+                                    <th:block
+                                        th:if="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                        <div class="price">[[${'$' + #numbers.formatDecimal((product.price * (1 -
+                                            product.pr_discountAmount / 100)), 0, 'DEFAULT', 2, 'DEFAULT' )}]]
+                                            <small><del>[[${'$' + product.price}]]</del></small>
+                                        </div>
+                                    </th:block>
+                                    <th:block
+                                        th:unless="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                        <div class="price">[[${'$' + product.price}]]</div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                            <div class="sell_stock mt10 sold">
+                                <th:block
+                                    th:if="${#lists.size(listDetailProduct) > 0}"
+                                    th:with="totalQuantity=0">
+                                    <th:block
+                                        th:each="productDetail : ${listDetailProduct}">
+                                        <th:block
+                                            th:if="${productDetail.product.productId == product.productId}">
+                                            <span style="display: none;"
+                                                th:id="'sold-product-'+${product.productId}"
+                                                th:with="totalQuantity=${totalQuantity + productDetail.quantity}">[[${totalQuantity}]]</span>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
+
+                                <div class="sell">Sold <span
+                                        th:class="'totalQuantityDisplay-'+${product.productId}">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${totalPages > 1}" class="pagination-container">
+                <div>
+                    <div class="col-sm mb20">
+                        <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                            <a th:if="${currentPage != i}"
+                                th:href="@{'/user/product/category?id=' + ${s_categoryId} + '&page=' + ${i}}"
+                                class="pagination-link">[[${i}]]</a>
+                            <span th:unless="${currentPage != i}" class="pagination-current">[[${i}]]</span>
+                        </span>
+                    </div>
+                    <div class="mt20 mb20">
+                        <a th:if="${currentPage < totalPages}"
+                            th:href="@{'/user/product/category?id=' + ${s_categoryId} + '&page=' + ${currentPage + 1}}"
+                            class="pagination-link">Next</a>
+                        <span th:unless="${currentPage < totalPages}" class="pagination-disabled">Next</span>
+                        <a th:if="${currentPage < totalPages}"
+                            th:href="@{'/user/product/category?id=' + ${s_categoryId} + '&page=' + ${totalPages}}"
+                            class="pagination-link">Last</a>
+                        <span th:unless="${currentPage < totalPages}" class="pagination-disabled">Last</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </th:block>
+
+    <th:block id="jsScript">
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("[id^='sold-product']").each(function () {
+                    var productId = $(this).attr("id").replace("sold-product-", "");
+                    var totalQuantity = 0;
+                    $("[id='sold-product-" + productId + "']").each(function () {
+                        var quantity = parseInt($(this).text());
+                        if (!isNaN(quantity)) {
+                            totalQuantity += quantity;
+                        }
+                       
+                    });
+                    $(".totalQuantityDisplay-" + productId).text(totalQuantity);
+                });
+            });
+        </script>
+    </th:block>
+</body>
+
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('Order', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+                  <h2 class="title mb30">Order Cancellation</h2>
+                  <div class="account_details_page form_grid">
+
+                    <form class="contact_form" name="contact_form" th:action="@{/user/account/order-cancel}"
+                      method="post" th:object="${orderCancel}">
+                      <input type="hidden" th:field="*{user.userId}">
+                      <input type="hidden" th:field="*{shopowner.ownerId}">
+                      <input type="hidden" th:field="*{order.orderId}">
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group mb-4">
+                            <label class="form-label">You want to cancel your order? Please tell us why!</label>
+                            <textarea class="form-control" cols="30" rows="5" th:field="*{reason}"></textarea>
+                            <div th:if="${#fields.hasErrors('reason')}">
+                              <p style="color:red;" th:errors="*{reason}"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                          <div class="form-group d-flex mb0">
+                            <input type="submit" value="Send Request" class="btn btn-thm me-3">
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+
+  </th:block>
+</body>
+
+</html>

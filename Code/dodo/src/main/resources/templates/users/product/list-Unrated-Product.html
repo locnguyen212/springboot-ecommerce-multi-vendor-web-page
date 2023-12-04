@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{/users/layout/index :: mainContent('Unrated Orders', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+	<meta charset="UTF-8">
+	<th:block id="style">
+
+	</th:block>
+</head>
+
+<body>
+	<th:block id="content-wrapper">
+		<th:block id="content-wrapper">
+			<div class="dashboard__content bgc-gmart-gray">
+				<div class="row pb50">
+					<div class="col-lg-12">
+						<div class="dashboard_title_area">
+							<h2>List Unrated Product</h2>
+						</div>
+					</div>
+					<div class="col-xl-12">
+						<div class="dashboard_product_list account_user_deails">
+							<div class="order_table table-responsive">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th scope="col">Shop Name</th>
+											<th scope="col">Product Name</th>
+											<th scope="col">Review</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="p, i : ${listUnratedProduct}">
+											<td>[[${i.index + 1}]]. [[${p.order.shopowner.shopName}]]</td>
+											<td><a th:href="@{'/user/product/detail?id=' + ${p.product.productId}}" > [[${p.product.productName}]]</a></td>
+											<td>
+												<a th:href="@{'/user/product/review?productId=' + ${p.product.productId} + '&orderId=' + ${p.order.orderId}}">
+													<button type="button" class="btn btn-thm">Go to Review</button>
+												</a>												
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+		</th:block>
+
+	</th:block>
+	<th:block id="jsScript">
+	</th:block>
+</body>
+
+</html>

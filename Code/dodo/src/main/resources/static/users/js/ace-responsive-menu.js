@@ -1,0 +1,17 @@
+/* 
+Ace Responsive Menu Plugin
+Version: 1.0
+Author: Samson.Onna 
+Email : samson3d@gmail.com
+----------------------------------------*/
+let icon_arrow = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" width="10pt" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"></path></svg>`;
+!function(e){e.fn.aceResponsiveMenu=function(s){var i=s=e.extend({resizeWidth:"768",animationSpeed:"fast",accoridonExpAll:!1},s),l=i.resizeWidth,n=i.animationSpeed,a=i.accoridonExpAll,t=e(this),d=e(this).attr("data-menu-style");function o(){if(e(window).innerWidth()<=l)t.find("li.menu-active").removeClass("menu-active"),t.find("ul.slide").removeClass("slide").removeAttr("style"),t.addClass("collapse hide-menu"),t.attr("data-menu-style",""),e(".menu-toggle").show();else{if(t.attr("data-menu-style",d),t.removeClass("collapse hide-menu").removeAttr("style"),e(".menu-toggle").hide(),"accordion"==t.attr("data-menu-style"))return void t.addClass("collapse");t.find("li.menu-active").removeClass("menu-active"),t.find("ul.slide").removeClass("slide").removeAttr("style")}}return t.find("ul").addClass("sub-menu"),t.find("ul").siblings("a").append(icon_arrow),"accordion"==d&&e(this).addClass("collapse"),e(window).innerWidth()<=l&&o(),e(window).resize((function(){o()})),e("#menu-btn").on("click",(function(){t.slideToggle().toggleClass("hide-menu")})),this.each((function(){t.on("mouseover","> li a",(function(){if(!0===t.hasClass("collapse"))return!1;e(this).off("click","> li a"),e(this).parent("li").siblings().children(".sub-menu").stop(!0,!0).slideUp(n).removeClass("slide").removeAttr("style").stop(),e(this).parent().addClass("menu-active").children(".sub-menu").slideDown(n).addClass("slide")})),t.on("mouseleave","li",(function(){if(!0===t.hasClass("collapse"))return!1;e(this).off("click","> li a"),e(this).removeClass("menu-active"),e(this).children("ul.sub-menu").stop(!0,!0).slideUp(n).removeClass("slide").removeAttr("style")})),t.on("click","> li a",(function(){if(t.hasClass("collapse"),e(this).off("mouseover","> li a"),e(this).parent().hasClass("menu-active"))e(this).parent().children(".sub-menu").slideUp().removeClass("slide"),e(this).parent().removeClass("menu-active");else{if(1==a)return void e(this).parent().addClass("menu-active").children(".sub-menu").slideDown(n).addClass("slide");e(this).parent().siblings().removeClass("menu-active"),e(this).parent("li").siblings().children(".sub-menu").slideUp().removeClass("slide"),e(this).parent().addClass("menu-active").children(".sub-menu").slideDown(n).addClass("slide")}}))}))}}(jQuery);
+/* Body Overlay On Hover */
+$(document).ready(function(){
+  $("#mega-menu, .ace-responsive-menu > li.visible_list, .ace-responsive-menu > li.megamenu_style,.top-search form.form-search .box-search input ").hover(function(){
+    $(".body_content_wrapper").addClass("before_active");
+  },            
+  function(){
+    $(".body_content_wrapper").removeClass("before_active");
+  });
+});

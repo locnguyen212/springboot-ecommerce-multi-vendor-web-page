@@ -1,0 +1,34 @@
+<th:block id="alert">
+    <!-- Alert -->
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successUpdated}">
+        <strong>Successfully edited!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertUpdated}">
+        <strong>Fail to edited!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successCancel}">
+        <strong>Your cancellation request has been sent, please wait for the shop confirmation!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertCancel}">
+        <strong>Fail to send cancellation request, please try again!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alreadyCancel}">
+        <strong>You have already sent cancellation request for this order!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <!-- Alert ends -->
+</th:block>

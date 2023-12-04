@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('Sales Data', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Sales Data</h3>
+                        <h6 class="font-weight-normal mb-0">Sales Data List</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="card-body">
+                <form>
+                    <p class="card-description">
+                        <b>Year: </b>
+                        <select name="year">
+                            <option th:each="e : ${years}" th:value="${e}" th:selected="${e==year}">[[${e}]]</option>
+                        </select> &nbsp;&nbsp;
+
+                        <b>Month: </b>
+                        <select name="month">
+                            <option th:each="e : ${months}" th:value="${e}" th:selected="${e==month}">[[${e!=0? e : 'All'}]]</option>
+                        </select> &nbsp;&nbsp;
+
+                        <input type="submit" class="btn btn-primary" th:formaction="@{/admin/sales-data/}" value="Search by filter">&nbsp;&nbsp;
+                        <input th:if="${salesdata != null && #lists.size(salesdata) != 0}" type="submit" class="btn btn-primary" th:formaction="@{/admin/sales-data/export}" value="Excel export">&nbsp;&nbsp;
+                    </p>
+
+                    <!-- Alert -->
+                    <div th:replace="~{admins/layout/partials/alert :: #alertLayout}"></div>
+                    <!-- Alert Ends -->
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Shop Name</th>
+                                    <th>Total Sales</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+
+                            <tbody th:if="${salesdata != null}">
+                                <tr th:each="e : ${salesdata}">
+                                    <td>[[${e.shopowner.shopName}]]</td>
+                                    <td>[[${e.total}]]</td>
+                                    <td>[[${e.month}]]</td>
+                                    <td>[[${e.year}]]</td>
+                                </tr>
+                            </tbody>
+
+                            <tbody th:if="${salesdata == null}">
+                                <tr>
+                                    <td colspan="100%" style="text-align:center;">No data, please choose a year and month!</td>                          
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <!-- Main-content ends -->
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('Review', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+      #reviewTable {
+        overflow-x: scroll;
+        width: 1000px;
+        display: block;
+        white-space: nowrap;
+      }
+    </style>
+    <!-- <script>
+      $(document).ready(function () {
+        $('#reviewTable').dataTable({
+          "sScrollX": "100%",
+          "sScrollXInner": "110%",
+          "bScrollCollapse": true
+        });
+      });
+    </script> -->
+  </th:block> 
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+
+                  <h2 class="title mb30">Review</h2>
+                  <!-- Content -->
+                  <div id="reviewTable" class="order_table table-responsive">
+                    <table class="table">
+                      <thead class="table-light">
+                        <tr>
+                          <th scope="col">Product</th>
+                          <th scope="col">Shop</th>
+                          <th scope="col">Rating</th>
+                          <th scope="col">Review</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Review Image</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr th:if="${reviews!=null && #lists.size(reviews)!=0}" th:each="e : ${reviews}">
+                          <th>[[${e.product.productName}]]</th>
+                          <th>[[${e.product.shopowner.shopName}]]</th>
+                          <th>[[${e.rating}]]</th>
+                          <th>[[${e.comment}]]</th>
+                          <td>[[${#dates.format(e.reviewDate, 'dd-MM-yyyy') }]]</td>
+                          <th th:if="${e.reviewImage!=null}">
+                            <img th:src="@{'/upload/'+${e.reviewImage}}" width="50" height="50">
+                          </th>
+                          <th th:if="${e.reviewImage==null}">
+                            No Image
+                          </th>
+                        </tr>
+                        <tr th:if="${reviews == null || #lists.size(reviews) == 0 }">
+                          <th colspan="100%" style="text-align:center;">No Data</th>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                  </div>
+                  <!-- Content Ends -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+
+  </th:block>
+</body>
+
+</html>

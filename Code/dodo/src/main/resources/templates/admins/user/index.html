@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('User', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <style>
+            .indexImg {
+                border-radius: 50%;
+                border: 2px solid red;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">User</h3>
+                        <h6 class="font-weight-normal mb-0">User List</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="card-body">
+                <p class="card-description">
+                    <a class="btn btn-primary" th:href="@{'/admin/user/create'}">Add</a>
+                </p>
+
+                <!-- Alert -->
+                <div th:replace="~{admins/layout/partials/alert :: #alertLayout}"></div>
+                <!-- Alert Ends -->
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Role</th>
+                                <th>Avatar</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${users}">
+                                <td>[[${e.username}]]</td>
+                                <td>[[${e.email}]]</td>
+                                <td>[[${e.status}]]</td>
+                                <td th:if="${e.role.roleId == 1}">Super Admin</td>
+                                <td th:if="${e.role.roleId == 2}">Admin</td>
+                                <td th:if="${e.role.roleId == 3}">Shopowner</td>
+                                <td th:if="${e.role.roleId == 4}">User</td>
+                                <td>
+                                    <img class="indexImg" th:src="@{'/upload/'+${e.avatar}}" width="50" height="50">
+                                </td>
+                                <td>[[${#dates.format(e.createdAt, 'dd-MM-yyyy') }]]</td>
+                                <td>[[${e.updatedAt!=null? #dates.format(e.updatedAt, 'dd-MM-yyyy') : "None" }]]</td>
+                                <td sec:authorize="hasRole('ROLE_SUPER_ADMIN')">
+                                    <div class="dropdown">
+                                        <button class="btn btn-success btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
+                                            <a class="dropdown-item"
+                                                th:href="@{'/admin/user/switch-status/'+${e.userId}}">Switch Status</a>
+                                            <a class="dropdown-item"
+                                                th:href="@{'/admin/user/edit/'+${e.userId}}">Edit</a>
+                                            <a class="dropdown-item" th:href="@{'/admin/user/delete/'+${e.userId}}"
+                                                onclick="return confirm('Are you sure?')">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td sec:authorize="hasRole('ROLE_ADMIN')">
+                                    <button class="btn btn-success btn-sm dropdown-toggle" type="button"
+                                        id="dropdownMenuSizeButton4" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
+                                        Action
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton4">
+                                        <a class="dropdown-item"
+                                            th:href="@{'/admin/user/switch-status/'+${e.userId}}">Switch Status</a>
+                                        <a class="dropdown-item" th:href="@{'/admin/user/edit/'+${e.userId}}">Edit</a>
+                                    </div>
+
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

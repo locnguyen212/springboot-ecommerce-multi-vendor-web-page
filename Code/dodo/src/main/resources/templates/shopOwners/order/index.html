@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/shopOwners/layout/index :: mainContent('Order', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block th:inline="text">
+    <style>
+      /* Thêm CSS cho sidebar ngang */
+      .sidebar {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+      }
+
+      .sidebar button {
+        padding: 10px 20px;
+        /* Điều chỉnh padding cho button */
+        margin: 0 5px;
+        background-color: #4CAF50;
+        /* Màu nền của button */
+        color: white;
+        /* Màu chữ trên button */
+        border: none;
+        /* Loại bỏ viền */
+        border-radius: 5px;
+        /* Bo tròn góc */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        /* Hiệu ứng chuyển đổi màu nền */
+      }
+
+      .sidebar button:hover {
+        background-color: #45a049;
+        /* Màu nền khi hover */
+      }
+    </style>
+  </th:block>
+  <th:block id="jsScript">
+    <script>
+      // function showForm(formId) {
+      //     hideAllForms();
+      //     document.getElementById(formId).style.display = "block";
+      // }
+
+      // function hideAllForms() {
+      //     var forms = document.querySelectorAll('.order-form');
+      //     forms.forEach(function(form) {
+      //         form.style.display = "none";
+      //     });
+      // }
+      function showForm(formId) {
+        // Lấy ra phần tử HTML tương ứng với formId
+        var form = document.getElementById(formId);
+
+        // Hiển thị phần tử này bằng cách thay đổi thuộc tính display
+        form.style.display = "block";
+
+        // Ẩn các phần tử khác có thể đang hiển thị
+        hideOtherForms(formId);
+      }
+
+      function hideOtherForms(formId) {
+        // Lấy danh sách tất cả các form
+        var allForms = document.getElementsByClassName("order-form");
+
+        // Duyệt qua từng form
+        for (var i = 0; i < allForms.length; i++) {
+          var form = allForms[i];
+
+          // Kiểm tra xem form hiện tại có phải là form mà bạn muốn hiển thị không
+          if (form.id !== formId) {
+            // Nếu không phải, ẩn đi bằng cách đặt thuộc tính display thành none
+            form.style.display = "none";
+          }
+        }
+      }
+
+    </script>
+  </th:block>
+
+  <th:block id="style">
+
+  </th:block>
+
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <div class="dashboard__content bgc-gmart-gray">
+      <div class="row pb50">
+        <div class="col-lg-12">
+          <div class="dashboard_title_area">
+            <h2>Order</h2>
+          </div>
+        </div>
+        <div class="col-xl-12">
+          <div class="dashboard_product_list account_user_deails">
+            <!-- Sử dụng sidebar ngang để chứa các button -->
+            <div class="order-form">
+
+
+              <!-- Alert -->
+              <div th:replace="~{shopOwners/layout/partials/alert :: #alert}"></div>
+              <!-- Alert ends -->
+              <div class="order_table table-responsive">
+                <table class="table">
+
+                  <thead class="table-light">
+                    <tr>
+                      <th scope="col">User Name</th>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Total Amount</th>
+                      <th scope="col">Shipping Address</th>
+                      <th scope="col">Payment Method</th>
+                      <th scope="col">Order Status</th>
+                      <th scope="col">Detail</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:if="${#lists.size(orders) != 0}" th:each="e : ${orders}">
+                      <td>[[${e.user.username}]]</td>
+                      <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                      <td>[[${e.totalAmount}]]</td>
+                      <td>[[${e.shippingAddress}]]</td>
+                      <td>[[${e.paymentMethod}]]</td>
+                      <td>
+                        <th:block th:if="${orderStatusCon==0}">
+                          <button type="button" class="btn btn-primary btn-sm" disabled>[[${e.orderStatus}]]</button>
+                        </th:block>
+
+                        <th:block th:if="${orderStatusCon==1}">
+                          <button type="button" class="btn btn-primary btn-sm" disabled>[[${e.orderStatus}]]</button>
+                        </th:block>
+
+                        <th:block th:if="${orderStatusCon==2}">
+                          <button type="button" th:if="${e.orderStatus=='Ready For Transport'}" class="btn btn-warning btn-sm"
+                          disabled>[[${e.orderStatus}]]</button>
+
+                          <button type="button" th:if="${e.orderStatus=='In Process'}" class="btn btn-info btn-sm"
+                            disabled>[[${e.orderStatus}]]</button>
+
+                          <button type="button" th:if="${e.orderStatus=='Delivered'}" class="btn btn-success btn-sm"
+                            disabled>[[${e.orderStatus}]]</button>
+                        </th:block>
+
+                        <th:block th:if="${orderStatusCon==3}">
+                          <button type="button" class="btn btn-danger btn-sm" disabled>[[${e.orderStatus}]]</button>
+                        </th:block>
+
+                      </td>
+                      <td>
+                        <a th:href="@{'/shop-owners/order/detail/'+${e.orderId}}"
+                        class="btn dbxshad btn-lg btn-thm1 circle">Detail</a>
+                      </td>
+                      <td>
+                        <a th:if="${e.orderStatus=='Waiting For Approval' || e.orderStatus=='Packaging'}"
+                          onclick="return confirm('Are you sure?')"
+                          th:href="@{'/shop-owners/order/cancel/'+${e.orderId}}"
+                          class="btn dbxshad btn-lg btn-thm1 circle">Cancel</a>
+
+                        <a th:if="${e.orderStatus=='Waiting For Approval'}"
+                          onclick="return confirm('Accept this order?')"
+                          th:href="@{'/shop-owners/order/approve/'+${e.orderId}}"
+                          class="btn dbxshad btn-lg btn-thm1 circle">Approve</a>
+
+                        <a th:if="${e.orderStatus=='Packaging'}" onclick="return confirm('Are you sure?')"
+                          th:href="@{'/shop-owners/order/ready/'+${e.orderId}}"
+                          class="btn dbxshad btn-lg btn-thm1 circle">Ready For Transport</a>
+                      </td>
+                    </tr>
+
+                    <tr th:if="${#lists.size(orders) == 0}">
+                      <th colspan="100%" style="text-align:center;">No Data</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </th:block>
+</body>
+
+</html>

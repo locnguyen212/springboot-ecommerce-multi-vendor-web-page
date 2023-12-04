@@ -1,0 +1,35 @@
+.dealoftheday {
+    color: #e7b641;
+    font-family: Jost;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 40px;
+    letter-spacing: 0em;
+}
+
+#searchProductList {
+    max-height: 400px;
+    overflow: auto;
+    position: relative;
+}
+
+#searchProductList::-webkit-scrollbar {
+    width: 10px; 
+}
+
+#searchProductList::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 1px solid #555;
+    border-radius: 10px;
+}
+
+#searchProductList::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+#searchProductList::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.bootstrap-select>.dropdown-toggle.bs-placeholder {
+    color: black !important;
+}

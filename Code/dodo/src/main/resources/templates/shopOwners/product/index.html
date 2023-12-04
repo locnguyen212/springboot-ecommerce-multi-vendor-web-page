@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/shopOwners/layout/index :: mainContent('Product', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+
+  <th:block id="jsScript">
+  </th:block>
+
+  <th:block id="style">
+  </th:block>
+
+</head>
+
+<body>
+
+  <th:block id="content-wrapper">
+    <div class="dashboard__content bgc-gmart-gray">
+      <div class="row pb50">
+        <div class="col-lg-12">
+          <div class="dashboard_title_area">
+            <h2>Product</h2>
+          </div>
+        </div>
+        <div class="col-xl-12">
+          <div style=" white-space: nowrap;" class="dashboard_product_list account_user_deails">
+
+            <div class="row d-block d-sm-flex justify-content-center justify-content-sm-between">
+
+
+              <div class="col-sm-6 col-lg-4">
+                <div class="dashboard_page header_search_widget mb30 mb15-520">
+                  <a th:href="@{'/shop-owners/product/create'}" class="btn btn-order btn-lg btn-thm">Add New</a>
+                </div>
+              </div>
+
+
+              <div class="col-sm-6 col-lg-4">
+                <div class="dashboard_page_add_listing text-center text-sm-end mb30 mb15-520">
+
+                </div>
+              </div>
+
+
+            </div>
+
+            <!-- Alert -->
+            <div th:replace="~{shopOwners/layout/partials/alert :: #alert}"></div>
+            <!-- Alert ends -->
+
+            <div class="order_table table-responsive">
+              <table class="table" id="reviewTable">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Stock Quantity</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Expiry Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">CreatedAt</th>
+                    <th scope="col">UpdatedAt</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Swicth status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:if="${#lists.size(products) != 0}" th:each="e : ${products}">
+                    <td>[[${e.productName}]]</td>
+                    <td>[[${e.price}]]</td>
+                    <td>[[${e.category.categoryName}]]</td>
+                    <td>[[${e.StockQuantity}]]</td>
+                    <td>
+                      <img th:src="@{'/upload/'+${e.productImage}}" width="50" height="50">
+                    </td>
+                    <td>[[${e.expiryDate!=null? #dates.format(e.updatedAt, 'dd-MM-yyyy') : "None" }]]
+                    </td>
+                    <td th:style="${e.status} ? 'color: green;' : 'color: red;'">
+                      [[${e.status} ? 'Active' : 'Deactive']]
+                    </td>
+                    <td>[[${#dates.format(e.createdAt, 'dd-MM-yyyy') }]]</td>
+                    <td>[[${e.updatedAt!=null? #dates.format(e.updatedAt, 'dd-MM-yyyy') : "None" }]]</td>
+                    <td>
+                      <a th:href="@{'/shop-owners/product/edit/'+${e.productId}}"
+                        class="btn dbxshad btn-lg btn-thm1 circle">Edit</a>
+                      <a th:href="@{'/shop-owners/product/delete/'+${e.productId}}"
+                        class="btn dbxshad btn-lg btn-thm1 circle" onclick="return confirm('Are you sure?')">Delete</a>
+                    </td>
+                    <td>
+                      <a th:href="@{'/shop-owners/product/switch-status/' + ${e.productId}}"
+                        class="btn dbxshad btn-lg btn-thm1 circle">Switch</a>
+                    </td>
+
+                  </tr>
+
+                  <tr th:if="${#lists.size(products) == 0}">
+                    <th colspan="100%" style="text-align:center;">No Data</th>
+                  </tr>
+
+                </tbody>
+              </table>
+              
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+  </th:block>
+
+</body>
+
+</html>

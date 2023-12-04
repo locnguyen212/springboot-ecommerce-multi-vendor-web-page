@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('Order', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+                  <h2 class="title mb30">Order</h2>
+
+                  <!-- Alert -->
+                  <div th:replace="~{users/account/partials/alert :: #alert}"></div>
+                  <!-- Alert ends -->
+
+                  <div class="ui_kit_tab style2">
+                    <!-- nav tab Nav List Start -->
+                    <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="recentlyordered-tab" data-bs-toggle="tab"
+                          data-bs-target="#recentlyordered" type="button" role="tab" aria-controls="recentlyordered"
+                          aria-selected="true">Recently Order</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="t20-tab" data-bs-toggle="tab" data-bs-target="#t20" type="button"
+                          role="tab" aria-controls="t20" aria-selected="true">Packaging</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="baby-tab" data-bs-toggle="tab" data-bs-target="#baby" type="button"
+                          role="tab" aria-controls="baby" aria-selected="false">Other</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="furniture-tab" data-bs-toggle="tab" data-bs-target="#furniture"
+                          type="button" role="tab" aria-controls="furniture" aria-selected="false">Delivered</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="cancel-tab" data-bs-toggle="tab" data-bs-target="#cancel"
+                          type="button" role="tab" aria-controls="cancel" aria-selected="false">Cancelled</button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="cancelrequest-tab" data-bs-toggle="tab"
+                          data-bs-target="#cancelrequest" type="button" role="tab" aria-controls="cancelrequest"
+                          aria-selected="false">Cancel Request</button>
+                      </li>
+                    </ul>
+                    <!-- nav tab Nav List End -->
+                    <!-- nav tab contents Start -->
+                    <div class="tab-content pt20 row" id="myTabContent">
+
+                      <div class="tab-pane fade show active col-lg-12" id="recentlyordered" role="tabpanel"
+                        aria-labelledby="recentlyordered-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(ordersRecent) != 0}" th:each="e : ${ordersRecent}">
+                                <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <td>[[${'$'+ e.totalAmount}]]</td>
+                                <th>[[${e.paymentMethod}]]</th>
+                                <th>
+                                  <button type="button" class="btn btn-primary btn-sm"
+                                    disabled>[[${e.orderStatus}]]</button>
+                                </th>
+                                <td>
+                                  <a th:href="@{'/user/account/order-detail/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">View Detail</a>
+                                  <a th:href="@{'/user/account/order-cancel/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">Cancel Order</a>
+
+                                </td>
+                              </tr>
+
+                              <tr th:if="${#lists.size(ordersRecent) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="tab-pane fade col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(ordersPackaging) != 0}" th:each="e : ${ordersPackaging}">
+                                <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <td>[[${'$'+ e.totalAmount}]]</td>
+                                <th>[[${e.paymentMethod}]]</th>
+                                <th>
+                                  <button type="button" class="btn btn-primary btn-sm"
+                                    disabled>[[${e.orderStatus}]]</button>
+                                </th>
+                                <td>
+                                  <a th:href="@{'/user/account/order-detail/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">View Detail</a>
+                                  <a th:href="@{'/user/account/order-cancel/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">Cancel Order</a>
+
+                                </td>
+                              </tr>
+
+                              <tr th:if="${#lists.size(ordersPackaging) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="tab-pane fade col-xl-12" id="baby" role="tabpanel" aria-labelledby="baby-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(ordersInProcess) != 0}" th:each="e : ${ordersInProcess}">
+                                <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <td>[[${'$'+ e.totalAmount}]]</td>
+                                <th>[[${e.paymentMethod}]]</th>
+                                <th>
+                                  <button th:if="${e.orderStatus=='In Process'}" type="button"
+                                    class="btn btn-info btn-sm" disabled>[[${e.orderStatus}]]</button>
+                                  <button th:if="${e.orderStatus=='Ready For Transport'}" type="button"
+                                    class="btn btn-warning btn-sm" disabled>[[${e.orderStatus}]]</button>
+                                  <button th:if="${e.orderStatus!='Ready For Transport' && e.orderStatus!='In Process'}" type="button"
+                                    class="btn btn-success btn-sm" disabled>[[${e.orderStatus}]]</button>
+                                </th>
+                                <td>
+                                  <a th:href="@{'/user/account/order-detail/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">View Detail</a>
+                                </td>
+                              </tr>
+
+                              <tr th:if="${#lists.size(ordersInProcess) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="tab-pane fade col-xl-12" id="furniture" role="tabpanel"
+                        aria-labelledby="furniture-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(ordersDelivered) != 0}" th:each="e : ${ordersDelivered}">
+                                <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <td>[[${'$'+ e.totalAmount}]]</td>
+                                <th>[[${e.paymentMethod}]]</th>
+                                <th>
+                                  <button type="button" class="btn btn-success btn-sm"
+                                    disabled>[[${e.orderStatus}]]</button>
+                                </th>
+                                <td>
+                                  <a th:href="@{'/user/account/order-detail/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">View Detail</a>
+                                  <a th:if="${e.paymentStatus == 'Await Payment'}"
+                                    th:href="@{'/user/account/receive-order/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">Received Order</a>
+                                </td>
+                              </tr>
+
+                              <tr th:if="${#lists.size(ordersDelivered) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="tab-pane fade col-xl-12" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Total Amount</th>
+                                <th scope="col">Payment Method</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(ordersCancelled) != 0}" th:each="e : ${ordersCancelled}">
+                                <td>[[${#dates.format(e.orderDate, 'dd-MM-yyyy') }]]</td>
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <td>[[${'$'+ e.totalAmount}]]</td>
+                                <th>[[${e.paymentMethod}]]</th>
+                                <th>
+                                  <button type="button" class="btn btn-danger btn-sm"
+                                    disabled>[[${e.orderStatus}]]</button>
+                                </th>
+                                <td>
+                                  <a th:href="@{'/user/account/order-detail/'+${e.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">View Detail</a>
+                                </td>
+                              </tr>
+
+                              <tr th:if="${#lists.size(ordersCancelled) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+
+
+                          </table>
+                        </div>
+                      </div>
+
+                      <div class="tab-pane fade col-xl-12" id="cancelrequest" role="tabpanel"
+                        aria-labelledby="cancelrequest-tab">
+                        <div class="order_table table-responsive">
+                          <table class="table">
+                            <thead class="table-light">
+                              <tr>
+                                <th scope="col">Shop Name</th>
+                                <th scope="col">Reason</th>
+                                <th scope="col">Created At</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Cancellation Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr th:if="${#lists.size(cancelRequest) != 0}" th:each="e : ${cancelRequest}">
+                                <th>[[${e.shopowner.shopName}]]</th>
+                                <th>[[${e.reason}]]</th>
+                                <td>[[${#dates.format(e.createdAt, 'dd-MM-yyyy') }]]</td>
+                                <th th:if="${e.status == null}">
+                                  <button type="button" class="btn btn-warning btn-sm" disabled>Pending</button>
+                                </th>
+                                <th:block th:if="${e.status != null}">
+                                  <th th:if="${e.status}">
+                                    <button type="button" class="btn btn-success btn-sm" disabled>Approved</button>
+                                  </th>
+                                  <th th:if="${!e.status}">
+                                    <button type="button" class="btn btn-danger btn-sm" disabled>Denied</button>
+                                  </th>
+                                </th:block>
+                                <th th:if="${e.cancellationDate != null}">[[${#dates.format(e.cancellationDate,
+                                  'dd-MM-yyyy') }]]</th>
+                                <th th:if="${e.cancellationDate == null}">None</th>
+                              </tr>
+
+                              <tr th:if="${#lists.size(cancelRequest) == 0}">
+                                <th colspan="100%" style="text-align:center;">No Data</th>
+                              </tr>
+                            </tbody>
+
+
+                          </table>
+                        </div>
+                      </div>
+
+                    </div>
+                    <!-- nav tab contents End -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+
+  </th:block>
+</body>
+
+</html>

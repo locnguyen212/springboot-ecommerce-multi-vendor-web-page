@@ -1,0 +1,52 @@
+<th:block id="jsLayout">
+    <script th:src="@{/users/js/jquery-3.6.0.js}"></script>
+    <script th:src="@{/users/js/jquery-migrate-3.0.0.min.js}"></script>
+    <script th:src="@{/users/js/popper.min.js}"></script>
+    <script th:src="@{/users/js/bootstrap.min.js}"></script>
+    <script th:src="@{/users/js/bootstrap-select.min.js}"></script>
+    <script th:src="@{/users/js/chart.min.js}"></script>
+    <script th:src="@{/users/js/chart-custome.js}"></script>
+    <script th:src="@{/users/js/jquery.mmenu.all.js}"></script>
+    <script th:src="@{/users/js/ace-responsive-menu.js}"></script>
+    <script th:src="@{/users/js/parallax.js}"></script>
+    <script th:src="@{/users/js/jquery-scrolltofixed-min.js}"></script>
+    <script th:src="@{/users/js/wow.min.js}"></script>
+    <script th:src="@{/users/js/slider.js}"></script>
+    <script th:src="@{/users/js/range-slider.js}"></script>
+    <script th:src="@{/users/js/dashboard-script.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          // Pie chart
+          new Chart(document.getElementById("chartjs-dashboard-pie"), {
+            type: "pie",
+            data: {
+              labels: ["Direct", "Affiliate", "E-mail", "Other"],
+              datasets: [{
+                data: [2602, 1253, 541, 1465],
+                backgroundColor: [
+                  window.theme.primary,
+                  window.theme.warning,
+                  window.theme.danger,
+                  "#E8EAED"
+                ],
+                borderWidth: 5,
+                borderColor: window.theme.white
+              }]
+            },
+            options: {
+              responsive: !window.MSInputMethodContext,
+              maintainAspectRatio: false,
+              cutoutPercentage: 70,
+              legend: {
+                display: false
+              }
+            }
+          });
+        });
+      </script> 
+    
+</th:block>

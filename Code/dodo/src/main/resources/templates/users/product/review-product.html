@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html
+	th:replace="~{/users/layout/index :: mainContent('Review', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+	<meta charset="UTF-8">
+	<th:block id="style">
+		<style>
+			.star-rating {
+				list-style: none;
+				padding: 0;
+				display: flex;
+				cursor: pointer;
+			}
+
+			.star {
+				font-size: 28px;
+				margin: 0 10px;
+				color: #d3d3d3;
+				transition: color 0.3s;
+			}
+
+			.star:hover,
+			.star.active {
+				color: #f8ce0b;
+			}
+		</style>
+	</th:block>
+</head>
+
+<body>
+	<th:block id="content-wrapper">
+			<!-- Shop Single Content -->
+			<section class="shop-single-content pb80 pt0 ovh">
+				<div class="container">
+					<div class="row wrap">
+						<div class="card mb-0">
+							<div id="collapseSeven" aria-labelledby="headingSeven" data-parent="#accordionExample">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="bsp_reveiw_wrt mb-0">
+												<form th:action="@{/user/product/review}" th:object="${review}"
+													method="post" enctype="multipart/form-data" class="comments_form">
+													<div class="row">
+														<div class="col-md-12">
+															<h4 class="title mb20">Review Product</h4>
+															<div style="display: flex;width: 30%; justify-content: center; border: 1px solid #1ac317; margin-bottom: 20px;padding: 30px;border-radius: 15px;">
+																<div>
+																	<h5 class="title mb20" th:text="*{product.productName}"></h5>
+																	<img class="zoom-img" th:src="@{'/upload/' + *{product.productImage}}"
+																		 width="100" height="100"
+																		alt="Image Product" />
+																</div>
+															</div>
+															<h5 class="mb0">Your rating of this product</h5>
+															<div class="sspd_postdate vendor_single">
+																<div class="">
+																	<ul class="star-rating" id="star-rating">
+																		<li class="star active" data-value="1"><i
+																				class="fas">⚝</i></li>
+																		<li class="star active" data-value="2"><i
+																				class="fas">⚝</i></li>
+																		<li class="star active" data-value="3"><i
+																				class="fas">⚝</i></li>
+																		<li class="star active" data-value="4"><i
+																				class="fas">⚝</i></li>
+																		<li class="star active" data-value="5"><i
+																				class="fas">⚝</i></li>
+																	</ul>
+																</div>
+																<input type="hidden" th:field="*{user.userId}" />
+																<input type="hidden" th:field="*{orderDetail.orderDetailId}" />
+																<input type="hidden" th:field="*{product.productId}" />
+																<input type="hidden" th:field="*{rating}"
+																	id="rating-text" />
+															</div>
+															<div class="form-group">
+																<label class="heading-color mb10">Your review</label>
+																<textarea class="form-control" th:field="*{comment}"
+																	rows="6" autofocus></textarea>
+															</div>
+														</div>
+														<div class="form-group mb-4">
+															<label for="formFile" class="form-label">Image</label>
+															<input class="form-control" style="height: 30px; line-height: 17px;" type="file" name="image">
+														  </div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="heading-color mb10">Full Name</label>
+																<input type="text"
+																	th:value="${session.user.firstName} + ' '+ ${session.user.lastName}"
+																	disabled class="form-control">
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="form-group">
+																<label class="heading-color mb10">Email</label>
+																<input type="email" th:value="${session.user.email}"
+																	disabled class="form-control">
+															</div>
+														</div>
+														<div class="col-md-12">
+															<button type="submit" class="btn btn-thm">Submit</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+	</th:block>
+	<th:block id="jsScript">
+		<script>
+			$(document).ready(function () {
+				$(document).ready(function () {
+					const stars = $('.star');
+					const ratingText = $('#rating-text');
+
+					stars.on('click', function () {
+						const value = $(this).data('value');
+						resetStars();
+						highlightStars(value);
+						updateRatingText(value);
+					});
+
+					function resetStars() {
+						stars.removeClass('active');
+					}
+
+					function highlightStars(value) {
+						stars.slice(0, value).addClass('active');
+					}
+
+					function updateRatingText(value) {
+						ratingText.val(value);
+					}
+				});
+			});
+		</script>
+	</th:block>
+</body>
+
+</html>

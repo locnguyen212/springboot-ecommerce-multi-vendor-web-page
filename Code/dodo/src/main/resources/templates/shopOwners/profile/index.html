@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/shopOwners/layout/index :: mainContent('Profile', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+
+  <th:block id="jsScript">
+    <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'))
+            .then(editor => {
+                editor.editing.view.change(writer => {
+                    writer.setStyle('min-height', '250px', editor.editing.view.document.getRoot());
+                });
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+  </th:block>
+
+  <th:block id="style">
+
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <div class="dashboard__content bgc-gmart-gray">
+      <div class="row pb50">
+        <div class="col-lg-12">
+          <div class="dashboard_title_area">
+            <h2>Shopowner Profile</h2>
+          </div>
+        </div>
+
+        <div class="col-xl-12">
+          <div class="dashboard_product_list account_user_deails">
+            <div class="row d-block d-sm-flex justify-content-center justify-content-sm-between">
+              <div class="col-sm-6 col-lg-4">
+
+              </div>
+
+
+              <div class="col-sm-6 col-lg-4">
+                <div class="dashboard_page_add_listing text-center text-sm-end mb30 mb15-520">
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Alert -->
+            <div th:replace="~{shopOwners/layout/partials/alert :: #alert}"></div>
+            <!-- Alert ends -->
+
+            <div class="account_details_page form_grid">
+              <form th:action="@{/shop-owners/profile/edit}" enctype="multipart/form-data" method="post">
+                <div class="row">
+
+                  <div class="col-md-12">
+                    <div class="form-group mb-4">
+                      <label class="form-label">Description</label>
+                      <textarea class="form-control" id="description" name="description" cols="30"
+                        rows="4">[[${shopowner.shopDescription}]]</textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-md-12">
+                    <div class="form-group mb-4">
+                      <label for="formFile" class="form-label">Logo</label>
+                      <input class="form-control" type="file" name="image">
+                    </div>
+                  </div>
+
+
+                  <div class="col-sm-12">
+                    <div class="form-group d-flex mb0">
+                      <input type="submit" value="Update Profile" class="btn btn-thm me-3">
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </th:block>
+</body>
+
+</html>

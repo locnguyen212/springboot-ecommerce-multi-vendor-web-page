@@ -1,0 +1,41 @@
+<th:block id="headerMenu">
+    <header class="header-nav menu_style_home_one main-menu">
+        <nav class="posr">
+            <div class="container posr menu_bdrt1">
+                <div class="menu-toggle"><button type="button" id="menu-btn"><span class="icon-bar"></span><span
+                            class="icon-bar"></span><span class="icon-bar"></span></button></div>
+                <div class="posr logo1 home1_style">
+                    <div id="mega-menu"><a class="btn-mega" href="#"><img class="me-2"
+                                th:src="@{/users/images/desktop-nav-menu-white.svg}" alt="Desktop Menu Icon"><span
+                                class="fw500 fz16 color-white vam">Browse Categories</span></a>
+                        <ul class="menu" >
+                            <li th:each="category : ${session.allCategory}">
+                                <a class="" th:href="@{'/user/product/category?id=' + ${category.categoryId}}" >
+                                    <span class="menu-title">[[${category.categoryName}]]</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <ul id="respMenu" class="ace-responsive-menu menu_list_custom_code wa pl200" sec:authorize="isAuthenticated()"
+                    data-menu-style="horizontal">
+                    <li class="visible_list"><a href="#"><span class="title" style="margin-right: 3px;">Review</span></a>
+                        <ul style="display: none;">
+                            <li><a th:href="@{/user/product/listUnratedProduct}">Unrated Product</a></li>
+                        </ul>
+                    </li>
+                    <li th:if="${!(session.isHasShop)}" class="list-inline-item list_c"><a th:href="@{/user/become-a-vendor}"><span
+                                class="title" style="margin-right: 3px;">Become
+                                a vendor</span></a></li>
+                </ul>
+                <ul id="respMenu2" class="ace-responsive-menu widget_menu_home2 wa" data-menu-style="horizontal">
+                    <th:block sec:authorize="hasRole('ROLE_SHOPOWNER')">
+                        <li class="list-inline-item list_c" th:if="${(session.shopStatus)}">
+                            <a th:href="@{/shop-owners}">Shop owner</a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+        </nav>
+    </header>
+</th:block>

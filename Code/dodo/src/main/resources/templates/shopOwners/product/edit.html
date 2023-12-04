@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html
+    th:replace="~{/shopOwners/layout/index :: mainContent('Product Edit', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(function () {
+                    $("#expiryDate").datepicker({
+                        dateFormat: "dd/mm/yy",
+                        minDate: '0',
+                        changeMonth: true,
+                        changeYear: true
+                    }).prop("readonly", true);
+                });
+
+                ClassicEditor
+                    .create(document.querySelector('#description'))
+                    .then(editor => {
+                        editor.editing.view.change(writer => {
+                            writer.setStyle('min-height', '250px', editor.editing.view.document.getRoot());
+                        });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        </script>
+    </th:block>
+
+    <th:block id="style">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content-wrapper">
+        <div class="dashboard__content bgc-gmart-gray">
+            <div class="row pb50">
+                <div class="col-lg-12">
+                    <div class="dashboard_title_area">
+                        <h2>Edit product</h2>
+
+                    </div>
+                    <br>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="dashboard_product_list account_user_deails">
+                            <form th:action="@{'/shop-owners/product/edit'}" th:object="${product}" method="post"
+                                enctype="multipart/form-data">
+                                <input type="hidden" th:field="*{shopowner.ownerId}">
+                                <input type="hidden" th:field="*{productImage}">
+                                <input type="hidden" th:field="*{productId}">
+                                <input type="hidden" th:field="*{createdAt}">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Product Name</label>
+                                            <input class="form-control" th:field="*{productName}" />
+                                            <div th:if="${#fields.hasErrors('productName')}">
+                                                <p style="color:red;" th:errors="*{productName}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Price</label>
+                                            <input class="form-control" name="price" th:field="*{price}" />
+                                            <div th:if="${#fields.hasErrors('price')}">
+                                                <p style="color:red;" th:errors="*{price}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Stock Quantity</label>
+                                            <input class="form-control" th:field="*{stockQuantity}" />
+                                            <div th:if="${#fields.hasErrors('stockQuantity')}">
+                                                <p style="color:red;" th:errors="*{stockQuantity}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label for="formFile" class="form-label">Image</label>
+                                            <input class="form-control" type="file" name="image">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="exampleInputUsername1">Category</label>
+                                        <select class="form-control" th:field="*{category.categoryId}">
+                                            <option th:each="category : ${categories}" th:value="${category.categoryId}"
+                                                th:text="${category.categoryName}"></option>
+                                        </select>
+                                        </br>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Status</label>
+                                            <select class="form-control" th:field="*{status}">
+                                                <option value="0">Deactive</option>
+                                                <option value="1">Active</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Expiry Date(optional)</label>
+                                            <input type="text" class="form-control" th:field="*{expiryDate}" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-4">
+                                            <label class="form-label">Description(optional)</label>
+                                            <textarea class="form-control" th:field="*{description}" cols="30"
+                                                rows="4"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group d-grid d-sm-flex mb0">
+                                            <button type="submit"
+                                                class="style2 btn btn-thm me-3 mb15-520">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </th:block>
+</body>
+
+
+</html>

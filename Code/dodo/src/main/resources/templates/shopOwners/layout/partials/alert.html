@@ -1,0 +1,77 @@
+<th:block id="alert">
+    <!-- Alert  -->
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successUpdated}">
+        <strong>Successfully edited!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successCreated}">
+        <strong>Successfully created!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alert}">
+        <strong>Something went wrong, please try again!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successDelete}">
+        <strong>Successfully deleted!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertDelete}">
+        <strong>Fail to delete, please try again!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successCancel}">
+        <strong>Successfully cancelled!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successApprove}">
+        <strong>You have approved an order!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertCancel}">
+        <strong>You can't cancel an order when status is not "Waiting For Approval" or "Packaging"!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertApprove}">
+        <strong>You have already approved that order!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${alertPackaging}">
+        <strong>You can't do that!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_three alert-dismissible fade show" role="alert" th:if="${cancellationInProgress}">
+        <strong>There is a cancellation request pending for this order!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <div class="alert alart_style_four alert-dismissible fade show" role="alert" th:if="${successReady}">
+        <strong>Done!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+            <span class="flaticon-close"></span>
+        </button>
+    </div>
+    <!-- Alert ends -->
+</th:block>

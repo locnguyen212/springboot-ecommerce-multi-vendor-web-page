@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('Parent Category', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+        <style>
+            .indexImg {
+                border-radius: 50%;
+                border: 2px solid red;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Parent Category</h3>
+                        <h6 class="font-weight-normal mb-0">Parent Category List</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="card-body">
+                <p class="card-description">
+                    <a class="btn btn-primary" th:href="@{'/admin/parent-category/create'}">Add</a>
+                </p>
+
+                <!-- Alert -->
+                <div th:replace="~{admins/layout/partials/alert :: #alertLayout}"></div>
+                <!-- Alert Ends -->
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Image</th>
+                                <th>Created at</th>
+                                <th>Updated at</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${parentCategories}">
+                                <td>[[${e.parentCategoryName}]]</td>
+                                <td>[[${e.parentCategoryDescription}]]</td>
+                                <td>
+                                    <img class="indexImg" th:src="@{'/upload/'+${e.parentCategoryImagePath}}" width="50" height="50">
+                                </td>
+                                <td>[[${#dates.format(e.createdAt, 'dd-MM-yyyy') }]]</td>
+                                <td>[[${e.updatedAt!=null? #dates.format(e.updatedAt, 'dd-MM-yyyy') : "None" }]]</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-success btn-sm dropdown-toggle" type="button"
+                                            id="dropdownMenuSizeButton3" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="false">
+                                            Action
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuSizeButton3">
+                                            <a class="dropdown-item"
+                                                th:href="@{'/admin/parent-category/edit/'+${e.parentCategoryId}}">Edit</a>
+                                            <a class="dropdown-item"
+                                                th:href="@{'/admin/parent-category/delete/'+${e.parentCategoryId}}"
+                                                onclick="return confirm('Are you sure?')">Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

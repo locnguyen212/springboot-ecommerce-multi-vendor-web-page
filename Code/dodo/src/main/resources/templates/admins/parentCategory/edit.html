@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html th:replace="~{/admins/layout/index :: mainContent('Parent Category Edit', ~{:: .content-wrapper}, ~{:: #jsScript})}">
+
+<head>
+    <meta charset="UTF-8">
+
+    <th:block id="jsScript">
+
+    </th:block>
+</head>
+
+<body>
+
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-md-12 grid-margin">
+                <div class="row">
+                    <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                        <h3 class="font-weight-bold">Parent Category</h3>
+                        <h6 class="font-weight-normal mb-0">Edit Parent Category</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main-content -->
+        <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="forms-sample" th:action="@{/admin/parent-category/edit}" method="post" th:object="${parentCategory}" enctype="multipart/form-data">
+                            
+                            <input type="hidden" th:field="*{parentCategoryId}">
+                            <input type="hidden" th:field="*{parentCategoryImagePath}">
+                            <input type="hidden" th:field="*{createdAt}">
+
+                            <div class="form-group">                          
+                                <label for="exampleInputUsername1">Name</label>
+                                <input type="text" class="form-control" placeholder="Name" th:field="*{parentCategoryName}">
+                                <div th:if="${#fields.hasErrors('parentCategoryName')}">
+                                    <p class="text-danger" th:errors="*{parentCategoryName}"></p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputUsername1">Description(optional)</label>
+                                <textarea class="form-control" placeholder="Description" th:field="*{parentCategoryDescription}" rows="4"></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>File upload</label>
+                                <input type="file" name="image" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Upload Image">
+                                    <span class="input-group-append">
+                                        <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
+                                    </span>
+                                </div>
+                                <div th:if="${#fields.hasErrors('parentCategoryImagePath')}">
+                                    <p class="text-danger" th:errors="*{parentCategoryImagePath}"></p>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Main-content ends -->
+
+    </div>
+
+
+
+</body>
+
+</html>

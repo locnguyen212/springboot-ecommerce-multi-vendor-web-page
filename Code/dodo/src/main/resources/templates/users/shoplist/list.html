@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html th:replace="~{/users/layout/index :: mainContent('Shop', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <style>
+      .parent-container {
+        display: flex;
+        align-items: center;
+        /* Canh chỉnh theo chiều dọc */
+      }
+
+      .flex-container {
+        display: flex;
+        align-items: center;
+        /* Canh chỉnh theo chiều dọc */
+        gap: 10px;
+        /* Khoảng cách giữa 2 phần tử */
+      }
+
+      .vendor_avatar {
+        width: 100px;
+        height: 100px;
+      }
+
+      @media (min-width: 1200px) {
+        .col-xl-8 {
+          flex: 0 0 auto;
+          width: 100%;
+        }
+      }
+
+      .vendor_single_page_banner::before {
+        content: "";
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url(http://rrfonline.unlockdesizn.com/alitufan/zeomart/images/background/vendor-single-banner.jpg);
+        background-size: cover;
+        background-position: center;
+        background-position-x: center;
+        background-position-y: center;
+        filter: blur(2px);
+        z-index: -1;
+      }
+
+      .vendor_single_page_banner {
+        position: relative;
+        height: 400px;
+        overflow: hidden;
+        z-index: 0;
+      }
+    </style>
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <div class="body_content_wrapper position-relative">
+      <!-- Listing Grid View -->
+      <section class="our-listing pt10">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="vendor_single_page_banner">
+                <div class="details">
+                  <div class="vendor_acc_info d-block d-sm-flex justify-content-between align-items-center">
+                    <div class="d-flex mb-3 mb-sm-0">
+                      <div class="flex-grow-1 ms-3">
+
+                        <div class="parent-container">
+                          <div class="flex-container">
+                            <div class="flex-shrink-0">
+                              <img class="vendor_avatar" th:src="@{'/upload/'+${shopLogoPath}}" width="200" height="200"
+                                alt="Avatar">
+                            </div>
+                            <div class="shop-name">
+                              <h4 class="title" style="font-size: 40px;" th:text="${shopName}"></h4>
+                              <div class="sspd_postdate me-2 mb10-sm">
+                                <div class="">
+                                  <th:block th:if="${sh_averageRating == 0}">
+                                    <ul class="mb0 me-2" style="display: flex;">
+                                      <li class="star">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <li class="star">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <li class="star">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <li class="star">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <li class="star">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <div style="padding: 7px 10px;"><span style="color: white !important;" class="fz18">
+                                        No seller reviews</span></div>
+                                    </ul>
+                                  </th:block>
+                                  <th:block th:unless="${sh_averageRating == 0}">
+                                    <ul class="mb0 me-2" style="display: flex;">
+                                      <li th:each="starNumber : ${#numbers.sequence(1, 5)}"
+                                        th:class="${starNumber le sh_averageRating} ? 'star active' : 'star'">
+                                        <i class="fas">⚝</i>
+                                      </li>
+                                      <div style="padding: 7px 10px;"><span style="color: white !important;" class="fz18">[[${sh_totalComments}]]
+                                        seller reviews</span></div>
+                                    </ul>
+                                  </th:block>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt60">
+            <div class="col-lg-12">
+              <div class="ui_kit_tab style2">
+                <!-- nav tab Nav List Start -->
+                <ul class="nav nav-tabs mb15" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products"
+                      type="button" role="tab" aria-controls="products" aria-selected="true">Products</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button"
+                      role="tab" aria-controls="about" aria-selected="false">About</button>
+                  </li>
+                </ul>
+                <!-- nav tab Nav List End -->
+                <!-- nav tab contents Start -->
+                <div class="tab-content pt20 row" id="myTabContent">
+                  <div class="tab-pane fade col-xl-8  active show" id="products" role="tabpanel"
+                    aria-labelledby="products-tab">
+                    <div class="inner_main" th:if="${#lists.isEmpty(listProductForShop)}">
+                      <div class="mt10">
+                        <div style="text-align: center;">
+                          <img
+                            src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/search/a60759ad1dabe909c46a817ecbf71878.png"
+                            width="150" height="150">
+                        </div>
+                        <h4 class="p20 text-center" style="color: #586eed;">
+                          No result is found
+                          <br>
+                          Try using more general keywords
+                        </h4>
+                      </div>
+                    </div>
+                    <div class="inner_main" th:unless="${#lists.isEmpty(listProductForShop)}"
+                      th:with="listDetailProduct = ${allDetailProduct}">
+                      <div class="row">
+                        <div class="col-6 col-lg-4 col-xl-3 p0 pl15-520" th:each="product : ${listProductForShop}"
+                          style="padding: 10px !important;"
+                          th:class="${product.stockQuantity <= 0} ? 'col-6 col-lg-4 col-xl-3 p0 pl15-520 disabled-div-home' : 'col-6 col-lg-4 col-xl-3 p0 pl15-520'">
+                          <div class="shop_item bdr1 m--1" style="height: 100%; width: 316px;">
+                            <div class="div-discount" th:if="${product.pr_discountAmount != null}">
+                              <th:block
+                                th:if="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                <small class="sm-style-discount">-
+                                  [[${product.pr_discountAmount +'%'}]]</small>
+                                <img src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png"
+                                  data-src="https://cdn-icons-png.flaticon.com/128/10737/10737162.png" alt="Sale "
+                                  title="Sale " width="64" height="64" class="lzy lazyload--done"
+                                  srcset="https://cdn-icons-png.flaticon.com/128/10737/10737162.png 4x">
+                              </th:block>
+                            </div>
+                            <div class="div-sold-out" th:if="${product.stockQuantity <= 0}">
+                              <img src="https://cdn-icons-png.flaticon.com/128/5110/5110176.png" width="50" height="50"
+                                class="replaced-svg">
+                            </div>
+                            <div class="thumb pb30">
+                              <img th:src="@{'/upload/' + ${product.productImage}}" height="150" width="150"
+                                alt="Shop Item1">
+                              <div class="shop_item_cart_btn d-grid">
+                                <th:block sec:authorize="!isAuthenticated()">
+                                  <a class="btn btn-thm" th:href="@{/login}">
+                                    Add to Cart
+                                  </a>
+                                </th:block>
+                                <th:block sec:authorize="isAuthenticated()">
+                                  <a class="btn btn-thm" th:if="${session.user.userId != product.sh_shopId}"
+                                    th:onclick="'addToCart(' + ${product.productId} + ', ' + 1 + ')'">
+                                    Add to Cart
+                                  </a>
+                                </th:block>
+                              </div>
+                            </div>
+                            <div class="details">
+                              <div class="title">
+                                <a style="text-decoration: none;"
+                                  th:href="@{'/user/product/detail?id=' + ${product.productId}}">
+                                  <div th:text="${product.productName}" class="title">
+                                  </div>
+                                </a>
+                                <a th:href="@{'/user/shop-list/v_shop?shopId=' + ${s_shopId} }"
+                                  style="text-decoration: none;" class="parent-border-shop-name">
+                                  <div th:text="${product.sh_shopName}" class="title div-border-shop-name"></div>
+                                </a>
+                              </div>
+                              <div class="review d-flex db-500 tab-star-rv" style="flex-direction: column;">
+                                <th:block th:if="${product.totalComments == 0}">
+                                  <div class="price"> No reviews yet </div>
+                                </th:block>
+                                <th:block th:unless="${product.totalComments == 0}">
+                                  <ul class="mb0 me-2" style="display: flex;">
+                                    <li class="list-inline-item">
+                                      [[${#numbers.formatDecimal(product.averageRating,
+                                      1,
+                                      'DEFAULT', 1, 'DEFAULT')}]]</a></li>
+                                    <li th:each="starNumber : ${#numbers.sequence(1, 5)}"
+                                      th:class="${starNumber le product.averageRating} ? 'star active' : 'star'">
+                                      <i class="fas">⚝</i>
+                                    </li>
+                                  </ul>
+                                  <div th:if="${product.totalComments == 1}" class="review_count">
+                                    <a>[[${product.totalComments}]]
+                                      review</a>
+                                  </div>
+                                  <div th:unless="${product.totalComments == 1}" class="review_count">
+                                    <a>[[${product.totalComments}]]
+                                      reviews</a>
+                                  </div>
+                                </th:block>
+                              </div>
+                              <div class="si_footer">
+                                <th:block th:if="${product.pr_discountAmount == null}">
+                                  <div class="price">[[${'$' + product.price}]]</div>
+                                </th:block>
+                                <th:block th:if="${product.pr_discountAmount != null}">
+                                  <th:block
+                                    th:if="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                    <div class="price">[[${'$' + #numbers.formatDecimal((product.price * (1 -
+                                      product.pr_discountAmount / 100)), 0, 'DEFAULT', 2, 'DEFAULT' )}]]
+                                      <small><del>[[${'$' + product.price}]]</del></small>
+                                    </div>
+                                  </th:block>
+                                  <th:block
+                                    th:unless="${product.pr_startDate.before(#dates.createNow()) && product.pr_endDate.after(#dates.createNow())}">
+                                    <div class="price">[[${'$' + product.price}]]</div>
+                                  </th:block>
+                                </th:block>
+                              </div>
+                              <div class="sell_stock mt10 sold">
+                                <th:block th:if="${#lists.size(listDetailProduct) > 0}" th:with="totalQuantity=0">
+                                  <th:block th:each="productDetail : ${listDetailProduct}">
+                                    <th:block th:if="${productDetail.product.productId == product.productId}">
+                                      <span style="display: none;" th:id="'sold-product-'+${product.productId}"
+                                        th:with="totalQuantity=${totalQuantity + productDetail.quantity}">[[${totalQuantity}]]</span>
+                                    </th:block>
+                                  </th:block>
+                                </th:block>
+
+                                <div class="sell">Sold <span
+                                    th:class="'totalQuantityDisplay-'+${product.productId}">0</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div th:if="${totalPages > 1}" class="row mt20">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="mbp_pagination mt30 text-center">
+
+                            <ul class="page_navigation">
+                              <li class="page-item">
+                                <a class="page-link" th:if="${currentPage > 1}"
+                                  th:href="@{'/user/shop-list/v_shop?shopId=' + ${s_shopId} + '&page=' + ${currentPage - 1}}"
+                                  tabindex="-1" aria-disabled="true"> <span class="fas fa-angle-left"></span></a>
+                              </li>
+                              <li th:each="i: ${#numbers.sequence(1, totalPages)}"
+                                th:class="${currentPage == i} ? 'page-item active' : 'page-item'">
+                                <a th:if="${currentPage != i}"
+                                  th:href="@{'/user/shop-list/v_shop?shopId=' + ${s_shopId} + '&page=' + ${i} }"
+                                  class="page-link">[[${i}]]</a>
+                                <span th:if="${currentPage == i}" class="page-link pagination-current"
+                                  aria-current="page">[[${i}]]</span>
+                              </li>
+                              <li class="page-item">
+                                <a class="page-link" th:if="${currentPage < totalPages}"
+                                  th:href="@{'/user/shop-list/v_shop?shopId=' + ${s_shopId} + '&page=' + ${currentPage + 1} }">
+                                  <span class="fas fa-angle-right"></span></a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade col-xl-8" id="about" role="tabpanel" aria-labelledby="about-tab">
+                    <div class="vendor_about">
+                      <h4 class="title">[(${shopDescription})]</h4>
+                    </div>
+                  </div>
+                </div>
+                <!-- nav tab contents End -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+    <a class="scrollToHome" href="#"><i class="fas fa-angle-up"></i></a>
+  </th:block>
+  <th:block id="jsScript">
+    <script th:src="@{/users/js/home-user.js}"></script>
+    <script th:src="@{/users/js/single-counter.js}"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("[id^='sold-product']").each(function () {
+          var productId = $(this).attr("id").replace("sold-product-", "");
+          var totalQuantity = 0;
+          $("[id='sold-product-" + productId + "']").each(function () {
+            var quantity = parseInt($(this).text());
+            if (!isNaN(quantity)) {
+              totalQuantity += quantity;
+            }
+
+          });
+          $(".totalQuantityDisplay-" + productId).text(totalQuantity);
+        });
+      });
+    </script>
+  </th:block>
+</body>
+<script>
+  $(document).ready(function () {
+    var maxHeight = 0;
+    $('.col-sm-6.col-lg-3.p0.pl15-520').each(function () {
+      var currentHeight = $(this).height();
+      if (currentHeight > maxHeight) {
+        maxHeight = currentHeight;
+      }
+    });
+    $('.col-sm-6.col-lg-3.p0.pl15-520').height(maxHeight);
+  });
+
+
+</script>
+
+</html>

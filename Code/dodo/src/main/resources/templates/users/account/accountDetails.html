@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('User Detail', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+                  <h2 class="title mb30">Account Details</h2>
+
+                  <!-- Alert -->
+                  <div th:replace="~{users/account/partials/alert :: #alert}"></div>
+                  <!-- Alert ends -->
+
+                  <!-- Content -->
+                  <div class="account_details_page form_grid">
+                    <form class="contact_form" name="contact_form" th:action="@{/user/account/account-detail}"
+                      method="post" enctype="multipart/form-data" th:object="${user}">
+                      <input type="hidden" th:field="*{userId}">
+                      <input type="hidden" th:field="*{role.roleId}">
+                      <input type="hidden" th:field="*{avatar}">
+                      <input type="hidden" th:field="*{createdAt}">
+                      <input type="hidden" th:field="*{updatedAt}">
+                      <input type="hidden" th:field="*{status}">
+                      <input type="hidden" th:field="*{username}">
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <!-- <div class="form-group mb-4"> -->
+                          <label class="form-label">First Name</label>
+                          <input class="form-control" type="text" th:field="*{firstName}">
+                          <div th:if="${#fields.hasErrors('firstName')}">
+                            <p style="color:red;" th:errors="*{firstName}"></p>
+                          </div>
+                          <!-- </div> -->
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Last Name</label>
+                            <input class="form-control" type="text" th:field="*{lastName}">
+                            <div th:if="${#fields.hasErrors('lastName')}">
+                              <p style="color:red;" th:errors="*{lastName}"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Email</label>
+                            <input class="form-control email" type="text" th:field="*{email}">
+                            <div th:if="${#fields.hasErrors('email')}">
+                              <p style="color:red;" th:errors="*{email}"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Phone Number</label>
+                            <input class="form-control" type="text" th:field="*{phoneNumber}">
+                            <div th:if="${#fields.hasErrors('phoneNumber')}">
+                              <p style="color:red;" th:errors="*{phoneNumber}"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Address</label>
+                            <input class="form-control" type="text" th:field="*{address}">
+                            <div th:if="${#fields.hasErrors('address')}">
+                              <p style="color:red;" th:errors="*{address}"></p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Date Of Birth</label>
+                            <input class="form-control" type="text" th:field="*{dob}">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label class="form-label">Gender</label>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" th:field="*{gender}" value="female">
+                              <label class="form-check-label" for="flexRadioDefault1">
+                                Female
+                              </label>
+                            </div>
+                            <div class="form-check">
+                              <input class="form-check-input" type="radio" th:field="*{gender}" value="male">
+                              <label class="form-check-label" for="flexRadioDefault2">
+                                Male
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="form-group mb-4">
+                            <label for="formFile" class="form-label">Avatar</label>
+                            <input class="form-control" type="file" name="image">
+                          </div>
+                        </div>
+
+
+                        <div class="col-sm-12">
+                          <div class="form-group d-flex mb0">
+                            <input type="submit" value="Update" class="btn btn-thm me-3">
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- Content Ends -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+      $(function () {
+        $("#dob").datepicker({
+          dateFormat: "dd/mm/yy",
+          maxDate: '0',
+          changeMonth: true,
+          changeYear: true
+        }).prop("readonly", true);
+      });
+    </script>
+  </th:block>
+</body>
+
+</html>

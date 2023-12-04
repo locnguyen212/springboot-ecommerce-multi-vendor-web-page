@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html
+  th:replace="~{/users/layout/index :: mainContent('Order Detail', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+  <meta charset="UTF-8">
+  <th:block id="style">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <!-- <style>
+      #detailTable {
+        overflow-x: scroll;
+        max-width: 100%;
+        display: block;
+        white-space: nowrap;
+      }
+    </style>
+    <script>
+      $(document).ready(function () {
+        $('#detailTable').dataTable({
+              "sScrollX": "100%",
+          "sScrollXInner": "110%",
+          "bScrollCollapse": true
+        });
+      });
+    </script> -->
+  </th:block>
+</head>
+
+<body>
+  <th:block id="content-wrapper">
+    <section class="our-dashbord dashbord">
+      <div class="container">
+        <div class="row">
+
+          <!-- Side menu -->
+          <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+          <!-- Side menu end -->
+
+
+          <div class="col-lg-9 col-xl-9">
+            <div class="row">
+              <div class="col-xl-12">
+                <div class="account_user_deails pl40 pl0-md">
+                  <h2 class="title mb30">Order Detail</h2>
+                  <div class="ui_kit_tab style2">
+
+                    <!-- Content -->
+                    <div class="tab-pane fade show active col-lg-12" id="t20" role="tabpanel" aria-labelledby="t20-tab">
+                      <div class="order_table table-responsive">
+                        <table class="table" id="detailTable">
+                          <thead class="table-light">
+                            <tr>
+                              <th scope="col">Product Name</th>
+                              <th scope="col">Quantity</th>
+                              <th scope="col">Unit Price</th>
+                              <th scope="col">Subtotal</th>
+                              <th scope="col">Product Image</th>
+                              <th:block th:if="${isDeliveredAndPayed}">
+                                <th scope="col">Buy Again</th>
+                                <th scope="col">Review</th>
+                              </th:block>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr th:each="e : ${orderDetail}">
+                              <th>[[${e.product.productName}]]</th>
+                              <th>[[${e.quantity}]]</th>
+                              <th>[[${e.unitPrice}]]</th>
+                              <th>[[${e.subtotal}]]</th>
+                              <th>
+                                <img th:src="@{'/upload/'+${e.productImage}}" width="50" height="50">
+                              </th>
+                              <th:block th:if="${isDeliveredAndPayed}">
+                                <td>
+                                  <a th:href="@{'/user/product/detail?id='+${e.product.productId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">Go To Product</a>
+                                </td>
+                                <td th:if="${!e.isReviewed}">
+                                  <a th:href="@{'/user/product/review?productId='+${e.product.productId}+'&orderId='+${e.order.orderId}}"
+                                    class="btn dbxshad btn-lg btn-thm1 circle">Review</a>
+                                </td>
+                                <td th:if="${e.isReviewed}">
+                                  Already Reviewed
+                                </td>
+                              </th:block>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- Content Ends -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </th:block>
+
+  <th:block id="jsScript">
+
+  </th:block>
+</body>
+
+</html>

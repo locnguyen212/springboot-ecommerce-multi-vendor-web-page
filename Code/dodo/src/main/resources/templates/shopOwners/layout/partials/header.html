@@ -1,0 +1,60 @@
+<th:block id="header">
+    <header class="dashboard_header">
+        <div class="header__container pt20 pb20 pl30 pr30">
+            <div class="row justify-between items-center">
+                <div class="col-sm-4 col-xl-2">
+                    <div class="text-center text-lg-start d-flex mb15-520">
+                        <div class="brand-logo">
+                            <a th:href="@{/}">
+                                <div class="logo">DoDo<span class="text-thm">.</span></div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 col-xl-3 d-none d-md-block">
+                    <div class="header_search_widget mb15-520">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search"
+                                aria-label="Recipient's username">
+                            <div class="input-group-append">
+                                <button class="btn" type="button"><span class="fa fa-search"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-xl-6 offset-xl-1 d-none d-md-block">
+                    <div class="text-center text-lg-end header_right_widgets">
+                        <ul class="mb0 d-flex justify-content-center justify-content-sm-end">
+                            <li class="user_setting">
+                                <style>
+                                    .user_setting span {
+                                        font-weight: bold;
+                                        color: #3366cc;
+                                        /* Change the text color to blue */
+                                    }
+
+                                    .user_setting p {
+                                        margin-top: 10px;
+                                        font-size: 14px;
+                                    }
+
+                                    /* CSS */
+                                    /* CSS */
+                                    img {
+                                        border-radius: 50%;
+                                        border: 2px solid red;
+                                        /* Đặt kích thước và màu sắc cho viền */
+                                    }
+                                </style>
+                                <img th:src="@{'/upload/'+${session.shopLogoPath}}" width="50" height="50">
+                                <a th:href="@{'/user/shop-list/v_shop?shopId=' + ${session.shopId} }">
+                                    <p style="font-size: 16px;">To My Shop: <span th:text="${session.shopName}">Default Shop Name</span></p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</th:block>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:fragment="mainContent(title, content, script, style)">
+
+<head>
+    <div th:replace="~{users/layout/partials/head :: #headLayout}"></div>
+
+    <div th:replace="${style}"></div>
+</head>
+
+<body data-spy="scroll">
+    <div class="wrapper ovh"> 
+        <!-- Logo header -->
+        <div th:replace="~{users/layout/partials/headerLogo :: #headerLogo}"></div>
+        <!-- Logo header ends -->
+
+        <!-- Menu header -->
+        <div th:replace="~{users/layout/partials/headerMenu :: #headerMenu}"></div>
+        <!-- Menu header ends -->
+        
+        <!-- Hidden bar -->
+        <div th:replace="~{users/layout/partials/hiddenBar :: #hiddenBar}"></div>
+        <!-- Hidden bar ends -->
+        
+        <div class="body_content_wrapper position-relative pt30">
+            <!-- content-wrapper -->
+            <div th:replace="${content}"></div>
+            <!-- content-wrapper ends -->
+
+            <!-- Partner and footer -->
+            <div th:replace="~{users/layout/partials/partners :: #partners}"></div>
+
+            <div th:replace="~{users/layout/partials/footer :: #footer}"></div>
+            <!-- Partner and footer ends -->
+        </div>
+    </div>
+
+    <!-- Js -->
+    <div th:replace="~{users/layout/partials/js :: #jsLayout}"></div>
+    <div th:replace="${script}"></div>
+    <!-- Js ends -->
+</body>
+<!-- Mirrored from rrfonline.unlockdesizn.com/alitufan/zeomart/index1.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 29 Sep 2023 03:53:24 GMT -->
+
+</html>

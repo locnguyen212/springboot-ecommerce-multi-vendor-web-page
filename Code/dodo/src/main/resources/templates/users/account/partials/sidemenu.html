@@ -1,0 +1,23 @@
+<th:block id="sidemenu">
+    <div class="col-lg-3 col-xl-2 dn-md">
+        <div class="users_account_details extra-dashboard-menu">
+            <div class="account_details_user d-flex pb10 bb1 mb10">
+                <img style="border-radius: 50%; border: 2px solid red;" class="me-3" th:src="@{'/upload/'+${session.avatar}}" alt="Generic placeholder image">
+                <div class="content_details text-start">
+                    <h5 class="title">[[${session.userProfile.username}]]</h5>
+                    <a class="stitle" href="#">[[${session.userProfile.email}]]</a>
+                </div>
+            </div>
+            <div class="ed_menu_list">
+                <ul>
+                    <li><a class="active" th:href="@{/user/account/account-detail}"><span class="flaticon-growth"></span>Account Details</a></li>
+                    <li><a class="active" th:href="@{/user/account/password}"><span class="flaticon-growth"></span>Password</a></li>
+                    <li><a th:href="@{/user/account/order}"><span class="flaticon-checked-box"></span>Order</a></li>
+                    <li><a th:href="@{/user/account/review}"><span class="flaticon-invoice"></span>Review</a></li>
+                    <li><a th:href="@{/user/account/wishlist}"><span class="flaticon-badge"></span>Wishlist</a></li>
+                    <li><a th:href="@{/user/account/invoice}"><span class="flaticon-invoice"></span>Invoices</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</th:block>

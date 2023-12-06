@@ -110,29 +110,4 @@ public class ShopOwnerServiceImpl implements IShopOwnerService {
 	}
 
 	//====LOC====
-
-
-	
-	//====HUY====
-	
-
-
-	@Override
-	public Shopowner findByUser(User user) {
-		// TODO Auto-generated method stub
-		return repository.findByUser(user);
-	}
-
-
-
-
-	 @Override
-	    public Shopowner findShopownerByOwnerId(Integer ownerId) {
-	        // Triển khai logic để tìm Shopowner dựa trên ownerId
-	        // Sử dụng shopownerRepository hoặc bất kỳ phương thức nào khác phù hợp
-	        return repository.findShopownerByOwnerId(ownerId);
-	    }
-
-
-
 }

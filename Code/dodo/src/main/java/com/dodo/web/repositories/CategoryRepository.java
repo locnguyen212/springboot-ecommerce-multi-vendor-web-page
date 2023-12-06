@@ -28,7 +28,4 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	@Query("from Category where status=:status ")
 	public List<Category> getAllAndStatus(@Param("status") Boolean status);
 	
-	
-	@Query("SELECT c FROM Category c WHERE c.user.userId = :userId")
-	List<Category> findByOwnerId(@Param("userId") int ownerId);
 }

@@ -50,8 +50,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("from User where role.roleId != 1 order by userId asc")
 	public List<User> findAll();
 	//====LOC====
-	
-	//====HUY====
-			@Query("SELECT c FROM User c WHERE c.userId = :userId")
-			List<User> findByOwnerId(@Param("userId") int userId);
 }

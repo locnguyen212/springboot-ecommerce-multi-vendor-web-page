@@ -129,11 +129,6 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 		}	
 	}
 	//====LOC====
-	//====HUY====
-	 @Override
-	    public List<Ordercancellation> findByOwnerId(int ownerId) {
-	        return repository.findByOwnerId(ownerId);
-	    }
 
 
 }

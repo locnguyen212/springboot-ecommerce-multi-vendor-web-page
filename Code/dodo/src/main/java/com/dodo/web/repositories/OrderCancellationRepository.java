@@ -26,8 +26,4 @@ public interface OrderCancellationRepository extends JpaRepository<Ordercancella
 	@Query("from Ordercancellation where cancellationDate >= :from and cancellationDate <= :to order by cancellationId desc")
 	public List<Ordercancellation> findByDateRange(@Param("from") Date from,  @Param("to") Date to);
 	//====LOC====
-	
-	//====HUY====
-		@Query("SELECT c FROM Ordercancellation c WHERE c.shopowner.ownerId = :ownerId")
-		List<Ordercancellation> findByOwnerId(@Param("ownerId") int ownerId);
 }

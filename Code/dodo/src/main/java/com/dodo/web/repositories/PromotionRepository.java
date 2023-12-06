@@ -25,12 +25,4 @@ public interface PromotionRepository extends JpaRepository<Promotion, Integer> {
 	@Query("SELECT p.product.productId FROM Promotion p WHERE p.shopowner.ownerId = :id")
 	public List<Integer> findProductIdGotPromotionByShopownerId(@Param("id") int id);
 	//====LOC====
-	
-	//====HUY====
-	@Query("SELECT c FROM Promotion c WHERE c.shopowner.ownerId = :ownerId")
-	List<Promotion> findByOwnerId(@Param("ownerId") int ownerId);
-	
-	@Query("SELECT p FROM Promotion p JOIN FETCH p.product JOIN FETCH p.shopowner WHERE p.shopowner.id = :ownerId")
-	List<Promotion> findAllPromotionsWithDetails(@Param("ownerId") Integer ownerId);
-
 }

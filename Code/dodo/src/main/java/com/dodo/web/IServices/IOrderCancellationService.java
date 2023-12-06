@@ -29,6 +29,4 @@ public interface IOrderCancellationService {
 	
 	public List<Ordercancellation> findByDateRange(Date from, Date to);
 	//====LOC====
-	//====HUY====
-		public List<Ordercancellation> findByOwnerId(int ownerId);
 }

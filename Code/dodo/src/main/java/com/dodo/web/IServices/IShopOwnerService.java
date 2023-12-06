@@ -22,15 +22,6 @@ public interface IShopOwnerService {
 	public Shopowner findByUserUsername(String name);
 	public List<Shopowner> findByStatus(Boolean status);
 	
-
+	public Shopowner findByShopName(String name);
 	//====LOC====
-	//====HUY====
-	@Query("SELECT s FROM Shopowner s WHERE s.shopName = :name")
-	public Shopowner findByShopName(@Param("name") String name);
-	
-	public Shopowner findByUser(User user);
-	public Shopowner findShopownerByOwnerId(Integer ownerId);
-	
-
-
 }

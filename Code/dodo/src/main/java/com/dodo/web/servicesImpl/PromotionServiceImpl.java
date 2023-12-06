@@ -121,30 +121,5 @@ public class PromotionServiceImpl implements IPromotionService {
 	
 	//====LOC====
 	
-	@Override
-    public List<Promotion> findByOwnerId(int ownerId) {
-        return repository.findByOwnerId(ownerId);
-    }
-	
-	@Override
-	public List<Promotion> getAllPromotionsWithDetails(Integer ownerId) {
-	    return repository.findAllPromotionsWithDetails(ownerId);
-	}
-	
-	public boolean isProductAlreadyInPromotion(Integer productId) {
-	    //
-	    List<Promotion> promotions = findAll(); // Phương thức này cần được thay thế bằng phương thức thực tế
-	    for (Promotion promotion : promotions) {
-	        if (promotion.getProduct().getProductId().equals(productId)) {
-	            return true;
-	        }
-	    }
-	    return false;
-	}
-
-	
-
-	
-
 
 }

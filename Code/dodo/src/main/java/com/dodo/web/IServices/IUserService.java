@@ -41,7 +41,4 @@ public interface IUserService extends UserDetailsService {
 	
 	public List<User> findAllRoleUserAndShopowner();
 	//====LOC====
-	
-	//====HUY====
-	public List<User> findByOwnerId(int userId);
 }

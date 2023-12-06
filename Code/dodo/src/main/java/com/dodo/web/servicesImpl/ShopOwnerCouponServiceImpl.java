@@ -119,16 +119,5 @@ public class ShopOwnerCouponServiceImpl implements IShopOwnerCouponService {
 		}
 	}
 	//====LOC====
-	//====HUY====
-	  @Override
-	    public List<Shopownercoupon> findByOwnerId(int ownerId) {
-	        return repository.findByOwnerId(ownerId);
-	    }
-	  public List<Shopownercoupon> getAllCoupons() {
-	        // Thực hiện truy vấn để lấy danh sách coupon từ cơ sở dữ liệu
-	        return repository.findAll(); // Giả sử bạn sử dụng Spring Data JPA
-	    }
-
-
 
 }

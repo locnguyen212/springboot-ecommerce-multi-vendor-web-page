@@ -17,17 +17,6 @@ public interface ShopOwnerRepository extends JpaRepository<Shopowner, Integer> {
 	public Shopowner findByUserUsername(String name);
 	public List<Shopowner> findByStatus(Boolean status);
 	
-	
+	public Shopowner findByShopName(String name);
 	//====LOC====
-	//====HUY====
-
-	@Query("SELECT s FROM Shopowner s WHERE s.shopName = :name")
-	Shopowner findByShopName(@Param("name") String name);
-	
-	public Shopowner findByUser(User user);
-
-	@Query("SELECT s FROM Shopowner s WHERE s.ownerId = :ownerId")
-    Shopowner findShopownerByOwnerId(Integer ownerId);
-
-	
 }

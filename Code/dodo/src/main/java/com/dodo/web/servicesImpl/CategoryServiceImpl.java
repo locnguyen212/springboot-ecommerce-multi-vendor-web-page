@@ -148,19 +148,14 @@ public class CategoryServiceImpl implements ICategoryService {
 	//====LOC====
 
 	@Override
-	public List<Category> getAllAndStatus() {
-		return repository.getAllAndStatus(true);
+	public List<Category> getAllAndStatus() {	
+		try {
+			return repository.getAllAndStatus(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}	
 	}
-
-	
-
-	
-	 @Override
-	 public List<Category>findByOwnerId(Integer ownerId) {
-	        // Triển khai logic để tìm Shopowner dựa trên ownerId
-	        // Sử dụng shopownerRepository hoặc bất kỳ phương thức nào khác phù hợp
-	        return repository.findByOwnerId(ownerId);
-	    }
 
 
 

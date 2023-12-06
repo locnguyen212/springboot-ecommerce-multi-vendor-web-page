@@ -24,10 +24,6 @@ public interface IShopOwnerCouponService {
 	public List<Shopownercoupon> findByExpiryDate(Date date);
 	public boolean isCouponCodeExist(String code);
 	//====LOC====
-	//====HUY====
-	public List<Shopownercoupon> findByOwnerId(int ownerId);
-	public  List<Shopownercoupon> getAllCoupons();
-	
 	
 	
 }

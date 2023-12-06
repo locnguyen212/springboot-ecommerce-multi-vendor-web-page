@@ -27,9 +27,4 @@ public interface IPromotionService {
 	
 	public List<Integer> findProductIdGotPromotionByShopownerId(int id);
 	//====LOC====
-	
-	//====HUY====
-			public List<Promotion> findByOwnerId(int ownerId);
-			public List<Promotion> getAllPromotionsWithDetails(Integer ownerId);
-			public boolean isProductAlreadyInPromotion(Integer productId);
 }

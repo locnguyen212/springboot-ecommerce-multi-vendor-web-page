@@ -46,40 +46,38 @@ public interface IOrderService {
 
 	public List<Order> findByOwnerId(int ownerId);
 
-	// ====Huy Dasboard====
+	// ====Huy Dashboard====
 	public int getTotalOrdersForShopOwner(Integer ownerId);
-	// ====Huy Dasboard====
 
 	// Trong IOrderService
-	List<Order> getOrdersByShopOwnerAndOrderDateBetween(
+	public List<Order> getOrdersByShopOwnerAndOrderDateBetween(
 			Integer ownerId,
 			Date startDate,
 			Date endDate);
 
 	public List<Order> getOrdersByShopOwnerIdAndStatus(Integer ownerId, String status);
 
-	// ====Huy Dasboard====
 	List<Order> getOrdersByShopOwnerAndOrderDateBetween2(
 			Integer ownerId,
 			Date startDate,
 			Date endDate);
 
-	List<Order> getAllCancelledOrders(Integer ownerId);
+	public List<Order> getAllCancelledOrders(Integer ownerId);
 
-	int countCancelledOrdersByOwnerId(int ownerId);
+	public int countCancelledOrdersByOwnerId(int ownerId);
 
-	int countDeliveredOrdersByOwnerId(int ownerId);
+	public int countDeliveredOrdersByOwnerId(int ownerId);
 
-	int countWaitingForApprovalOrdersByOwnerId(int ownerId);
+	public int countWaitingForApprovalOrdersByOwnerId(int ownerId);
 
-	int countInProcessOrdersByOwnerId(int ownerId);
+	public int countInProcessOrdersByOwnerId(int ownerId);
 
-	int countPackagingOrdersByOwnerId(int ownerId);
+	public int countPackagingOrdersByOwnerId(int ownerId);
 
-	int countPaymentStatusOrdersByOwnerId(int ownerId);
+	public int countPaymentStatusOrdersByOwnerId(int ownerId);
 
-	int countPaymentStatusNullOrdersByOwnerId(int ownerId);
+	public int countPaymentStatusNullOrdersByOwnerId(int ownerId);
 
-	List<Object[]> getOrdersByOwnerIdAndDateRange(Integer ownerId, Date startDate, Date endDate);
+	public List<Object[]> getOrdersByOwnerIdAndDateRange(Integer ownerId, Date startDate, Date endDate);
 	// ====Huy Dasboard====
 }

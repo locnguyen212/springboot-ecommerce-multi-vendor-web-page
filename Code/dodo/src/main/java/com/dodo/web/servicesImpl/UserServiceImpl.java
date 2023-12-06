@@ -21,7 +21,7 @@ public class UserServiceImpl implements IUserService {
 	@Autowired
 	private UserRepository repository;
 
-	//====LOC====
+	// ====LOC====
 	@Override
 	public List<User> findAll() {
 		try {
@@ -39,7 +39,7 @@ public class UserServiceImpl implements IUserService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}	
+		}
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public User findByUsername(String name) {
 		try {
@@ -113,7 +113,7 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 	}
-	
+
 	@Override
 	public User findByEmail(String email) {
 		try {
@@ -193,50 +193,39 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 	}
-	
 
 	@Override
 	public boolean isTokenExist(String token) {
 		try {
-			return repository.findByToken(token).size()!=0;
+			return repository.findByToken(token).size() != 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;
 		}
 	}
-		
-	//LOGIN
+
+	// LOGIN
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		try {
 			var user = repository.findByUsername(username);
 			System.out.println(user);
-			if(user==null) {
+			if (user == null) {
 				throw new UsernameNotFoundException("Account not found!");
-			}else {
-				//trích xuất tên roles dc gán cho account và đặt nó trong GrantedAuthority
+			} else {
+				// trích xuất tên roles dc gán cho account và đặt nó trong GrantedAuthority
 				List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 				authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
-				return new org.springframework.security.core.userdetails.User(username, user.getPassword(), user.getStatus(), true, true, true, authorities);
+				return new org.springframework.security.core.userdetails.User(username, user.getPassword(),
+						user.getStatus(), true, true, true, authorities);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new UsernameNotFoundException("Account not found!");
 		}
 	}
-	//LOGIN
+	// LOGIN
 
-
-
-
-	
-	//====LOC====
-	
-	//====HUY====
-	  @Override
-	    public List<User> findByOwnerId(int userId) {
-	        return repository.findByOwnerId(userId);
-	    }
-	
+	// ====LOC====
 
 }

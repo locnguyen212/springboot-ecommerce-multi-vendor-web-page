@@ -22,11 +22,6 @@ public interface ShopOwnerCouponRepository extends JpaRepository<Shopownercoupon
 	
 	public List<Shopownercoupon> findByExpiryDate(Date date);
 	//====LOC====
-	
-	//====HUY====
-	@Query("SELECT c FROM Shopownercoupon c WHERE c.shopowner.ownerId = :ownerId")
-	List<Shopownercoupon> findByOwnerId(@Param("ownerId") int ownerId);
-	
-	
+
 
 }

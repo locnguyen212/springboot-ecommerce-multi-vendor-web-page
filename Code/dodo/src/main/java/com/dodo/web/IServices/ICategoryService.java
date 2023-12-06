@@ -29,6 +29,4 @@ public interface ICategoryService {
 	//====LOC====
 	
 	public List<Category> getAllAndStatus();
-	//====HUY====
-	List<Category>findByOwnerId(Integer ownerId);
 }

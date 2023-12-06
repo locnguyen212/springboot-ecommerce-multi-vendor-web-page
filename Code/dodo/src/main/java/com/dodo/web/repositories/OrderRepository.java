@@ -62,6 +62,7 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	public List<Order> findByUserIdAndStatusNotIn(@Param("id") int id, @Param("statusList") List<String> statusList);
 	// ====LOC====
 
+	// Huy làm chart
 	@Query("from Order od where od.user.userId =:userId and od.orderStatus =:orderStatus order by od.orderDate desc")
 	public List<Order> getMyOrder(@Param("userId") int userId, @Param("orderStatus") String orderStatus);
 
@@ -79,7 +80,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 	@Query("SELECT o FROM Order o WHERE o.shopowner.id = :ownerId AND o.orderStatus = :status")
 	List<Order> getOrdersByShopOwnerIdAndStatus(@Param("ownerId") Integer ownerId, @Param("status") String status);
 
-	// Huy làm chart
 	@Query("SELECT o FROM Order o WHERE o.shopowner.id = :ownerId AND o.orderDate BETWEEN :startDate AND :endDate AND o.orderStatus = 'Cancelled'")
 	List<Order> findOrdersByOwnerIdAndOrderDateBetween2(@Param("ownerId") Integer shopOwnerId,
 			@Param("startDate") Date startDate,

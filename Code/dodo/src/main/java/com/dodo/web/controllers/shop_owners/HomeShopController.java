@@ -55,7 +55,7 @@ public class HomeShopController {
 	public String index(Model model, HttpSession session, Authentication authentication) {
 		if (authentication != null) {
 			var user = userService.findByUsername(authentication.getName());
-			Shopowner shopOwner = shopOwnerService.findByUser(user);
+			Shopowner shopOwner = shopOwnerService.findByUserUsername(user.getUsername());
 			if (shopOwner != null) {
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("ownerId", shopOwner.getOwnerId());

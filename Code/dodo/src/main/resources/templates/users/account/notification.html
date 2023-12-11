@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html
+    th:replace="~{/users/layout/index :: mainContent('All Notification', ~{:: #content-wrapper}, ~{:: #jsScript} ,~{:: #style})}">
+
+<head>
+    <meta charset="UTF-8">
+    <th:block id="style">
+        <style>
+            .ic-notifi-all {
+                margin: 5px 5px;
+                padding: 5px 12px;
+                border: 1px solid #ccc;
+                border-radius: 15px;
+                background-color: #52a83e;
+                color: #fff;
+                cursor: pointer;
+            }
+
+            .ic-notifi-unread {
+                margin: 5px 5px;
+                padding: 5px 12px;
+                border: 1px solid #ccc;
+                border-radius: 15px;
+                cursor: pointer;
+            }
+
+            .notification-page {
+                display: flex;
+                justify-content: center;
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                min-width: 650px;
+                border: 1px solid;
+                border-radius: 20px;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+
+            .icon-head {
+                display: flex;
+            }
+
+            .inner__main {
+                display: flex;
+                flex-direction: column;
+            }
+
+            .inner__main_child {
+                border: none;
+                max-height: 400px;
+                overflow-y: auto;
+            }
+
+            .txt-message {
+                font-size: 17px;
+                font-weight: 500;
+                margin: 5px 0px;
+            }
+
+            .wrap-notifi:hover {
+                background-color: #e6e6e6;
+                border-radius: 10px;
+            }
+
+            .wrap-notifi {
+                display: flex;
+                padding: 10px;
+            }
+        </style>
+    </th:block>
+</head>
+
+<body>
+    <th:block id="content-wrapper">
+        <section class="our-dashbord dashbord">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Side menu -->
+                    <div th:replace="~{users/account/partials/sidemenu :: #sidemenu}"></div>
+                    <!-- Side menu end -->
+
+
+                    <div class="col-lg-9 col-xl-9">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="account_user_deails pl40 pl0-md">
+
+                                    <h2 class="title mb30">Invoice</h2>
+                                    <!-- Content -->
+                                    <div class="notification-page">
+                                        <div class="content">
+                                            <div class="icon-head">
+                                                <div id="notifi-all" class="ic-notifi-all">
+                                                    <span style="font-weight: bold">All</span>
+                                                </div>
+                                                <div id="notifi-unread" class="ic-notifi-unread">
+                                                    <span style="font-weight: bold">Unread</span>
+                                                </div>
+                                                <input type="hidden" id="typeview" name="name" th:value="${type}" />
+                                            </div>
+                                            <div class="inner__main">
+                                                <div id="notificationPanel" class="inner__main_child">
+                                                    <div class="panel-body" th:each="e, i : ${notifications}">
+                                                        <div style="border: none; padding: 0;text-align:left;">
+                                                            <div th:data-type-view="${type}"
+                                                                th:data-id="${e.notificationId}" class="wrap-notifi">
+                                                                <div th:onclick="|return readNotifywithURL('/user/notification/readUrl'${e.notificationId}');|"
+                                                                    style="cursor:pointer;">
+                                                                    <strong class="txt-message" style="color: #267cde;"
+                                                                        th:title="${e.user.username}"><i
+                                                                            class="fa fa-user"></i>
+                                                                        [[${e.user.username}]]</strong>
+
+                                                                    <p class="text txt-message" th:text="${e.message}">
+                                                                    </p>
+                                                                    <strong class="congviec-thaoluan-user"
+                                                                        style=" font-weight: 400; font-size: 13px;"><i
+                                                                            class="fa fa-clock-o"
+                                                                            aria-hidden="true"></i>
+                                                                        [[${#dates.format(e.createdAt, 'HH:mm,
+                                                                        dd/MM/yyyy')}]]</strong>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- Content Ends -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </th:block>
+
+    <th:block id="jsScript">
+        <script>           
+            $(document).ready(function () {
+                var lastScrollTop = 0;
+                var lastestRow = 5;
+                var isRead = 'all';
+                $("#notificationPanel").on('scroll', function (e) {
+                    var currentScrollTop = $("#notificationPanel").prop('scrollTop');
+
+                    if (currentScrollTop > lastScrollTop) {
+                        if ($("#notificationPanel").prop('offsetHeight') + $("#notificationPanel").prop('scrollTop') >= $("#notificationPanel").prop('scrollHeight')) {
+                            var notificationEnd = $("#notificationEnd").val();
+                            if (notificationEnd != 1) {
+                                $.ajax({
+                                    url: '/user/account/addition-notification',
+                                    type: 'GET',
+                                    data: { lastestRow: lastestRow, isRead: isRead },
+                                    success: function (data) {
+                                        lastestRow = lastestRow + 5;
+                                        $('#notificationPanel .panel-body').last().after(data);
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    lastScrollTop = currentScrollTop;
+                });
+
+                $('#notifi-all').on("click", function () {
+                    $('#notifi-all').css('background-color', '#52a83e');
+                    $('#notifi-all').css('color', '#fff');
+                    $('#notifi-unread').css('background-color', 'unset');
+                    $('#notifi-unread').css('color', '#000');
+                    $("#notificationPanel").scrollTop(0);
+                    showNotifi('all');
+                });
+
+                $('#notifi-unread').on("click", function () {
+                    $('#notifi-all').css('background-color', 'unset');
+                    $('#notifi-all').css('color', '#000');
+                    $('#notifi-unread').css('background-color', '#f48f48');
+                    $('#notifi-unread').css('color', '#fff');
+                    $("#notificationPanel").scrollTop(0);
+                    showNotifi('unread');
+                });
+
+                function showNotifi(option) {
+                    if (isRead != option) {
+                        isRead = option;
+                        lastestRow = 5;
+                        $.ajax({
+                            url: '/user/account/change-notification',
+                            type: 'GET',
+                            data: { isRead: isRead },
+                            success: function (data) {
+                                $('#notificationPanel').html(data);
+                            }
+                        });
+                    }
+                }
+            });
+
+
+        </script>
+    </th:block>
+</body>
+
+</html>

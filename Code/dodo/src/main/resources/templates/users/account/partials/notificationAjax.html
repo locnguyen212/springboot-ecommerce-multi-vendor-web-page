@@ -1,0 +1,19 @@
+<th:block>
+    <div class="panel-body" th:each="e, i : ${notifications}">
+        <div style="border: none; padding: 0;text-align:left;">
+            <div th:data-type-view="${type}" th:data-id="${e.notificationId}" class="wrap-notifi">
+                <div th:onclick="|return readNotifywithURL('/user/notification/readUrl'${e.notificationId}');|"
+                    style="cursor:pointer;">
+                    <strong class="txt-message" style="color: #267cde;" th:title="${e.user.username}"><i
+                            class="fa fa-user"></i> [[${e.user.username}]]</strong>
+
+                    <p class="text txt-message" th:text="${e.message}"></p>
+                    <strong class="congviec-thaoluan-user" style=" font-weight: 400; font-size: 13px;"><i
+                            class="fa fa-clock-o" aria-hidden="true"></i> [[${#dates.format(e.createdAt, 'HH:mm,
+                        dd/MM/yyyy')}]]</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" th:if="${notificationEnd}" id="notificationEnd" value="1" />
+</th:block>

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dodo.web.IServices.IInvoiceService;
+import com.dodo.web.IServices.INotificationService;
 import com.dodo.web.IServices.IOrderCancellationService;
 import com.dodo.web.IServices.IOrderDetailService;
 import com.dodo.web.IServices.IOrderService;
@@ -46,6 +47,9 @@ public class AccountUserController {
 
 	@Autowired
 	IShopOwnerService shopOwnerService;
+	
+	@Autowired
+	INotificationService notificationService;
 
 	@Autowired
 	IShopOwnerCouponService couponService;
@@ -366,5 +370,44 @@ public class AccountUserController {
 			e.printStackTrace();
 			return "redirect:/error/404";
 		}
+	}
+	
+	@GetMapping("notification")
+	public String notification(ModelMap modelMap, Authentication authentication) {
+		var userId = userService.findByUsername(authentication.getName()).getUserId(); 
+		modelMap.put("notifications", notificationService.findByUserId(userId, 0, 5));
+		return "users/account/notification";
+	}
+	
+	@GetMapping("addition-notification")
+	public String additionNotification(ModelMap modelMap, Authentication authentication, @RequestParam("lastestRow") int lastestRow, @RequestParam("isRead") String isRead) {
+		var userId = userService.findByUsername(authentication.getName()).getUserId();
+		
+		//check if all notifications are present
+		var allNotiCount = notificationService.countAll(userId);
+		if(lastestRow >= allNotiCount) {
+			modelMap.put("notificationEnd", true);
+		}
+		//check if all notifications are present
+		
+		if(isRead.equalsIgnoreCase("all")) {
+			modelMap.put("notifications", notificationService.findByUserId(userId, lastestRow, 5));
+		}else if(isRead.equalsIgnoreCase("unread")) {
+			modelMap.put("notifications", notificationService.findByUserIdAndTypeAndIsRead(userId, null, false, lastestRow, 5));
+		}
+		
+		return "users/account/partials/notificationAjax";
+	}
+	
+	@GetMapping("change-notification")
+	public String changeNotification(ModelMap modelMap, Authentication authentication, @RequestParam("isRead") String isRead) {
+		var userId = userService.findByUsername(authentication.getName()).getUserId();
+		if(isRead.equalsIgnoreCase("all")) {
+			modelMap.put("notifications", notificationService.findByUserId(userId, 0, 5));
+		}else if(isRead.equalsIgnoreCase("unread")) {
+			modelMap.put("notifications", notificationService.findByUserIdAndTypeAndIsRead(userId, null, false, 0, 5));
+		}
+		
+		return "users/account/partials/notificationAjax";
 	}
 }

@@ -22,18 +22,17 @@ public class UserUsernameUniqueValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
 		UserDto user = (UserDto) target;
-
 		if (!user.getUsername().isBlank()) {
 			var unique = service.findByUsername(user.getUsername());
 
 			if(unique!=null) {
 				//Check if this is a create command
 				if(user.getUserId()==null) {
-					errors.rejectValue("username", "NotUnique", null, null);
+					errors.rejectValue("username", "NotUnique", null, "The value of this field has already been taken.");
 				}else {
 					//else phase is an update command
 					if(user.getUserId()!=unique.getUserId()) {
-						errors.rejectValue("username", "NotUnique", null, null);
+						errors.rejectValue("username", "NotUnique", null, "The value of this field has already been taken.");
 					}
 				}
 			}

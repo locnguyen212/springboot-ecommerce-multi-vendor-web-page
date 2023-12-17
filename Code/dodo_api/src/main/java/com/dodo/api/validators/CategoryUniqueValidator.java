@@ -29,11 +29,11 @@ public class CategoryUniqueValidator implements Validator {
 			if(unique!=null) {
 				//Check if this is a create command
 				if(category.getCategoryId()==null) {
-					errors.rejectValue("categoryName", "NotUnique", null, null);
+					errors.rejectValue("categoryName", "NotUnique", null, "The value of this field has already been taken.");
 				}else {
 					//else phase is an update command
 					if(category.getCategoryId()!=unique.getCategoryId()) {
-						errors.rejectValue("categoryName", "NotUnique", null, null);
+						errors.rejectValue("categoryName", "NotUnique", null, "The value of this field has already been taken.");
 					}
 				}
 			}

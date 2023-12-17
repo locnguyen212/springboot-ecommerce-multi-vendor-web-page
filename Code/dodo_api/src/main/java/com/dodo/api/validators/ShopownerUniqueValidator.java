@@ -29,11 +29,11 @@ public class ShopownerUniqueValidator implements Validator {
 			if(unique!=null) {
 				//Check if this is a create command
 				if(shopowner.getOwnerId()==null) {
-					errors.rejectValue("shopName", "NotUnique", null, null);
+					errors.rejectValue("shopName", "NotUnique", null, "The value of this field has already been taken.");
 				}else {
 					//else phase is an update command
 					if(shopowner.getOwnerId()!=unique.getOwnerId()) {
-						errors.rejectValue("shopName", "NotUnique", null, null);
+						errors.rejectValue("shopName", "NotUnique", null, "The value of this field has already been taken.");
 					}
 				}
 			}

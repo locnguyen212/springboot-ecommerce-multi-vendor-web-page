@@ -12,10 +12,12 @@ import com.dodo.api.dtos.ParentcategoryDto;
 import com.dodo.api.dtos.ProductDto;
 import com.dodo.api.dtos.ReviewDto;
 import com.dodo.api.dtos.ShopownerDto;
+import com.dodo.api.dtos.UserDto;
 import com.dodo.api.models.Parentcategory;
 import com.dodo.api.models.Product;
 import com.dodo.api.models.Review;
 import com.dodo.api.models.Shopowner;
+import com.dodo.api.models.User;
 
 
 @Configuration
@@ -26,76 +28,6 @@ public class ModelMapperConfiguration {
 	@Bean
 	public ModelMapper modelMapper() {
 		ModelMapper modelMappers = new ModelMapper();
-		
-//		Converter<Integer, Parentcategory> idToParentCategory = new AbstractConverter<Integer, Parentcategory>() {
-//			@Override
-//			protected Parentcategory convert(Integer source) {
-//				var target = new Parentcategory();
-//				target.setParentCategoryId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, User> idToUser = new AbstractConverter<Integer, User>() {
-//			@Override
-//			protected User convert(Integer source) {
-//				var target = new User();
-//				target.setUserId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, Category> idToCategory = new AbstractConverter<Integer, Category>() {
-//			@Override
-//			protected Category convert(Integer source) {
-//				var target = new Category();
-//				target.setCategoryId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, Order> idToOrder = new AbstractConverter<Integer, Order>() {
-//			@Override
-//			protected Order convert(Integer source) {
-//				var target = new Order();
-//				target.setOrderId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, Product> idToProduct = new AbstractConverter<Integer, Product>() {
-//			@Override
-//			protected Product convert(Integer source) {
-//				var target = new Product();
-//				target.setProductId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, Role> idToRole = new AbstractConverter<Integer, Role>() {
-//			@Override
-//			protected Role convert(Integer source) {
-//				var target = new Role();
-//				target.setRoleId(source);
-//				return target;
-//			}
-//			
-//		};
-//		
-//		Converter<Integer, Shopowner> idToShop = new AbstractConverter<Integer, Shopowner>() {
-//			@Override
-//			protected Shopowner convert(Integer source) {
-//				var target = new Shopowner();
-//				target.setOwnerId(source);
-//				return target;
-//			}
-//			
-//		};
 		
 		Converter<String, String> photoToUrl = new AbstractConverter<String, String>() {
 			@Override
@@ -123,6 +55,11 @@ public class ModelMapperConfiguration {
 		modelMappers.typeMap(Shopowner.class, ShopownerDto.class)
 		.addMappings(mappers -> {
 			mappers.using(photoToUrl).map(Shopowner::getShopLogoPath, ShopownerDto::setShopLogoPath);
+		});
+		
+		modelMappers.typeMap(User.class, UserDto.class)
+		.addMappings(mappers -> {
+			mappers.using(photoToUrl).map(User::getAvatar, UserDto::setAvatar);
 		});
 		
 		

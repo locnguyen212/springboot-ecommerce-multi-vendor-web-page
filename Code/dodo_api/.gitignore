@@ -1,5 +1,15 @@
 HELP.md
-target/
+/target/generated-sources
+/target/generated-test-sources
+/target/test-classes
+/target/classes/com
+/target/classes/META-INF
+/target/classes/templates
+/target/classes/application.properties
+/target/classes/errorMessages.properties
+/target/classes/hibernate.reveng.xml
+/target/classes/static/admins
+/target/classes/static/users
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -31,3 +41,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/.metadata/
+
+### logs ###
+logs/

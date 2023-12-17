@@ -44,9 +44,6 @@ public class UserDto implements java.io.Serializable {
 	@NotNull
 	private Date dob;
 	private Boolean status;
-	private String token;
-	private String refreshToken;
-	private String forgetPasswordToken;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date createdAt;

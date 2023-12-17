@@ -83,20 +83,30 @@ public class JwtHelper implements Serializable {
     }
     
     private Boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
+        try {
+            final Date expiration = getExpirationDateFromToken(token);
+            return expiration.before(new Date());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return true;
+		}
     }
     
     public Boolean isTokenValid(String token, UserDetails user) {
-        final String username = getUsernameFromToken(token);    
-        return (username.equals(user.getUsername()) && !isTokenExpired(token));
+    	try {
+            final String username = getUsernameFromToken(token);    
+            return (username.equals(user.getUsername()) && !isTokenExpired(token));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
     }
     
-    public String generateToken(UserDto user) {
+    public String generateToken(User user) {
     	return generateToken(new HashMap<>(), user, jwtExpiryTime);
     }
     
-    public String generateToken(Map<String, Object> extraClaims, UserDto user, long expiryTime) {
+    public String generateToken(Map<String, Object> extraClaims, User user, long expiryTime) {
     	return Jwts.builder()
     			.setClaims(extraClaims)
     			.setSubject(user.getUsername())
@@ -106,7 +116,7 @@ public class JwtHelper implements Serializable {
     			.compact();			
     }
     
-    public String generateRefreshToken(UserDto user) {
+    public String generateRefreshToken(User user) {
     	return generateToken(new HashMap<>(), user, refreshTokenExpiryTime);		
     }
 }

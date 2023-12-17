@@ -72,7 +72,7 @@ public class ForgetPasswordController {
 	public ResponseEntity<Object> changePassword(@RequestBody @Valid ResetPassword resetPassword) {	
 		try {
 			//validate
-			var user = userService.findById(resetPassword.getId());
+			var user = userService.findByIdModel(resetPassword.getId());
 			
 			if(user==null || user.getToken() == null) {
 				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
@@ -86,7 +86,7 @@ public class ForgetPasswordController {
 			user.setToken(null);
 			
 			return new ResponseEntity<Object>(new Object() {
-				public boolean status = userService.save(user);
+				public boolean status = userService.saveModel(user);
 			}, HttpStatus.OK);	
 			//change password and save	
 		} catch (Exception e) {

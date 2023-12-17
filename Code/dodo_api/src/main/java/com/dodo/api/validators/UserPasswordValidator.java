@@ -18,7 +18,7 @@ public class UserPasswordValidator implements Validator {
 		// TODO Auto-generated method stub
 		UserDto user = (UserDto) target;
 		if(user.getPassword().isBlank()) {
-			errors.rejectValue("password", "NotBlank",  new Object[]{"password"}, null);
+			errors.rejectValue("password", "NotBlank",  null, "must not be blank.");
 		}
 
 	}

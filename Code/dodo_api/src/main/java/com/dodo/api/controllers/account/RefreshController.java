@@ -34,13 +34,13 @@ public class RefreshController {
 			var oldRefreshToken = tokenAuth.getRefreshToken();
 			
 			var username = jwtHelper.getUsernameFromExpiredToken(oldToken);
-			
+
 			if(username == null) {
 				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 			}
 			
 			UserDetails userDetails = userService.loadUserByUsername(username);
-			var user = userService.findByUsername(username);
+			var user = userService.findByUsernameModel(username);
 			
 			if(user == null || !user.getRefreshToken().equals(oldRefreshToken) || !jwtHelper.isTokenValid(oldRefreshToken, userDetails)) {
 				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
@@ -52,7 +52,7 @@ public class RefreshController {
 			user.setRefreshToken(newRefreshToken);
 
 			return new ResponseEntity<Object>(new Object() {
-				public boolean status = userService.save(user);
+				public boolean status = userService.saveModel(user);
 				public String token = newToken;
 				public String refreshToken = newRefreshToken;
 			}, HttpStatus.OK);

@@ -29,11 +29,11 @@ public class UserEmailUniqueValidator implements Validator {
 			if(unique!=null) {
 				//Check if this is a create command
 				if(user.getUserId()==null) {
-					errors.rejectValue("email", "NotUnique", null, null);
+					errors.rejectValue("email", "NotUnique", null, "The value of this field has already been taken.");
 				}else {
 					//else phase is an update command
 					if(user.getUserId()!=unique.getUserId()) {
-						errors.rejectValue("email", "NotUnique", null, null);
+						errors.rejectValue("email", "NotUnique", null, "The value of this field has already been taken.");
 					}
 				}
 			}

@@ -46,12 +46,33 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 	}
+	
+	@Override
+	public User findByIdModel(int id) {
+		try {
+			return repository.findById(id).get();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	public boolean save(UserDto dto) {
 		try {
 			User model = modelMapper.map(dto, User.class);
 			repository.save(model);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean saveModel(User user) {
+		try {
+			repository.save(user);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,6 +95,17 @@ public class UserServiceImpl implements IUserService {
 	public UserDto findByUsername(String name) {
 		try {
 			return modelMapper.map(repository.findByUsername(name), UserDto.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+
+	@Override
+	public User findByUsernameModel(String name) {
+		try {
+			return repository.findByUsername(name);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

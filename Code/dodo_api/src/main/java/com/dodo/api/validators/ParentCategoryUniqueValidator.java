@@ -29,11 +29,11 @@ public class ParentCategoryUniqueValidator implements Validator {
 			if(unique!=null) {
 				//Check if this is a create command
 				if(parentcategory.getParentCategoryId()==null) {
-					errors.rejectValue("parentCategoryName", "NotUnique", null, null);
+					errors.rejectValue("parentCategoryName", "NotUnique", null, "The value of this field has already been taken.");
 				}else {
 					//else phase is an update command
 					if(parentcategory.getParentCategoryId()!=unique.getParentCategoryId()) {
-						errors.rejectValue("parentCategoryName", "NotUnique", null, null);
+						errors.rejectValue("parentCategoryName", "NotUnique", null, "The value of this field has already been taken.");
 					}
 				}
 			}

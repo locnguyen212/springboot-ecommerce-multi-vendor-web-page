@@ -31,12 +31,12 @@ public class LoginController {
 	public ResponseEntity<Object> login(@RequestBody LoginInfo login) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getpassword()));
-			var user = userService.findByUsername(login.getUsername());
+			var user = userService.findByUsernameModel(login.getUsername());
 			var jwt = jwtHelper.generateToken(user);
 			var newRefreshToken = jwtHelper.generateRefreshToken(user);
 			user.setRefreshToken(newRefreshToken);
 			user.setToken(jwt);
-			userService.save(user);
+			userService.saveModel(user);
 			return new ResponseEntity<Object>(new Object() {
 				public boolean status = true;
 				public String token = jwt;

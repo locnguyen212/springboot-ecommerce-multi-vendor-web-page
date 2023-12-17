@@ -12,12 +12,8 @@ public interface IReviewService {
 	public boolean delete(int id);
 	
 	public List<Review> findByProductProductId(int id);
-	public List<Review> findByProductProductName(String name);
 	
 	public List<Review> findByUserUserId(int id);
-	public List<Review> findByUserUsername(String name);
-	
-	public List<Review> findByRating(int rating);
 	//====LOC====
 
 	public List<Review> getReviewsByShopId(int shopId);

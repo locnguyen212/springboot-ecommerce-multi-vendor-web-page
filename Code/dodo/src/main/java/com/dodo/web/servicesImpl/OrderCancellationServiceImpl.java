@@ -15,8 +15,8 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 
 	@Autowired
 	private OrderCancellationRepository repository;
-	
-	//====LOC====
+
+	// ====LOC====
 	@Override
 	public List<Ordercancellation> findAll() {
 		try {
@@ -34,7 +34,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}	
+		}
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}	
+		}
 	}
 
 	@Override
@@ -76,27 +76,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}	
-	}
-
-	@Override
-	public List<Ordercancellation> findByShopownerShopName(String name) {
-		try {
-			return repository.findByShopownerShopName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-	@Override
-	public List<Ordercancellation> findByUserUserId(int id) {
-		try {
-			return repository.findByUserUserId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
+		}
 	}
 
 	@Override
@@ -106,29 +86,8 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
-		}	
+		}
 	}
-
-	@Override
-	public List<Ordercancellation> findByDateRange(Date from, Date to) {
-		try {
-			return repository.findByDateRange(from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-	@Override
-	public List<Ordercancellation> findByStatus(boolean status) {
-		try {
-			return repository.findByStatus(status);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-	//====LOC====
-
+	// ====LOC====
 
 }

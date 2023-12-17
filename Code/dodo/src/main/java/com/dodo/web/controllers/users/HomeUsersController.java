@@ -104,7 +104,7 @@ public class HomeUsersController {
 		//LOC
 		
 		List<Product> allProducts = productService.getAllAndStatus();
-		List<Category> allCategory = categoryService.getAllAndStatus();
+		List<Category> allCategory = categoryService.findByStatus(true);
 		List<Orderdetail>  allDetailProduct = orderDetailService.findAll();
 		Map<Category, List<Product>> productsByCategory = allProducts.stream().collect(Collectors.groupingBy(Product::getCategory));
 		productsByCategory.forEach((category, productList) -> {

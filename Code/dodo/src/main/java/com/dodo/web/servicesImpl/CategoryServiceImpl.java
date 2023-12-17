@@ -64,26 +64,6 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	public List<Category> findByParentCategoryName(String name) {
-		try {
-			return repository.findByParentcategoryParentCategoryName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-	@Override
-	public List<Category> findByParentCategoryId(int id) {
-		try {
-			return repository.findByParentcategoryParentCategoryId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-	@Override
 	public Category findByCategoryName(String name) {
 		try {
 			return repository.findByCategoryName(name);
@@ -146,19 +126,4 @@ public class CategoryServiceImpl implements ICategoryService {
 	
 	
 	//====LOC====
-
-	@Override
-	public List<Category> getAllAndStatus() {	
-		try {
-			return repository.getAllAndStatus(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-
-
-
-
-
 }

@@ -19,26 +19,6 @@ public interface IUserService extends UserDetailsService {
 	public User findByEmail(String email);
 	public User findByUsername(String name);
 	
-	public List<User> findByStatus(boolean status);
-	
-	public List<User> findByRoleName(String name);
-
-	public List<User> findByPhoneNumberContain(String phone);
-	
-	public List<User> findByUsernameContain(String name);
-	
-	public List<User> findByEmailContain(String email);	
-	
-	public List<User> findByFirstNameContain(String name);	
-	
-	public List<User> findByLastNameContain(String name);	
-	
-	public List<User> findByAddressContain(String address);	
-	
-	public List<User> findByDateRangeCreated(Date from, Date to);
-	
-	public List<User> findByDateRangeDob(Date from, Date to);
-	
 	public List<User> findAllRoleUserAndShopowner();
 	//====LOC====
 }

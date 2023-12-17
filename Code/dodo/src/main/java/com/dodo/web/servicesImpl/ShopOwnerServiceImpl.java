@@ -60,16 +60,6 @@ public class ShopOwnerServiceImpl implements IShopOwnerService {
 	}
 
 	@Override
-	public List<Shopowner> findByUserUserId(int id) {
-		try {
-			return repository.findByUserUserId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public Shopowner findByUserUsername(String name) {
 		try {
 			return repository.findByUserUsername(name);
@@ -98,16 +88,5 @@ public class ShopOwnerServiceImpl implements IShopOwnerService {
 			return null;
 		}
 	}
-
-	@Override
-	public boolean userCheck(int id) {
-		try {
-			return repository.findByUserUserId(id).size()==1;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	//====LOC====
 }

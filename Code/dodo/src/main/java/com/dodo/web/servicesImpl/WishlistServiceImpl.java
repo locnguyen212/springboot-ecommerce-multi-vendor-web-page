@@ -66,38 +66,7 @@ public class WishlistServiceImpl implements IWishlistService {
 			e.printStackTrace();
 			return null;
 		}
-	}
-
-	@Override
-	public List<Wishlist> findByUserUsername(String name) {
-		try {
-			return repository.findByUserUsername(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Wishlist> findByProductProductId(int id) {
-		try {
-			return repository.findByProductProductId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Wishlist> findByProductProductName(String name) {
-		try {
-			return repository.findByProductProductName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
+	}	
 	//====LOC====
 
 	

@@ -68,36 +68,6 @@ public class PromotionServiceImpl implements IPromotionService {
 			return null;
 		}
 	}
-
-	@Override
-	public List<Promotion> findByProductProductName(String name) {
-		try {
-			return repository.findByProductProductName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Promotion> findByStartDate(Date date) {
-		try {
-			return repository.findByStartDate(date);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Promotion> findByEndDate(Date date) {
-		try {
-			return repository.findByEndDate(date);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 	@Override
 	public List<Promotion> findByShopownerOwnerId(int id) {

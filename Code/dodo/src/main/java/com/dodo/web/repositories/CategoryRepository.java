@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.dodo.web.models.Category;
@@ -22,10 +21,5 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	public List<Category> findByStatusNotNull();
 	
 	public List<Category> findByUserUserId(int id);
-	//====LOC====
-	
-
-	@Query("from Category where status=:status ")
-	public List<Category> getAllAndStatus(@Param("status") Boolean status);
-	
+	//====LOC====	
 }

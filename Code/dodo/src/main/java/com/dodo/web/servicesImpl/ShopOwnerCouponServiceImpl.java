@@ -1,6 +1,5 @@
 package com.dodo.web.servicesImpl;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,46 +62,6 @@ public class ShopOwnerCouponServiceImpl implements IShopOwnerCouponService {
 	public List<Shopownercoupon> findByShopownerOwnerId(int id) {
 		try {
 			return repository.findByShopownerOwnerId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Shopownercoupon> findByShopownerShopName(String name) {
-		try {
-			return repository.findByShopownerShopName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Shopownercoupon> findByIsActive(boolean status) {
-		try {
-			return repository.findByIsActive(status);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Shopownercoupon> findByCouponCode(String code) {
-		try {
-			return repository.findByCouponCode(code);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Shopownercoupon> findByExpiryDate(Date date) {
-		try {
-			return repository.findByExpiryDate(date);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

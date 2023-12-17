@@ -60,7 +60,6 @@ public class User implements java.io.Serializable {
 	private Date updatedAt;
 	private Set<Shopowner> shopowners = new HashSet<Shopowner>(0);
 	private Set<Salesdata> salesdatas = new HashSet<Salesdata>(0);
-	private Set<Paymentinfo> paymentinfos = new HashSet<Paymentinfo>(0);
 	private Set<Notification> notifications = new HashSet<Notification>(0);
 	private Set<Order> orders = new HashSet<Order>(0);
 	private Set<Item> items = new HashSet<Item>(0);
@@ -75,7 +74,7 @@ public class User implements java.io.Serializable {
 
 	public User(Role role, String username, String password, String email, String firstName, String lastName,
 			String address, String phoneNumber, String avatar, String gender, Date dob, Boolean status, String token, Date createdAt, Date updatedAt,
-			Set<Shopowner> shopowners, Set<Salesdata> salesdatas, Set<Paymentinfo> paymentinfos,
+			Set<Shopowner> shopowners, Set<Salesdata> salesdatas,
 			Set<Notification> notifications, Set<Order> orders, Set<Item> items, Set<Wishlist> wishlists,
 			Set<Invoice> invoices, Set<Ordercancellation> ordercancellations, Set<Review> reviews, Set<Category> categories) {
 		this.role = role;
@@ -95,7 +94,6 @@ public class User implements java.io.Serializable {
 		this.token = token;
 		this.shopowners = shopowners;
 		this.salesdatas = salesdatas;
-		this.paymentinfos = paymentinfos;
 		this.notifications = notifications;
 		this.orders = orders;
 		this.items = items;
@@ -255,15 +253,6 @@ public class User implements java.io.Serializable {
 
 	public void setSalesdatas(Set<Salesdata> salesdatas) {
 		this.salesdatas = salesdatas;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-	public Set<Paymentinfo> getPaymentinfos() {
-		return this.paymentinfos;
-	}
-
-	public void setPaymentinfos(Set<Paymentinfo> paymentinfos) {
-		this.paymentinfos = paymentinfos;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")

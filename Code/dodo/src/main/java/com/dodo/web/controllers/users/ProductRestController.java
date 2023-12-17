@@ -50,7 +50,7 @@ public class ProductRestController {
 	public ResponseEntity<String> AddWishList(@RequestParam("productId") Integer pId,
 			@RequestParam("userId") Integer uId) {
 		try {
-			Product p = productService.getProductDetail(pId);
+			Product p = productService.findById(pId);
 			User u = userService.findById(uId);
 			if (p == null || u == null) {
 				return new ResponseEntity<>("Error", HttpStatus.OK);

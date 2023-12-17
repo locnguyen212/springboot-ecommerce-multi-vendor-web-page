@@ -42,8 +42,6 @@ public class Order implements java.io.Serializable {
 	private String paymentStatus;
 	private Set<Salesdata> salesdatas = new HashSet<Salesdata>(0);
 	private Set<Orderdetail> orderdetails = new HashSet<Orderdetail>(0);
-	private Set<Orderstatus> orderstatuses = new HashSet<Orderstatus>(0);
-	private Set<Transaction> transactions = new HashSet<Transaction>(0);
 	private Set<Invoice> invoices = new HashSet<Invoice>(0);
 	private Set<Ordercancellation> ordercancellations = new HashSet<Ordercancellation>(0);
   
@@ -51,8 +49,7 @@ public class Order implements java.io.Serializable {
 	}
 
 	public Order(User user, Shopowner shopowner, Date orderDate, Double totalAmount, String shippingAddress, String paymentMethod,
-			String orderStatus, Date updatedAt, String paymentStatus, Set<Salesdata> salesdatas, Set<Orderdetail> orderdetails,
-			Set<Orderstatus> orderstatuses, Set<Transaction> transactions, Set<Invoice> invoices,
+			String orderStatus, Date updatedAt, String paymentStatus, Set<Salesdata> salesdatas, Set<Orderdetail> orderdetails, Set<Invoice> invoices,
 			Set<Ordercancellation> ordercancellations) {
 		this.user = user;
 		this.shopowner = shopowner;
@@ -65,8 +62,6 @@ public class Order implements java.io.Serializable {
 		this.paymentStatus = paymentStatus;
 		this.salesdatas = salesdatas;
 		this.orderdetails = orderdetails;
-		this.orderstatuses = orderstatuses;
-		this.transactions = transactions;
 		this.invoices = invoices;
 		this.ordercancellations = ordercancellations;
 	}
@@ -184,24 +179,6 @@ public class Order implements java.io.Serializable {
 
 	public void setOrderdetails(Set<Orderdetail> orderdetails) {
 		this.orderdetails = orderdetails;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-	public Set<Orderstatus> getOrderstatuses() {
-		return this.orderstatuses;
-	}
-
-	public void setOrderstatuses(Set<Orderstatus> orderstatuses) {
-		this.orderstatuses = orderstatuses;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
-	public Set<Transaction> getTransactions() {
-		return this.transactions;
-	}
-
-	public void setTransactions(Set<Transaction> transactions) {
-		this.transactions = transactions;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "order")

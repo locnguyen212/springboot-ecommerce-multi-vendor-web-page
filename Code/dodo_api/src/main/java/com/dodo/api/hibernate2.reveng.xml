@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.org/dtd/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+  <table-filter match-schema="dodo_api" match-name=".*"/>
+  <table-filter match-catalog="dodo_api" match-name="category"/>
+  <table-filter match-catalog="dodo_api" match-name="invoice"/>
+  <table-filter match-catalog="dodo_api" match-name="item"/>
+  <table-filter match-catalog="dodo_api" match-name="notification"/>
+  <table-filter match-catalog="dodo_api" match-name="order"/>
+  <table-filter match-catalog="dodo_api" match-name="ordercancellation"/>
+  <table-filter match-catalog="dodo_api" match-name="orderdetail"/>
+  <table-filter match-catalog="dodo_api" match-name="parentcategory"/>
+  <table-filter match-catalog="dodo_api" match-name="product"/>
+  <table-filter match-catalog="dodo_api" match-name="productattribute"/>
+  <table-filter match-catalog="dodo_api" match-name="promotion"/>
+  <table-filter match-catalog="dodo_api" match-name="review"/>
+  <table-filter match-catalog="dodo_api" match-name="role"/>
+  <table-filter match-catalog="dodo_api" match-name="salesdata"/>
+  <table-filter match-catalog="dodo_api" match-name="shopowner"/>
+  <table-filter match-catalog="dodo_api" match-name="shopownercoupon"/>
+  <table-filter match-catalog="dodo_api" match-name="user"/>
+  <table-filter match-catalog="dodo_api" match-name="wishlist"/>
+</hibernate-reverse-engineering>

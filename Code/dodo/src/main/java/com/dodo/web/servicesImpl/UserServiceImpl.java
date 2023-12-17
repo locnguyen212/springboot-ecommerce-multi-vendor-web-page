@@ -1,7 +1,6 @@
 package com.dodo.web.servicesImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,46 +64,6 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public List<User> findByStatus(boolean status) {
-		try {
-			return repository.findByStatus(status);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByRoleName(String name) {
-		try {
-			return repository.findByRoleName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByDateRangeCreated(Date from, Date to) {
-		try {
-			return repository.findByDateRangeCreated(from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByDateRangeDob(Date from, Date to) {
-		try {
-			return repository.findByDateRangeDob(from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public User findByUsername(String name) {
 		try {
 			return repository.findByUsername(name);
@@ -118,66 +77,6 @@ public class UserServiceImpl implements IUserService {
 	public User findByEmail(String email) {
 		try {
 			return repository.findByEmail(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByPhoneNumberContain(String phone) {
-		try {
-			return repository.findByPhoneNumberContain(phone);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByUsernameContain(String name) {
-		try {
-			return repository.findByUsernameContain(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByEmailContain(String email) {
-		try {
-			return repository.findByEmailContain(email);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByFirstNameContain(String name) {
-		try {
-			return repository.findByFirstNameContain(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByLastNameContain(String name) {
-		try {
-			return repository.findByLastNameContain(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<User> findByAddressContain(String address) {
-		try {
-			return repository.findByAddressContain(address);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

@@ -17,16 +17,11 @@ public interface IOrderCancellationService {
 	public boolean save(Ordercancellation ordercancellation);
 	public boolean delete(int id);
 	
-	public List<Ordercancellation> findByStatus(boolean status);
-	
 	public Ordercancellation findByOrderOrderId(int id);
 	
 	public List<Ordercancellation> findByShopownerOwnerId(int id);
-	public List<Ordercancellation> findByShopownerShopName(String name);
-	
-	public List<Ordercancellation> findByUserUserId(int id);
+
 	public List<Ordercancellation> findByUserUsername(String name);
 	
-	public List<Ordercancellation> findByDateRange(Date from, Date to);
 	//====LOC====
 }

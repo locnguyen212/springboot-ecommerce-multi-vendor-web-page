@@ -13,12 +13,6 @@ public interface IOrderDetailService {
 	public boolean delete(int id);
 	
 	public List<Orderdetail> findByOrderOrderId(int id);
-	
-	public List<Orderdetail> findByProductProductId(int id);
-	public List<Orderdetail> findByProductProductName(String name);
-	
-//	public List<Orderdetail> findByShopownerOwnerId(int id);
-//	public List<Orderdetail> findByShopownerShopName(String name);
 	//====LOC====
 	
 	public List<ReviewModelView> getReviewModelByUserId(int userId);

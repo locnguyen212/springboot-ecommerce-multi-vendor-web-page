@@ -15,13 +15,6 @@ public interface IShopOwnerCouponService {
 	public boolean delete(int id);
 	
 	public List<Shopownercoupon> findByShopownerOwnerId(int id);
-	public List<Shopownercoupon> findByShopownerShopName(String name);
-	
-	public List<Shopownercoupon> findByIsActive(boolean status);
-	
-	public List<Shopownercoupon> findByCouponCode(String code);
-	
-	public List<Shopownercoupon> findByExpiryDate(Date date);
 	public boolean isCouponCodeExist(String code);
 	//====LOC====
 	

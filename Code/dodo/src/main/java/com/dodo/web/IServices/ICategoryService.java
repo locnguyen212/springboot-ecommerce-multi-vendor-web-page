@@ -18,15 +18,10 @@ public interface ICategoryService {
 	public boolean save(Category category);
 	public boolean delete(int id);
 	
-	public List<Category> findByParentCategoryName(String name);
-	public List<Category> findByParentCategoryId(int id);
-	
 	public Category findByCategoryName(String name);
 	
 	public List<Category> findByUserUserId(int id);
 	
 	public Page<Category> findPaginated(Pageable pageable, List<Category> categories);
 	//====LOC====
-	
-	public List<Category> getAllAndStatus();
 }

@@ -17,15 +17,7 @@ public interface IOrderService {
 
 	public boolean delete(int id);
 
-	public List<Order> findByOrderStatus(String status);
-
-	public List<Order> findByUserUserId(int id);
-
-	public List<Order> findByUserUsername(String name);
-
 	public List<Order> findByUserUsernameAndOrderStatus(String username, String status);
-
-	public List<Order> findByDateRange(Date from, Date to);
 
 	public List<OrderView> findSalesdataByYear(int year);
 

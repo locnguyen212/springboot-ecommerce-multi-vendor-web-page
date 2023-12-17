@@ -11,10 +11,6 @@ public interface IWishlistService {
 	public boolean save(Wishlist wishlist);
 	public boolean delete(int id);
 	
-	public List<Wishlist> findByProductProductId(int id);
-	public List<Wishlist> findByProductProductName(String name);
-	
 	public List<Wishlist> findByUserUserId(int id);
-	public List<Wishlist> findByUserUsername(String name);
 	//====LOC====
 }

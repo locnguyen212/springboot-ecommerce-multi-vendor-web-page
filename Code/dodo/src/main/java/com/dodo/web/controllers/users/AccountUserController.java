@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.dodo.web.IServices.IInvoiceService;
 import com.dodo.web.IServices.INotificationService;
 import com.dodo.web.IServices.IOrderCancellationService;
 import com.dodo.web.IServices.IOrderDetailService;
@@ -65,9 +64,6 @@ public class AccountUserController {
 	
 	@Autowired
 	IWishlistService wishlistService;
-	
-	@Autowired
-	IInvoiceService invoiceService;
 	
 	@Autowired
 	IReviewService reviewService;

@@ -69,39 +69,9 @@ public class ReviewServiceImpl implements IReviewService {
 	}
 
 	@Override
-	public List<Review> findByProductProductName(String name) {
-		try {
-			return repository.findByProductProductName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public List<Review> findByUserUserId(int id) {
 		try {
 			return repository.findByUserUserId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Review> findByUserUsername(String name) {
-		try {
-			return repository.findByUserUsername(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Review> findByRating(int rating) {
-		try {
-			return repository.findByRating(rating);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

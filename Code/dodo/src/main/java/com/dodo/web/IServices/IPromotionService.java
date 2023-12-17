@@ -17,11 +17,6 @@ public interface IPromotionService {
 	public boolean delete(int id);
 	
 	public List<Promotion> findByProductProductId(int id);
-	public List<Promotion> findByProductProductName(String name);
-	
-	public List<Promotion> findByStartDate(Date date);
-	
-	public List<Promotion> findByEndDate(Date date);
 	
 	public List<Promotion> findByShopownerOwnerId(int id);
 	

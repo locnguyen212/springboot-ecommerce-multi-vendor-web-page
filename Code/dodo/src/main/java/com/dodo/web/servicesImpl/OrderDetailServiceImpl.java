@@ -71,26 +71,6 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 	}
 
 	@Override
-	public List<Orderdetail> findByProductProductId(int id) {
-		try {
-			return repository.findByProductProductId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Orderdetail> findByProductProductName(String name) {
-		try {
-			return repository.findByProductProductName(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public List<ReviewModelView> getReviewModelByUserId(int userId) {
 		try {
 			return repository.getReviewModelByUserId(userId);
@@ -99,26 +79,6 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 			return null;
 		}
 	}
-
-	// @Override
-	// public List<Orderdetail> findByShopownerOwnerId(int id) {
-	// try {
-	// return repository.findByShopownerOwnerId(id);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// return null;
-	// }
-	// }
-	//
-	// @Override
-	// public List<Orderdetail> findByShopownerShopName(String name) {
-	// try {
-	// return repository.findByShopownerShopName(name);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// return null;
-	// }
-	// }
 	// ====LOC====
 
 	// ====Huy Dasboard====

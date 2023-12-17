@@ -71,46 +71,6 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<Order> findByOrderStatus(String status) {
-		try {
-			return repository.findByOrderStatus(status);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Order> findByUserUserId(int id) {
-		try {
-			return repository.findByUserUserId(id);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Order> findByUserUsername(String name) {
-		try {
-			return repository.findByUserUsername(name);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<Order> findByDateRange(Date from, Date to) {
-		try {
-			return repository.findByDateRange(from, to);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
 	public List<Order> findByUserUsernameAndOrderStatus(String username, String status) {
 		try {
 			return repository.findByUserUsernameAndOrderStatus(username, status);

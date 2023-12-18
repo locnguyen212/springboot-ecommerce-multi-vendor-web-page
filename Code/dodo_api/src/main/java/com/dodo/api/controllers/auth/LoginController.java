@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.account;
+package com.dodo.api.controllers.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class LoginController {
 	@PostMapping(value = { "/" , "" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> login(@RequestBody LoginInfo login) {
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getpassword()));
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));
 			var user = userService.findByUsernameModel(login.getUsername());
 			var jwt = jwtHelper.generateToken(user);
 			var newRefreshToken = jwtHelper.generateRefreshToken(user);

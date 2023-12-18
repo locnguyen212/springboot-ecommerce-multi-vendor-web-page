@@ -1,11 +1,9 @@
 package com.dodo.api.helpers;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
 public class ValidateHelper {
@@ -13,17 +11,6 @@ public class ValidateHelper {
 		bindingResult.getFieldErrors()
 			.stream()
 			.forEach(f -> System.out.println(f.getField()+ '-' + f.getCode() + ": " + f.getDefaultMessage()));
-	}
-	
-	public static Map<String, String> getErrors(BindingResult bindingResult){
-		return bindingResult.getFieldErrors()
-	            .stream()
-	            .collect(Collectors.toMap(
-	            		k -> k.getField(), 
-	            		v -> v.getDefaultMessage(),
-	            		(v1, v2) -> v1+", "+v2
-	            		)
-		);
 	}
 	
 	public static Map<String, Object> getErrorResponseBody(BindingResult bindingResult) {

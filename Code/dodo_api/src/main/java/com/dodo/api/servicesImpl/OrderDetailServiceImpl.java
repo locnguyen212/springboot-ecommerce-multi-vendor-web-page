@@ -1,6 +1,7 @@
 package com.dodo.api.servicesImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -8,9 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dodo.api.IServices.IOrderDetailService;
+import com.dodo.api.dtos.OrderDto;
 import com.dodo.api.dtos.OrderdetailDto;
+import com.dodo.api.dtos.ProductDto;
 import com.dodo.api.models.Orderdetail;
 import com.dodo.api.modelview.ReviewModelView;
+import com.dodo.api.modelview.ReviewModelViewDto;
 import com.dodo.api.repositories.OrderDetailRepository;
 
 @Service
@@ -77,9 +81,17 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 	}
 
 	@Override
-	public List<ReviewModelView> getReviewModelByUserId(int userId) {
+	public List<ReviewModelViewDto> getReviewModelByUserId(int userId) {
 		try {
-			return repository.getReviewModelByUserId(userId);
+			return repository
+					.getReviewModelByUserId(userId)
+					.stream()
+					.map(e -> {
+						var orderDto = modelMapper.map(e.getOrder(), OrderDto.class);
+						var productDto = modelMapper.map(e.getProduct(), ProductDto.class);
+						return new ReviewModelViewDto(orderDto, productDto);
+					})
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

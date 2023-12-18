@@ -3,7 +3,6 @@ package com.dodo.api.IServices;
 import java.util.List;
 
 import com.dodo.api.dtos.ReviewDto;
-import com.dodo.api.models.Review;
 
 public interface IReviewService {
 	//====LOC====

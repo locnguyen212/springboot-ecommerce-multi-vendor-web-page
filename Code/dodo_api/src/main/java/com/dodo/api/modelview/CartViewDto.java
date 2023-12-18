@@ -3,8 +3,9 @@ package com.dodo.api.modelview;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.dodo.api.dtos.ItemDto;
+import com.dodo.api.dtos.ShopownerDto;
 import com.dodo.api.models.Item;
-import com.dodo.api.models.Shopowner;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,12 +18,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class CartView {
-	private Shopowner shopowner;
-	private List<Item> items;
+public class CartViewDto {
+	private ShopownerDto shopowner;
+	private List<ItemDto> items;
 
-	public CartView(Shopowner shopowner) {
+	public CartViewDto(ShopownerDto shopowner) {
 		this.shopowner = shopowner;
-		this.items = new ArrayList<Item>();
+		this.items = new ArrayList<ItemDto>();
 	}
 }

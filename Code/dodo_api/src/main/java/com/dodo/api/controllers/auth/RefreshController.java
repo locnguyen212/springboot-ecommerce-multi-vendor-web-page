@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.account;
+package com.dodo.api.controllers.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import com.dodo.api.helpers.JwtHelper;
 import com.dodo.api.modelview.TokenAuth;
 
 @RestController
-@RequestMapping("refresh")
+@RequestMapping("api/auth/refresh")
 public class RefreshController {
 	@Autowired
 	IUserService userService;

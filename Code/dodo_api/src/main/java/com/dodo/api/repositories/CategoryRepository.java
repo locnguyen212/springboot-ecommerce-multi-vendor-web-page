@@ -22,9 +22,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 	@Query("from Category where status is not null")
 	public List<Category> findByStatusNotNull();
 	
-	@Query("from Category where status is not null")
-	public Page<Category> test(Pageable pageable);
-	
 	public List<Category> findByUserUserId(int id);
 	//====LOC====
 	

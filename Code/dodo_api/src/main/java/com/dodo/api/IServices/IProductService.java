@@ -25,6 +25,7 @@ public interface IProductService {
 	
 
 	//THIEN
+	public int getTotalQuantityByProductId(int productId);
 	public ProductDto findProductById(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop);
 
 	public List<String> searchByTerm(String term);

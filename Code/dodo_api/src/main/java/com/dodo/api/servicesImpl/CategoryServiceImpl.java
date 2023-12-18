@@ -38,6 +38,17 @@ public class CategoryServiceImpl implements ICategoryService {
 			return null;
 		}
 	}
+	
+	@Override
+	public Page<CategoryDto> findAll(Pageable pageable) {
+		try {
+			Page<CategoryDto> dtoPage = repository.findAll(pageable).map(entity -> modelMapper.map(entity, CategoryDto.class));
+			return dtoPage;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	public CategoryDto findById(int id) {
@@ -102,26 +113,26 @@ public class CategoryServiceImpl implements ICategoryService {
 		}	
 	}
 	
-	@Override
-	public Page<CategoryDto> findPaginated(Pageable pageable, List<CategoryDto> categories) {
-		int pageSize = pageable.getPageSize();
-        int currentPage = pageable.getPageNumber();
-        int startItem = currentPage * pageSize;
-        
-        List<CategoryDto> list;
-
-        if (categories.size() < startItem) {
-        	list = Collections.emptyList();
-        } else {
-            int toIndex = Math.min(startItem + pageSize, categories.size());
-            list = categories.subList(startItem, toIndex);
-        }
-
-        Page<CategoryDto> page
-          = new PageImpl<CategoryDto>(list, PageRequest.of(currentPage, pageSize), categories.size());
-
-        return page;
-	}
+//	@Override
+//	public Page<CategoryDto> findPaginated(Pageable pageable, List<CategoryDto> categories) {
+//		int pageSize = pageable.getPageSize();
+//        int currentPage = pageable.getPageNumber();
+//        int startItem = currentPage * pageSize;
+//        
+//        List<CategoryDto> list;
+//
+//        if (categories.size() < startItem) {
+//        	list = Collections.emptyList();
+//        } else {
+//            int toIndex = Math.min(startItem + pageSize, categories.size());
+//            list = categories.subList(startItem, toIndex);
+//        }
+//
+//        Page<CategoryDto> page
+//          = new PageImpl<CategoryDto>(list, PageRequest.of(currentPage, pageSize), categories.size());
+//
+//        return page;
+//	}
 	
 	@Override
 	public List<CategoryDto> findByUserUserId(int id) {
@@ -132,19 +143,6 @@ public class CategoryServiceImpl implements ICategoryService {
 			return null;
 		}	
 	}
-
-	@Override
-	public Page<CategoryDto> test(Pageable pageable) {
-		try {
-			Page<CategoryDto> dtoPage = repository.test(pageable).map(entity -> modelMapper.map(entity, CategoryDto.class));
-			return dtoPage;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	
 	//====LOC====
 
 }

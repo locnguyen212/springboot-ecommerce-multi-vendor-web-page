@@ -39,15 +39,6 @@ public class NotificationServiceImpl implements INotificationService {
 	}
 
 	@Override
-	public List<NotificationDto> findByUserIdAndTypeAndAll(int userId, String type, int skip, int take) {
-		try {
-			return modelMapper.map(repository.findByUserIdAndTypeAndAll(userId, type, skip, take), new TypeToken<List<NotificationDto>>() {}.getType());
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public List<NotificationDto> findByUserId(int userId, int skip, int take) {
 		try {
 			return modelMapper.map(repository.findByUserId(userId, skip, take), new TypeToken<List<NotificationDto>>() {}.getType());
@@ -75,9 +66,9 @@ public class NotificationServiceImpl implements INotificationService {
 	}
 
 	@Override
-	public Integer countAll(int userId) {
+	public Integer countByUserId(int userId) {
 		try {
-			return repository.countAll(userId);
+			return repository.countByUserId(userId);
 		} catch (Exception e) {
 			return null;
 		}

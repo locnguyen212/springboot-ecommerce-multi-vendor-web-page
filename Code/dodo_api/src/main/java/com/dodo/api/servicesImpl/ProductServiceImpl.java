@@ -144,6 +144,15 @@ public class ProductServiceImpl implements IProductService {
 			return null;
 		}
 	}
+	
+	@Override
+	public int getTotalQuantityByProductId(int productId) {
+		try {
+			return productRepository.getTotalQuantityByProductId(productId);
+		} catch (Exception e) {
+			return -1;
+		}
+	}
 
 	// LOC
 	@Override

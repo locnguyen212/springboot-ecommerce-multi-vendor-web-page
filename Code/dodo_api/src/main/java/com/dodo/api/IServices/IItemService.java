@@ -5,6 +5,7 @@ import java.util.List;
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.dtos.UserDto;
 import com.dodo.api.modelview.CartView;
+import com.dodo.api.modelview.CartViewDto;
 
 public interface IItemService {
 	public List<ItemDto> findAll();
@@ -19,13 +20,10 @@ public interface IItemService {
 	
 	public void saveCartToDb(UserDto user, List<ItemDto> cartItems);
 	
-	public int getTotalQuantityForProduct(int productId);
-	
-	public ItemDto findByProductId(int productId, int userId);
+	public ItemDto findByProductIdAndUserId(int productId, int userId);
 	
 	//LOC
-	public List<CartView> getCartView(int userId);
-	public List<CartView> getCartViewFromItems(int userId, List<Integer> itemsId);
+	public List<CartViewDto> getCartViewFromItems(int userId, List<Integer> itemsId);
 	//LOC
 
 }

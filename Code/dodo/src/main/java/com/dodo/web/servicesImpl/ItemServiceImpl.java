@@ -108,26 +108,7 @@ public class ItemServiceImpl implements IItemService {
 		}	
 	}
 	
-	//LOC
-	@Override
-	public List<CartView> getCartView(int userId) {
-		try {
-			var cartViews = repository.getCartView(userId);
-			var items = repository.getAllItemByUser(userId);
-			for(var cartView : cartViews) {
-				for(var item : items) {
-					if(item.getProduct().getShopowner().getOwnerId() == cartView.getShopowner().getOwnerId()) {
-						cartView.getItems().add(item);
-					}
-				}
-			}
-			return cartViews;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}	
-	}
-	
+	//LOC	
 	@Override
 	public List<CartView> getCartViewFromItems(int userId, List<Integer> itemsId) {
 		try {

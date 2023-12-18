@@ -43,36 +43,19 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception  {
 		httpSecurity
-//				.cors(cors -> cors.configurationSource(new CorsConfigurationSource() {					
-//					@Override
-//					public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-//						CorsConfiguration config = new CorsConfiguration();
-//				        config.setAllowedHeaders(Collections.singletonList("*"));
-//				        config.setAllowedMethods(Collections.singletonList("*"));
-//				        config.addAllowedOrigin("*");
-//				        config.setAllowCredentials(true);
-//				        return config;
-//					}
-//				}))
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/user/become-a-vendor/**").hasAnyRole("USER")
-//						.requestMatchers("/account/register/test").hasAnyRole("USER", "SHOPOWNER", "SUPER_ADMIN", "ADMIN")
+						.requestMatchers("/api/register/test").hasAnyRole("USER", "SHOPOWNER", "SUPER_ADMIN", "ADMIN")
 						.requestMatchers("/user/account/**").hasAnyRole("SHOPOWNER", "USER")
 			            .requestMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
 			            .requestMatchers("/shop-owners/**").hasAnyRole("SHOPOWNER")			          	            
 			            .requestMatchers(
 			            		"/"
 			            		, "/login/**"
-			            		, "/refresh/**"
-			            		, "/account/**"
-			            		, "/users/**"
-			            		, "/user/**"
-			            		, "/jquery/**"
-			            		, "/favicon.ico"
-			            		, "/error/**"
-			            		, "/upload/**"
-			            		, "/admins/**").permitAll()
+			            		, "/api/auth/**"
+			            		, "/api/register/**"
+			            		, "/upload/**").permitAll()
 			            .anyRequest().authenticated()	            
 		        )
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

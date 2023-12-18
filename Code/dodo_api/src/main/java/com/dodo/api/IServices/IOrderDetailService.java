@@ -3,6 +3,7 @@ import java.util.List;
 
 import com.dodo.api.dtos.OrderdetailDto;
 import com.dodo.api.modelview.ReviewModelView;
+import com.dodo.api.modelview.ReviewModelViewDto;
 
 public interface IOrderDetailService {
 	//====LOC====
@@ -14,5 +15,5 @@ public interface IOrderDetailService {
 	public List<OrderdetailDto> findByOrderOrderId(int id);
 	//====LOC====
 	
-	public List<ReviewModelView> getReviewModelByUserId(int userId);
+	public List<ReviewModelViewDto> getReviewModelByUserId(int userId);
 }

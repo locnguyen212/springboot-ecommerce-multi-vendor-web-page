@@ -2,6 +2,7 @@ package com.dodo.api.servicesImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 
 import com.dodo.api.IServices.IItemService;
 import com.dodo.api.dtos.ItemDto;
+import com.dodo.api.dtos.ShopownerDto;
 import com.dodo.api.dtos.UserDto;
 import com.dodo.api.models.Item;
 import com.dodo.api.modelview.CartView;
+import com.dodo.api.modelview.CartViewDto;
 import com.dodo.api.repositories.ItemRepository;
 
 @Service
@@ -99,18 +102,9 @@ public class ItemServiceImpl implements IItemService {
 	}
 
 	@Override
-	public int getTotalQuantityForProduct(int productId) {
+	public ItemDto findByProductIdAndUserId(int productId, int userId) {
 		try {
-			return repository.getTotalQuantityForProduct(productId);
-		} catch (Exception e) {
-			return -1;
-		}
-	}
-
-	@Override
-	public ItemDto findByProductId(int productId, int userId) {
-		try {
-			return modelMapper.map(repository.findByProductId(productId, userId), ItemDto.class);
+			return modelMapper.map(repository.findByProductIdAndUserId(productId, userId), ItemDto.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -119,42 +113,29 @@ public class ItemServiceImpl implements IItemService {
 
 	// LOC
 	@Override
-	public List<CartView> getCartView(int userId) {
-		try {
-			var cartViews = repository.getCartView(userId);
-			var items = repository.getAllItemByUser(userId);
-			for (var cartView : cartViews) {
-				for (var item : items) {
-					if (item.getProduct().getShopowner().getOwnerId() == cartView.getShopowner().getOwnerId()) {
-						cartView.getItems().add(item);
-					}
-				}
-			}
-			return cartViews;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	@Override
-	public List<CartView> getCartViewFromItems(int userId, List<Integer> itemsId) {
+	public List<CartViewDto> getCartViewFromItems(int userId, List<Integer> itemsId) {
 		try {
 			var cartViews = repository.getCartViewFromItems(userId, itemsId);
+			
+			List<CartViewDto> dto = cartViews.stream()
+					.map(e -> new CartViewDto(modelMapper.map(e.getShopowner(), ShopownerDto.class)))
+					.collect(Collectors.toList());
+			
 			List<Item> items = new ArrayList<Item>();
 
 			for (var e : itemsId) {
+				System.out.println(e);
 				items.add(repository.findById(e).get());
 			}
 
-			for (var cartView : cartViews) {
+			for (var cartView : dto) {
 				for (var item : items) {
 					if (item.getProduct().getShopowner().getOwnerId() == cartView.getShopowner().getOwnerId()) {
-						cartView.getItems().add(item);
+						cartView.getItems().add(modelMapper.map(item, ItemDto.class));
 					}
 				}
 			}
-			return cartViews;
+			return dto;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

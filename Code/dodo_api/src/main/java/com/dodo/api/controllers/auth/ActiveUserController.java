@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.account;
+package com.dodo.api.controllers.auth;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IUserService;
 
 @RestController
-@RequestMapping("account/active")
+@RequestMapping("api/auth/active")
 public class ActiveUserController {
 	@Autowired
 	IUserService userService;

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.dodo.api.dtos.UserDto;
 import com.dodo.api.models.User;
 
 import io.jsonwebtoken.Claims;

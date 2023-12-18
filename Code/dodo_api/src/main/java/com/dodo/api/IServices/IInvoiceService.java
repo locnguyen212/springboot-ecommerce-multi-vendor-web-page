@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import com.dodo.api.dtos.InvoiceDto;
-import com.dodo.api.models.Invoice;
 
 public interface IInvoiceService {
 	//====LOC====

@@ -26,7 +26,6 @@ public interface IItemService {
 	public Item findByProductId(int productId, int userId);
 	
 	//LOC
-	public List<CartView> getCartView(int userId);
 	public List<CartView> getCartViewFromItems(int userId, List<Integer> itemsId);
 	//LOC
 

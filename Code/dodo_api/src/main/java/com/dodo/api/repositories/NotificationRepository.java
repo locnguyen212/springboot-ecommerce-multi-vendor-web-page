@@ -22,16 +22,12 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 			+ "WHERE n.user.userId = :userId "
 			+ "ORDER BY n.createdAt DESC "
 			+ "LIMIT :take OFFSET :skip")
-	public List<Notification> findByUserId(@Param("userId") int userId, @Param("skip") int skip, @Param("take") int take);
+	public List<Notification> findByUserId(@Param("userId") int userId, @Param("skip") int skip, @Param("take") int take);	
 	
 	@Query("FROM Notification n "
-			+ "WHERE n.user.userId = :userId AND n.notificationType = :type "
-			+ "ORDER BY n.createdAt DESC "
-			+ "LIMIT :take OFFSET :skip")
-	public List<Notification> findByUserIdAndTypeAndAll(@Param("userId") int userId, @Param("type") String type, @Param("skip") int skip, @Param("take") int take);
-	
-	@Query("FROM Notification n "
-			+ "WHERE n.user.userId = :userId AND (:type IS NULL OR n.notificationType = :type) AND n.isRead = :isRead "
+			+ "WHERE n.user.userId = :userId "
+			+ "AND (:type IS NULL OR n.notificationType = :type) "
+			+ "AND (:isRead IS NULL OR n.isRead = :isRead) "
 			+ "ORDER BY n.createdAt DESC "
 			+ "LIMIT :take OFFSET :skip")
 	public List<Notification> findByUserIdAndTypeAndIsRead(@Param("userId") int userId, @Param("type") String type, @Param("isRead") Boolean isRead, @Param("skip") int skip, @Param("take") int take);
@@ -44,5 +40,5 @@ public interface NotificationRepository extends JpaRepository<Notification, Inte
 	@Query("SELECT COUNT(n) "
 			+ "FROM Notification n "
 			+ "WHERE n.user.userId = :userId ")
-	public int countAll(@Param("userId") int userId);
+	public int countByUserId(@Param("userId") int userId);
 }

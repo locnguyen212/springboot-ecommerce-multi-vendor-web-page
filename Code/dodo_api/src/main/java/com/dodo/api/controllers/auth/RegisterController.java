@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.account;
+package com.dodo.api.controllers.auth;
 
 import java.util.Date;
 import java.util.List;
@@ -8,10 +8,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +33,7 @@ import com.dodo.api.validators.UserUsernameUniqueValidator;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("account/register")
+@RequestMapping("api/register")
 public class RegisterController {
 	@Autowired
 	IUserService userService;
@@ -95,8 +95,10 @@ public class RegisterController {
 	}
 	
 	@GetMapping(value = {"test" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<UserDto>> test() {
+	public ResponseEntity<List<UserDto>> test(Authentication auth) {
 		try {
+			System.out.println("TEST TEST TEST");
+			System.out.println(userService.findByUsername(auth.getName()));
 			var page = 1;
 			var size = 8;
 			var pageable = PageRequest.of(page - 1, size);

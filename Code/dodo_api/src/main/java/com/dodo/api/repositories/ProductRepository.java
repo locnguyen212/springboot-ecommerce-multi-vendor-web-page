@@ -15,19 +15,18 @@ import com.dodo.api.modelview.ProductView;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
+	@Query("SELECT p.stockQuantity FROM Product p WHERE p.productId=:productId")
+	public int getTotalQuantityByProductId(@Param("productId") int productId);
+
 	@Query("from Product where category.categoryId  =:idCategory")
 	public List<Product> listProductByIdCategory(@Param("idCategory") int idCategory);
 
-	@Query("from Product p "
-			+ "LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
-			+ "WHERE p.productId =:id "
-			+ "AND (:statusPr IS NULL OR p.status =:statusPr) " 
-			+ "AND (:statusCate IS NULL OR c.status =:statusCate) " 
-			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " 
-			+ "GROUP BY p.productName "
+	@Query("from Product p " + "LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh " + "WHERE p.productId =:id "
+			+ "AND (:statusPr IS NULL OR p.status =:statusPr) " + "AND (:statusCate IS NULL OR c.status =:statusCate) "
+			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
-	public Product findProductById(@Param("id") int id, @Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop );
+	public Product findProductById(@Param("id") int id, @Param("statusPr") Boolean statusPr,
+			@Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop);
 
 	@Query("from Product where productName like %:term%")
 	public List<String> searchByTerm(@Param("term") String term);
@@ -37,88 +36,77 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	// recommend search tagbar header
 	@Query("SELECT new com.dodo.api.modelview.ProductView(p.productId, p.productName, p.price, p.stockQuantity, p.productImage, p.status, c.categoryId, c.categoryName, sh.user.userId, sh.shopName, sh.shopLogoPath, pr.discountAmount, pr.startDate, pr.endDate, COALESCE(COUNT(r.comment), 0) AS totalComments, COALESCE(AVG(r.rating), 0) AS averageRating) "
-			+ "FROM Product p LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
+			+ "FROM Product p LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "
 			+ "LEFT JOIN Promotion pr ON p.productId = pr.product.productId "
-			+ "LEFT JOIN Review r ON p.productId = r.product.productId " 
-			+ "WHERE (:productName IS NULL OR p.productName LIKE %:productName%) " 
-			+ "AND (:categoryName IS NULL OR c.categoryName LIKE %:categoryName%) " 
-			+ "AND (p.status = true AND c.status = true AND sh.status = true) " 
-			+ "GROUP BY p.productName "
+			+ "LEFT JOIN Review r ON p.productId = r.product.productId "
+			+ "WHERE (:productName IS NULL OR p.productName LIKE %:productName%) "
+			+ "AND (:categoryName IS NULL OR c.categoryName LIKE %:categoryName%) "
+			+ "AND (p.status = true AND c.status = true AND sh.status = true) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC limit :n")
 	public List<ProductView> findProductViewByProductName(@Param("productName") String productName,
 			@Param("categoryName") String categoryName, @Param("n") int n);
 
-	//@Query("from Product where status=:status ")
-	@Query("from Product p "
-			+ "LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
+	// @Query("from Product where status=:status ")
+	@Query("from Product p " + "LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "
 			+ "WHERE (:statusPr IS NULL OR p.status =:statusPr) "
-			+ "AND (:statusCate IS NULL OR c.status =:statusCate) " 
-			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " 
-			+ "GROUP BY p.productName "
+			+ "AND (:statusCate IS NULL OR c.status =:statusCate) "
+			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
-	public List<Product> getAllAndStatus(@Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop );
-	
+	public List<Product> getAllAndStatus(@Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate,
+			@Param("statusShop") Boolean statusShop);
+
 	@Query("SELECT p FROM Product p WHERE p.shopowner.id = :ownerId")
 	public List<Product> findByOwnerId2(@Param("ownerId") Integer ownerId);
 
 	@Query(value = "SELECT new com.dodo.api.modelview.ProductView(p.productId, p.productName, p.price, p.stockQuantity, p.productImage, p.status, c.categoryId, c.categoryName, sh.user.userId, sh.shopName, sh.shopLogoPath, pr.discountAmount, pr.startDate, pr.endDate, COALESCE(COUNT(r.comment), 0) AS totalComments, COALESCE(AVG(r.rating), 0) AS averageRating) "
-			+ "FROM Product p LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
+			+ "FROM Product p LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "
 			+ "LEFT JOIN Promotion pr ON p.productId = pr.product.productId "
 			+ "LEFT JOIN Review r ON p.productId = r.product.productId "
-			+ "WHERE (:productName IS NULL OR p.productName LIKE %:productName%) " 
-			+ "AND (:categoryName IS NULL OR c.categoryName LIKE %:categoryName%) " 
-			+ "AND (p.status = true AND c.status = true) " 
-			+ "GROUP BY p.productName "
+			+ "WHERE (:productName IS NULL OR p.productName LIKE %:productName%) "
+			+ "AND (:categoryName IS NULL OR c.categoryName LIKE %:categoryName%) "
+			+ "AND (p.status = true AND c.status = true) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
 	public Page<ProductView> findProductViewByProductNamePage(@Param("productName") String productName,
 			@Param("categoryName") String categoryName, Pageable pageable);
 
 	@Query(value = "SELECT new com.dodo.api.modelview.ProductView(p.productId, p.productName, p.price, p.stockQuantity, p.productImage, p.status, c.categoryId, c.categoryName, sh.user.userId, sh.shopName, sh.shopLogoPath, pr.discountAmount, pr.startDate, pr.endDate, COALESCE(COUNT(r.comment), 0) AS totalComments, COALESCE(AVG(r.rating), 0) AS averageRating) "
-			+ "FROM Product p LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
+			+ "FROM Product p LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "
 			+ "LEFT JOIN Promotion pr ON p.productId = pr.product.productId "
-			+ "LEFT JOIN Review r ON p.productId = r.product.productId "
-			+ "WHERE c.categoryId = :id "
-			+ "AND (p.status = true AND c.status = true) " 
-			+ "GROUP BY p.productName "
+			+ "LEFT JOIN Review r ON p.productId = r.product.productId " + "WHERE c.categoryId = :id "
+			+ "AND (p.status = true AND c.status = true) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
 	public Page<ProductView> findProductViewByCategoryIdPage(@Param("id") int id, Pageable pageable);
 
-	//sản phẩm của shop
+	// sản phẩm của shop
 	@Query(value = "SELECT new com.dodo.api.modelview.ProductView(p.productId, p.productName, p.price, p.stockQuantity, p.productImage, p.status, c.categoryId, c.categoryName, sh.user.userId, sh.shopName, sh.shopLogoPath, pr.discountAmount, pr.startDate, pr.endDate, COALESCE(COUNT(r.comment), 0) AS totalComments, COALESCE(AVG(r.rating), 0) AS averageRating) "
-			+ "FROM Product p LEFT JOIN p.category c "
-			+ "LEFT JOIN p.shopowner sh "
+			+ "FROM Product p LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "
 			+ "LEFT JOIN Promotion pr ON p.productId = pr.product.productId "
 			+ "LEFT JOIN Review r ON p.productId = r.product.productId "
 			+ "WHERE (:statusPr IS NULL OR p.status =:statusPr) "
-			+ "AND (:statusCate IS NULL OR c.status =:statusCate) " 
-			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " 
-			+ "AND sh.ownerId = :idShop "
-			+ "GROUP BY p.productName "
-			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
-	public Page<ProductView> getListProductByShop(@Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop, @Param("idShop") int idShop, Pageable pageable);
-  
-	//tính sao, review cho shop
+			+ "AND (:statusCate IS NULL OR c.status =:statusCate) "
+			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " + "AND sh.ownerId = :idShop "
+			+ "GROUP BY p.productName " + "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
+	public Page<ProductView> getListProductByShop(@Param("statusPr") Boolean statusPr,
+			@Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop,
+			@Param("idShop") int idShop, Pageable pageable);
 
-	//LOC
+	// tính sao, review cho shop
+
+	// LOC
 	@Query("SELECT p FROM Product p WHERE p.shopowner.ownerId = :id ORDER BY p.status DESC, p.createdAt DESC")
-	public List<Product> findByShopownerOwnerId(@Param("id")int id);
-	
-	@Query("SELECT p "
-		+ "FROM Product p "
-		+ "WHERE p.shopowner.ownerId = :id AND (p.status = true AND p.stockQuantity > 0) "
-		+ "ORDER BY p.status DESC, p.createdAt DESC")
-	public List<Product> findByShopownerOwnerIdAndStatusActive(@Param("id")int id);
-	
-	@Query("SELECT p "
-			+ "FROM Product p "
+	public List<Product> findByShopownerOwnerId(@Param("id") int id);
+
+	@Query("SELECT p " + "FROM Product p "
+			+ "WHERE p.shopowner.ownerId = :id AND (p.status = true AND p.stockQuantity > 0) "
+			+ "ORDER BY p.status DESC, p.createdAt DESC")
+	public List<Product> findByShopownerOwnerIdAndStatusActive(@Param("id") int id);
+
+	@Query("SELECT p " + "FROM Product p "
 			+ "WHERE p.shopowner.ownerId = :shopownerId AND p.productId NOT IN :ids AND (p.status = true AND p.stockQuantity > 0)")
-	public List<Product> findByIdsNotInAndShopownerIdAndStatusActive(@Param("ids") List<Integer> ids, @Param("shopownerId") int shopownerId);
-	
+	public List<Product> findByIdsNotInAndShopownerIdAndStatusActive(@Param("ids") List<Integer> ids,
+			@Param("shopownerId") int shopownerId);
+
 	public Product findByProductNameAndShopownerOwnerId(String productName, int shopId);
-	//LOC
-	
+	// LOC
+
 }

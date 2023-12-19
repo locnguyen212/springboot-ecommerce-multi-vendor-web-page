@@ -25,11 +25,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "AND (:statusPr IS NULL OR p.status =:statusPr) " + "AND (:statusCate IS NULL OR c.status =:statusCate) "
 			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
-	public Product findProductById(@Param("id") int id, @Param("statusPr") Boolean statusPr,
+	public Product findByProductIdCustom(@Param("id") int id, @Param("statusPr") Boolean statusPr,
 			@Param("statusCate") Boolean statusCate, @Param("statusShop") Boolean statusShop);
 
-	@Query("from Product where productName like %:term%")
-	public List<String> searchByTerm(@Param("term") String term);
+	@Query("from Product where productName like %:keyword%")
+	public List<Product> findByKeyword(@Param("keyword") String keyword);
 
 	@Query(value = "select * from Product order by createdAt desc limit :n", nativeQuery = true)
 	public List<Product> getNewProduct(@Param("n") int n);
@@ -43,7 +43,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "AND (:categoryName IS NULL OR c.categoryName LIKE %:categoryName%) "
 			+ "AND (p.status = true AND c.status = true AND sh.status = true) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC limit :n")
-	public List<ProductView> findProductViewByProductName(@Param("productName") String productName,
+	public List<ProductView> findProductViewByProductNameAndCategoryName(@Param("productName") String productName,
 			@Param("categoryName") String categoryName, @Param("n") int n);
 
 	// @Query("from Product where status=:status ")
@@ -52,11 +52,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 			+ "AND (:statusCate IS NULL OR c.status =:statusCate) "
 			+ "AND (:statusShop IS NULL OR sh.status =:statusShop) " + "GROUP BY p.productName "
 			+ "ORDER BY COALESCE(p.updatedAt, p.createdAt) DESC")
-	public List<Product> getAllAndStatus(@Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate,
+	public List<Product> findByStatusCustom(@Param("statusPr") Boolean statusPr, @Param("statusCate") Boolean statusCate,
 			@Param("statusShop") Boolean statusShop);
-
-	@Query("SELECT p FROM Product p WHERE p.shopowner.id = :ownerId")
-	public List<Product> findByOwnerId2(@Param("ownerId") Integer ownerId);
 
 	@Query(value = "SELECT new com.dodo.api.modelview.ProductView(p.productId, p.productName, p.price, p.stockQuantity, p.productImage, p.status, c.categoryId, c.categoryName, sh.user.userId, sh.shopName, sh.shopLogoPath, pr.discountAmount, pr.startDate, pr.endDate, COALESCE(COUNT(r.comment), 0) AS totalComments, COALESCE(AVG(r.rating), 0) AS averageRating) "
 			+ "FROM Product p LEFT JOIN p.category c " + "LEFT JOIN p.shopowner sh "

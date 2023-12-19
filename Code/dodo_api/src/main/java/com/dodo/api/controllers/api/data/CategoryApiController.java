@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.data;
 
 import java.util.List;
 
@@ -14,24 +14,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dodo.api.IServices.ICategoryService;
-import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.CategoryDto;
-import com.dodo.api.validators.CategoryUniqueValidator;
 
 @RestController
 @RequestMapping("api/data/category")
 public class CategoryApiController {
 	@Autowired
 	ICategoryService categoryService;
-
-	@Autowired
-	IUserService userService;
-
-	@Autowired
-	CategoryUniqueValidator uniqueValidator;
-
+	
 	@GetMapping(value = { "find-all-paginate" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Page<CategoryDto>> findAllPaginate(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "size", defaultValue = "10") int size) {
+	public ResponseEntity<Page<CategoryDto>> findAllPaginate(
+			@RequestParam(value = "page", defaultValue = "1") int page, 
+			@RequestParam(value = "size", defaultValue = "10") int size
+			) {
 		try {
 			return new ResponseEntity<Page<CategoryDto>>(categoryService.findAll(PageRequest.of(page - 1, size)) ,HttpStatus.OK);
 		} catch (Exception e) {
@@ -75,7 +70,7 @@ public class CategoryApiController {
 	}
 	
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CategoryDto> findById(@RequestParam(value = "id", required = true) Integer id) {
+	public ResponseEntity<CategoryDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
 			return new ResponseEntity<CategoryDto>(categoryService.findById(id) ,HttpStatus.OK);
 		} catch (Exception e) {
@@ -97,7 +92,7 @@ public class CategoryApiController {
 	}
 	
 	@GetMapping(value = { "find-by-user-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<CategoryDto>> findByUserUserId(@RequestParam(value = "id", required = true) Integer id) {
+	public ResponseEntity<List<CategoryDto>> findByUserUserId(@RequestParam(value = "id", required = true) int id) {
 		try {
 			return new ResponseEntity<List<CategoryDto>>(categoryService.findByUserUserId(id) ,HttpStatus.OK);
 		} catch (Exception e) {

@@ -1,6 +1,7 @@
 package com.dodo.api.servicesImpl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -9,8 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.dodo.api.IServices.IOrderService;
 import com.dodo.api.dtos.OrderDto;
+import com.dodo.api.dtos.ShopownerDto;
 import com.dodo.api.models.Order;
-import com.dodo.api.modelview.OrderView;
+import com.dodo.api.modelview.dtos.OrderViewDto;
 import com.dodo.api.repositories.OrderRepository;
 
 @Service
@@ -89,9 +91,17 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<OrderView> findSalesdataByYear(int year) {
+	public List<OrderViewDto> findSalesdataByYear(int year) {
 		try {
-			return repository.findSalesdataByYear(year);
+			return repository.findSalesdataByYear(year)
+					.stream()
+					.map(e -> new OrderViewDto(
+							modelMapper.map(e.getShopowner(), ShopownerDto.class), 
+							e.getTotal(),
+							e.getMonth(),
+							e.getYear()
+							))
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -99,9 +109,17 @@ public class OrderServiceImpl implements IOrderService {
 	}
 
 	@Override
-	public List<OrderView> findSalesdataByYearAndMonth(int year, int month) {
+	public List<OrderViewDto> findSalesdataByYearAndMonth(int year, int month) {
 		try {
-			return repository.findSalesdataByYearAndMonth(year, month);
+			return repository.findSalesdataByYearAndMonth(year, month)
+					.stream()
+					.map(e -> new OrderViewDto(
+							modelMapper.map(e.getShopowner(), ShopownerDto.class), 
+							e.getTotal(),
+							e.getMonth(),
+							e.getYear()
+							))
+					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

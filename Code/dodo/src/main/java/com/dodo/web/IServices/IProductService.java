@@ -27,8 +27,6 @@ public interface IProductService {
 	//THIEN
 	public Product findProductById(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop);
 
-	public List<String> searchByTerm(String term);
-
 	// search product header
 	public List<ProductView> findProductViewByProductName(String productName, String categoryName);
 

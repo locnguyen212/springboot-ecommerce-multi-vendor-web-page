@@ -3,7 +3,7 @@ package com.dodo.api.IServices;
 import java.util.List;
 
 import com.dodo.api.dtos.OrderDto;
-import com.dodo.api.modelview.OrderView;
+import com.dodo.api.modelview.dtos.OrderViewDto;
 
 public interface IOrderService {
 	// ====LOC====
@@ -19,9 +19,9 @@ public interface IOrderService {
 	
 	public List<OrderDto> findByUserUsernameAndOrderStatus(String username, String status);
 	
-	public List<OrderView> findSalesdataByYear(int year);
+	public List<OrderViewDto> findSalesdataByYear(int year);
 
-	public List<OrderView> findSalesdataByYearAndMonth(int year, int month);
+	public List<OrderViewDto> findSalesdataByYearAndMonth(int year, int month);
 
 	public List<Integer> findSalesdataYear();
 	

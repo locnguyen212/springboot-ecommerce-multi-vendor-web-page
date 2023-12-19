@@ -32,9 +32,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("from Product where productId =:id")
 	public Product getProductDetail(@Param("id") int id);
 
-	@Query("from Product where productName like %:term%")
-	public List<String> searchByTerm(@Param("term") String term);
-
 	@Query(value = "select * from Product order by createdAt desc limit :n", nativeQuery = true)
 	public List<Product> getNewProduct(@Param("n") int n);
 

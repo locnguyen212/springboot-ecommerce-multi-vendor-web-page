@@ -133,9 +133,9 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public boolean isTokenExist(String token) {
+	public boolean isForgetPasswordTokenExist(String token) {
 		try {
-			return repository.findByToken(token).size() != 0;
+			return repository.findByForgetPasswordToken(token).size() != 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return false;

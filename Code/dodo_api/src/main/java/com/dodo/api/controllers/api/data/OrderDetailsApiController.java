@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.data;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import com.dodo.api.IServices.IOrderDetailService;
 import com.dodo.api.IServices.IOrderService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderdetailDto;
-import com.dodo.api.modelview.ReviewModelViewDto;
+import com.dodo.api.modelview.dtos.ReviewModelViewDto;
 
 @RestController
 @RequestMapping("api/data/order-details")
@@ -33,7 +33,7 @@ public class OrderDetailsApiController {
 	@GetMapping(value = { "find-by-order-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderdetailDto>> findByOrderOrderId(
 			Authentication auth, 
-			@RequestParam(value = "orderId", required = true) Integer id
+			@RequestParam(value = "orderId", required = true) int id
 			) {
 		try {
 			//validate

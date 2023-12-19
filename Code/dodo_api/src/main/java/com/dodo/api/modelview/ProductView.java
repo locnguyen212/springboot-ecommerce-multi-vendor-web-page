@@ -15,7 +15,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class ProductView {
-
 	private Integer productId;
     private String productName;
     private Double price;

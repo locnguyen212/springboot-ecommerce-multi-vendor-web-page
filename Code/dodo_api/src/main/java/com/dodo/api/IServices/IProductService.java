@@ -26,21 +26,19 @@ public interface IProductService {
 
 	//THIEN
 	public int getTotalQuantityByProductId(int productId);
-	public ProductDto findProductById(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop);
+	public ProductDto findByProductIdCustom(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop);
 
-	public List<String> searchByTerm(String term);
+	public List<ProductDto> findByKeyword(String keyword);
 
 	// search product header
-	public List<ProductView> findProductViewByProductName(String productName, String categoryName);
+	public List<ProductView> findProductViewByProductNameAndCategoryName(String productName, String categoryName);
 
 	// get all
-	public List<ProductDto> getAllAndStatus();
+	public List<ProductDto> findByStatusCustom();
 
-	public List<ProductDto> getProductsByOwnerId2(Integer ownerId);
+	public Page<ProductView> findProductViewPageByProductNameAndCategoryName(String productName, String categoryName, int pageNo, int pageSize);
 
-	public Page<ProductView> findProductViewByProductNamePage(String productName, String categoryName, int pageNo, int pageSize);
-
-	public Page<ProductView> findProductViewByCategoryIdPage(int id, int pageNo, int pageSize);
+	public Page<ProductView> findProductViewPageByCategoryId(int id, int pageNo, int pageSize);
 	
 	public Page<ProductView> getListProductByShop(Boolean statusPr, Boolean statusCate, Boolean statusShop, int idShop, int pageNo, int pageSize);
 	//THIEN

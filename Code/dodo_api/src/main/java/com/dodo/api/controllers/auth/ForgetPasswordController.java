@@ -87,7 +87,7 @@ public class ForgetPasswordController {
 	
 	private String generateToken() {
 		String token = UUID.randomUUID().toString().replace("-", "") + System.currentTimeMillis();
-		if(userService.isTokenExist(token)) {
+		if(userService.isForgetPasswordTokenExist(token)) {
 			generateToken();
 		}
 		return token;

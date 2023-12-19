@@ -1,4 +1,4 @@
-package com.dodo.api.modelview;
+package com.dodo.api.modelview.dtos;
 
 import com.dodo.api.dtos.OrderDto;
 import com.dodo.api.dtos.ProductDto;

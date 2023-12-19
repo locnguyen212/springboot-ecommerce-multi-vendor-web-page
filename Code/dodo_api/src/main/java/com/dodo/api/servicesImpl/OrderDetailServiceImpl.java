@@ -14,7 +14,7 @@ import com.dodo.api.dtos.OrderdetailDto;
 import com.dodo.api.dtos.ProductDto;
 import com.dodo.api.models.Orderdetail;
 import com.dodo.api.modelview.ReviewModelView;
-import com.dodo.api.modelview.ReviewModelViewDto;
+import com.dodo.api.modelview.dtos.ReviewModelViewDto;
 import com.dodo.api.repositories.OrderDetailRepository;
 
 @Service

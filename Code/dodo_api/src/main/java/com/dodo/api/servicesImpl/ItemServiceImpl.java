@@ -15,7 +15,7 @@ import com.dodo.api.dtos.ShopownerDto;
 import com.dodo.api.dtos.UserDto;
 import com.dodo.api.models.Item;
 import com.dodo.api.modelview.CartView;
-import com.dodo.api.modelview.CartViewDto;
+import com.dodo.api.modelview.dtos.CartViewDto;
 import com.dodo.api.repositories.ItemRepository;
 
 @Service

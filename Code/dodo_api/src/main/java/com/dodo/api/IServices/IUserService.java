@@ -15,7 +15,7 @@ public interface IUserService extends UserDetailsService {
 	public boolean save(UserDto user);
 	public boolean saveModel(User user);
 	public boolean delete(int id);
-	public boolean isTokenExist(String token);
+	public boolean isForgetPasswordTokenExist(String token);
 	public UserDto findByEmail(String email);
 	public UserDto findByUsername(String name);
 	public User findByUsernameModel(String name);

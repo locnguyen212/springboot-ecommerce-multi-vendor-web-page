@@ -17,7 +17,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	public List<User> findByRoleName(String name);
 	public User findByUsername(String name);
 	public User findByEmail(String email);
-	public List<User> findByToken(String token);
+	public List<User> findByForgetPasswordToken(String token);
 	 
 	@Query("from User where role.roleId = 3 or role.roleId = 4 order by userId asc")
 	public List<User> findByRoleUserAndShopowner();

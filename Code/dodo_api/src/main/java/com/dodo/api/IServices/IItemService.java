@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.dtos.UserDto;
-import com.dodo.api.modelview.CartView;
-import com.dodo.api.modelview.CartViewDto;
+import com.dodo.api.modelview.dtos.CartViewDto;
 
 public interface IItemService {
 	public List<ItemDto> findAll();

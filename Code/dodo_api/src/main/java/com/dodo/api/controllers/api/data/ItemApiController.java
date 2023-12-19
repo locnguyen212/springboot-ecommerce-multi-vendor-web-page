@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.data;
 
 import java.util.List;
 
@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IItemService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ItemDto;
-import com.dodo.api.modelview.CartView;
-import com.dodo.api.modelview.CartViewDto;
+import com.dodo.api.modelview.dtos.CartViewDto;
 
 @RestController
 @RequestMapping("api/data/item")
@@ -54,7 +53,7 @@ public class ItemApiController {
 	@GetMapping(value = { "find-by-product-id-and-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ItemDto> findByProductIdAndUserId(
 			Authentication auth, 
-			@RequestParam(value = "productId", required = true) Integer productId
+			@RequestParam(value = "productId", required = true) int productId
 			) {
 		try {
 			var userId = userService.findByUsername(auth.getName()).getUserId();

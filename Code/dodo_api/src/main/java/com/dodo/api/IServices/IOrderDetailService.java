@@ -2,8 +2,7 @@ package com.dodo.api.IServices;
 import java.util.List;
 
 import com.dodo.api.dtos.OrderdetailDto;
-import com.dodo.api.modelview.ReviewModelView;
-import com.dodo.api.modelview.ReviewModelViewDto;
+import com.dodo.api.modelview.dtos.ReviewModelViewDto;
 
 public interface IOrderDetailService {
 	//====LOC====

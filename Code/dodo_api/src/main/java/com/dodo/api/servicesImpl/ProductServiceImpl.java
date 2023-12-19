@@ -73,9 +73,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<String> searchByTerm(String term) {		
+	public List<ProductDto> findByKeyword(String keyword) {		
 		try {
-			return productRepository.searchByTerm(term);
+			return modelMapper.map(productRepository.findByKeyword(keyword), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -83,10 +83,10 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductView> findProductViewByProductName(String productName, String categoryName) {
+	public List<ProductView> findProductViewByProductNameAndCategoryName(String productName, String categoryName) {
 		try {
 			int topLimit = 50;
-			return productRepository.findProductViewByProductName(productName, categoryName, topLimit);
+			return productRepository.findProductViewByProductNameAndCategoryName(productName, categoryName, topLimit);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -94,9 +94,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public ProductDto findProductById(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop) {
+	public ProductDto findByProductIdCustom(int id, Boolean statusPr, Boolean statusCate, Boolean statusShop) {
 		try {
-			return modelMapper.map(productRepository.findProductById(id, statusPr, statusCate, statusShop), ProductDto.class);
+			return modelMapper.map(productRepository.findByProductIdCustom(id, statusPr, statusCate, statusShop), ProductDto.class);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -104,18 +104,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductDto> getAllAndStatus() {
+	public List<ProductDto> findByStatusCustom() {
 		try {
-			return modelMapper.map(productRepository.getAllAndStatus(true, null, true), new TypeToken<List<ProductDto>>() {}.getType());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public List<ProductDto> getProductsByOwnerId2(Integer ownerId) {
-		try {
-			return modelMapper.map(productRepository.findByOwnerId2(ownerId), new TypeToken<List<ProductDto>>() {}.getType());
+			return modelMapper.map(productRepository.findByStatusCustom(true, null, true), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -123,7 +114,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Page<ProductView> findProductViewByProductNamePage(String productName, String categoryName, int pageNo,
+	public Page<ProductView> findProductViewPageByProductNameAndCategoryName(String productName, String categoryName, int pageNo,
 			int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
@@ -135,7 +126,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Page<ProductView> findProductViewByCategoryIdPage(int id, int pageNo, int pageSize) {
+	public Page<ProductView> findProductViewPageByCategoryId(int id, int pageNo, int pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 			return productRepository.findProductViewByCategoryIdPage(id, pageable);
@@ -153,6 +144,18 @@ public class ProductServiceImpl implements IProductService {
 			return -1;
 		}
 	}
+	
+	@Override
+	public Page<ProductView> getListProductByShop(Boolean statusPr, Boolean statusCate, Boolean statusShop, int idShop, int pageNo, int pageSize) {
+		try {
+			Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+			return productRepository.getListProductByShop(statusPr, statusCate, statusShop, idShop, pageable);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 
 	// LOC
 	@Override
@@ -198,16 +201,6 @@ public class ProductServiceImpl implements IProductService {
 
 	// LOC
 
-	@Override
-	public Page<ProductView> getListProductByShop(Boolean statusPr, Boolean statusCate, Boolean statusShop, int idShop, int pageNo, int pageSize) {
-		try {
-			Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-			return productRepository.getListProductByShop(statusPr, statusCate, statusShop, idShop, pageable);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 
 

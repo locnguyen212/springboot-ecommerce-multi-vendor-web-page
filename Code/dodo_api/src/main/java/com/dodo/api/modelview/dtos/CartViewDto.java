@@ -1,4 +1,4 @@
-package com.dodo.api.modelview;
+package com.dodo.api.modelview.dtos;
 
 import java.util.ArrayList;
 import java.util.List;

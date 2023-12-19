@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.data;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ import com.dodo.api.dtos.OrdercancellationDto;
 
 @RestController
 @RequestMapping("api/data/order-cancellation")
-public class OderCancellationApiController {
+public class OrderCancellationApiController {
 	@Autowired
 	IOrderCancellationService cancellationService;
 	
@@ -34,7 +34,7 @@ public class OderCancellationApiController {
 	IUserService userService;
 
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<OrdercancellationDto> findById(@RequestParam(value = "id", required = true) Integer id) {
+	public ResponseEntity<OrdercancellationDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
 			return new ResponseEntity<OrdercancellationDto>(cancellationService.findById(id), HttpStatus.OK);
 		} catch (Exception e) {
@@ -47,7 +47,7 @@ public class OderCancellationApiController {
 	@GetMapping(value = { "find-by-order-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrdercancellationDto> findByOrderOrderId(
 			Authentication auth,
-			@RequestParam(value = "id", required = true) Integer id
+			@RequestParam(value = "id", required = true) int id
 			) {
 		try {
 			//validate
@@ -65,7 +65,7 @@ public class OderCancellationApiController {
 
 	}
 
-	@GetMapping(value = { "find-by-logged-in-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@GetMapping(value = { "find-by-current-in-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrdercancellationDto>> findByShopownerOwnerId(Authentication auth) {
 		try {
 			var shop = shopOwnerService.findByUserUsername(auth.getName());

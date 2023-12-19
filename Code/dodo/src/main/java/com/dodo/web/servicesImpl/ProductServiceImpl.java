@@ -66,11 +66,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<String> searchByTerm(String term) {
-		return productRepository.searchByTerm(term);
-	}
-
-	@Override
 	public List<ProductView> findProductViewByProductName(String productName, String categoryName) {
 		try {
 			int topLimit = 50;

@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.data;
 
 import java.util.List;
 
@@ -40,8 +40,8 @@ public class NotificationApiController {
 	@GetMapping(value = { "find-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<NotificationDto>> findByUserId(
 			Authentication auth, 
-			@RequestParam(value = "skip", required = true) Integer skip,
-			@RequestParam(value = "take", required = true) Integer take
+			@RequestParam(value = "skip", required = true) int skip,
+			@RequestParam(value = "take", required = true) int take
 			) {
 		try {
 			var userId = userService.findByUsername(auth.getName()).getUserId();
@@ -57,8 +57,8 @@ public class NotificationApiController {
 	@GetMapping(value = { "find-by-logged-in-user-custom" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<NotificationDto>> findByUserIdAndTypeAndIsRead(
 			Authentication auth, 
-			@RequestParam(value = "skip", required = true) Integer skip,
-			@RequestParam(value = "take", required = true) Integer take,
+			@RequestParam(value = "skip", required = true) int skip,
+			@RequestParam(value = "take", required = true) int take,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "isRead", required = false) Boolean isRead) {
 		try {

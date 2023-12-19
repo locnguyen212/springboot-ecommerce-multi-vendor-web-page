@@ -1,4 +1,4 @@
-package com.dodo.api.controllers.api;
+package com.dodo.api.controllers.api.crud;
 
 import java.util.Date;
 
@@ -26,7 +26,7 @@ import com.dodo.api.validators.CategoryUniqueValidator;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/crud")
+@RequestMapping("api/crud/category")
 public class CrudApiController {
 	@Autowired
 	ICategoryService categoryService;
@@ -41,7 +41,7 @@ public class CrudApiController {
 	CategoryUniqueValidator uniqueValidator;
 
 	//super admin, admin, shop
-	@PostMapping(value = { "category/create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> categoryCreate(Authentication auth, @RequestBody @Valid CategoryDto category, BindingResult bindingResult) {
 		try {
 			// validate
@@ -68,7 +68,7 @@ public class CrudApiController {
 	}
 	
 	//super admin, admin
-	@PutMapping(value = { "category/edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> categoryEdit(@RequestBody @Valid CategoryDto category, BindingResult bindingResult) {
 		try {
 			// validate
@@ -92,8 +92,8 @@ public class CrudApiController {
 	}
 	
 	//super admin
-	@DeleteMapping(value = { "category/delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> categoryDelete(Authentication auth, @RequestParam(value = "id", required = true) Integer id) {
+	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> categoryDelete(Authentication auth, @RequestParam(value = "id", required = true) int id) {
 		try {
 //			//validate
 			String userRole = auth.getAuthorities().iterator().next().toString();

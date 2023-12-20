@@ -14,8 +14,11 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.helpers.JwtHelper;
 import com.dodo.api.modelview.TokenAuth;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/auth/refresh")
+@Tag(name = "Auth Refresh Token")
 public class RefreshController {
 	@Autowired
 	IUserService userService;

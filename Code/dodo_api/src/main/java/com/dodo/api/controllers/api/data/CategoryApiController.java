@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.ICategoryService;
 import com.dodo.api.dtos.CategoryDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/category")
+@Tag(name = "Data Category")
 public class CategoryApiController {
 	@Autowired
 	ICategoryService categoryService;

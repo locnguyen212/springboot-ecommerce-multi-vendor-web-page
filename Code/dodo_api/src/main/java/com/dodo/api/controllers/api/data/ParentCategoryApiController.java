@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IParentCategoryService;
 import com.dodo.api.dtos.ParentcategoryDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/parent-category")
+@Tag(name = "Data Parent Category")
 public class ParentCategoryApiController {
 	@Autowired
 	IParentCategoryService parentCategoryService;

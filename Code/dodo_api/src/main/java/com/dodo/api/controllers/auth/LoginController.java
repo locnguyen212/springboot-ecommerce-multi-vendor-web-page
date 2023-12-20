@@ -15,8 +15,11 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.helpers.JwtHelper;
 import com.dodo.api.modelview.LoginInfo;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("login")
+@Tag(name = "Auth Login")
 public class LoginController {
 	@Autowired
 	IUserService userService;

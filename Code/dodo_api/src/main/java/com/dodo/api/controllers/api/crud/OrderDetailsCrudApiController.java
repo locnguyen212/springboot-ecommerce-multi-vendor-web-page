@@ -16,10 +16,12 @@ import com.dodo.api.IServices.IOrderService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderdetailDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/order-details")
+@Tag(name = "Crud Order Details")
 public class OrderDetailsCrudApiController {
 	@Autowired
 	IOrderService orderService;

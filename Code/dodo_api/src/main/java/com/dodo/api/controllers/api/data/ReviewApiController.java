@@ -16,8 +16,11 @@ import com.dodo.api.IServices.IReviewService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ReviewDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/review")
+@Tag(name = "Data Review")
 public class ReviewApiController {
 	@Autowired
 	IReviewService reviewService;

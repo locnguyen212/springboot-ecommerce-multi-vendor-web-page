@@ -22,10 +22,12 @@ import com.dodo.api.dtos.CategoryDto;
 import com.dodo.api.dtos.PromotionDto;
 import com.dodo.api.helpers.ValidateHelper;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/promotion")
+@Tag(name = "Crud Promotion")
 public class PromotionCrudApiController {
 	@Autowired
 	IPromotionService promotionService;

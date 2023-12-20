@@ -18,8 +18,11 @@ import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrdercancellationDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/order-cancellation")
+@Tag(name = "Data Order Cancellation")
 public class OrderCancellationApiController {
 	@Autowired
 	IOrderCancellationService cancellationService;

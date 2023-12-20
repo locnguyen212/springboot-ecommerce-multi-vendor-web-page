@@ -16,8 +16,11 @@ import com.dodo.api.IServices.INotificationService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.NotificationDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/notification")
+@Tag(name = "Data Notification")
 public class NotificationApiController {
 	@Autowired
 	INotificationService notificationService;

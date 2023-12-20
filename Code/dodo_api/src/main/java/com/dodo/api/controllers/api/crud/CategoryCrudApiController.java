@@ -23,10 +23,12 @@ import com.dodo.api.dtos.CategoryDto;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.CategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/category")
+@Tag(name = "Crud Category")
 public class CategoryCrudApiController {
 	@Autowired
 	ICategoryService categoryService;

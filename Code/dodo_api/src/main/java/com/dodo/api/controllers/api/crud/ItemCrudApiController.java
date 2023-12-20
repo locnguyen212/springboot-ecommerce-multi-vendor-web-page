@@ -20,8 +20,11 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.dtos.ProductDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/crud/item")
+@Tag(name = "Crud Item")
 public class ItemCrudApiController {
 	@Autowired
 	IItemService itemService;

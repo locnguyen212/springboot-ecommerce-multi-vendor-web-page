@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IWishlistService;
 import com.dodo.api.dtos.WishlistDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/wishlist")
+@Tag(name = "Data Wishlist")
 public class WishlistApiController {
 	@Autowired
 	IWishlistService wishlistService;

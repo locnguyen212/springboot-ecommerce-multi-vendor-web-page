@@ -18,10 +18,12 @@ import com.dodo.api.IServices.IOrderCancellationService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrdercancellationDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/order-cancellation")
+@Tag(name = "Crud Order Cancellation")
 public class OrderCancellationCrudApiController {
 	@Autowired
 	IOrderCancellationService cancellationService;

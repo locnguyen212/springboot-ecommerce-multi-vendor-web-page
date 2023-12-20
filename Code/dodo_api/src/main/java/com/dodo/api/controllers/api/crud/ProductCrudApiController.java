@@ -25,10 +25,12 @@ import com.dodo.api.helpers.FileHelper;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.ParentCategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/product")
+@Tag(name = "Crud Product")
 public class ProductCrudApiController {
 	@Autowired
 	IProductService productService;

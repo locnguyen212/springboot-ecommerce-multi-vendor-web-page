@@ -18,10 +18,12 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.models.Mail;
 import com.dodo.api.modelview.ResetPassword;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/auth/forget-password")
+@Tag(name = "Auth Forgot Password")
 public class ForgetPasswordController {
 	@Autowired
 	IUserService userService;

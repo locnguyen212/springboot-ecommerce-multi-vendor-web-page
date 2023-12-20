@@ -18,8 +18,11 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderDto;
 import com.dodo.api.modelview.dtos.OrderViewDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/order")
+@Tag(name = "Data Order")
 public class OrderApiController {
 	@Autowired
 	IOrderService orderService;

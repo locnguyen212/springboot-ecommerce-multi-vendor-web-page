@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ShopownerDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/shop")
+@Tag(name = "Data Shop")
 public class ShopownerApiController {
 	@Autowired
 	IShopOwnerService ownerService;

@@ -14,8 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IPromotionService;
 import com.dodo.api.dtos.PromotionDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/promotion")
+@Tag(name = "Data Promotion")
 public class PromotionApiController {
 	@Autowired
 	IPromotionService promotionService;

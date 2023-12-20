@@ -23,10 +23,12 @@ import com.dodo.api.helpers.FileHelper;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.ParentCategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/crud/parent-category")
+@Tag(name = "Crud Parent Category")
 public class ParentCategoryCrudApiController {
 	@Autowired
 	IParentCategoryService parentCategoryService;

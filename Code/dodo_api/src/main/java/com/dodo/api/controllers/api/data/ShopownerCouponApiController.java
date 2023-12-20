@@ -16,8 +16,11 @@ import com.dodo.api.IServices.IShopOwnerCouponService;
 import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ShopownercouponDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/shop-coupon")
+@Tag(name = "Data Shop Coupon")
 public class ShopownerCouponApiController {
 	@Autowired
 	IShopOwnerCouponService couponService;

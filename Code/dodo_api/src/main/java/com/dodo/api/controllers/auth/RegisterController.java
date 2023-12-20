@@ -30,10 +30,12 @@ import com.dodo.api.validators.UserEmailUniqueValidator;
 import com.dodo.api.validators.UserPasswordValidator;
 import com.dodo.api.validators.UserUsernameUniqueValidator;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/register")
+@Tag(name = "Register User")
 public class RegisterController {
 	@Autowired
 	IUserService userService;

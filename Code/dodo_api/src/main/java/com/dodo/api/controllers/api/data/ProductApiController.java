@@ -18,8 +18,11 @@ import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ProductDto;
 import com.dodo.api.modelview.ProductView;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/product")
+@Tag(name = "Data Product")
 public class ProductApiController {
 	@Autowired
 	IShopOwnerService ownerService;

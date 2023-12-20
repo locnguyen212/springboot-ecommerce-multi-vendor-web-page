@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dodo.api.IServices.IUserService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/auth/active")
+@Tag(name = "Auth Active User")
 public class ActiveUserController {
 	@Autowired
 	IUserService userService;

@@ -18,8 +18,11 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.modelview.dtos.CartViewDto;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("api/data/item")
+@Tag(name = "Data Item")
 public class ItemApiController {
 	@Autowired
 	IUserService userService;

@@ -17,7 +17,7 @@ public interface IItemService {
 	
 	public int countItemsByUserId(int userId);
 	
-	public void saveCartToDb(UserDto user, List<ItemDto> cartItems);
+	public boolean saveCartToDb(UserDto user, List<ItemDto> cartItems);
 	
 	public ItemDto findByProductIdAndUserId(int productId, int userId);
 	

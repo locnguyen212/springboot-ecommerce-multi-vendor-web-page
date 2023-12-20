@@ -22,10 +22,15 @@ public class ItemDto implements java.io.Serializable {
 	private Integer quantity;
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date createdAt;
-	@NotBlank
-	@NotNull
 	private Integer productProductId;
 	private String productProductName;
 	private Integer userUserId;
 	private String userUsername;
+	
+	public ItemDto(Integer quantity, Date createdAt, Integer productProductId, Integer userUserId) {
+		this.quantity = quantity;
+		this.createdAt = createdAt;
+		this.productProductId = productProductId;
+		this.userUserId = userUserId;
+	}	
 }

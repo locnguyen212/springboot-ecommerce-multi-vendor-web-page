@@ -16,49 +16,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dodo.api.IServices.ICategoryService;
-import com.dodo.api.IServices.IParentCategoryService;
-import com.dodo.api.IServices.IUserService;
+import com.dodo.api.IServices.IPromotionService;
+import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.CategoryDto;
+import com.dodo.api.dtos.PromotionDto;
 import com.dodo.api.helpers.ValidateHelper;
-import com.dodo.api.validators.CategoryUniqueValidator;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("api/crud/category")
-public class CrudApiController {
+@RequestMapping("api/crud/promotion")
+public class PromotionCrudApiController {
 	@Autowired
-	ICategoryService categoryService;
-
+	IPromotionService promotionService;
+	
 	@Autowired
-	IUserService userService;
+	IShopOwnerService ownerService;
 
-	@Autowired
-	IParentCategoryService parentCategoryService;
-
-	@Autowired
-	CategoryUniqueValidator uniqueValidator;
-
-	//super admin, admin, shop
+	//shop
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> categoryCreate(Authentication auth, @RequestBody @Valid CategoryDto category, BindingResult bindingResult) {
+	public ResponseEntity<Object> create(
+			Authentication auth, 
+			@RequestBody @Valid PromotionDto dto, 
+			BindingResult bindingResult
+			) {
 		try {
+			var shopId = ownerService.findByUserUsername(auth.getName()).getOwnerId();
 			// validate
-			uniqueValidator.validate(category, bindingResult);
+			if(dto.getStartDate()!=null && dto.getEndDate()!=null) {
+				if(dto.getStartDate().compareTo(dto.getEndDate())>0) {
+					bindingResult.rejectValue("startDate", "StartDate");
+					bindingResult.rejectValue("endDate", "EndDate");
+				}
+			}
+			
 			if (bindingResult.hasErrors()) {
 				return new ResponseEntity<Object>(ValidateHelper.getErrorResponseBody(bindingResult), HttpStatus.BAD_REQUEST);
 			}
 			// validate
 	
-			// create category
-			var user = userService.findByUsername(auth.getName());
-			category.setStatus(true);
-			category.setUserUserId(user.getUserId());
-			category.setCreatedAt(new Date());
-			// create category
+			// create 
+			dto.setShopownerOwnerId(shopId);
+			dto.setCreatedAt(new Date());
+			// create 
 			return new ResponseEntity<Object>(new Object() {
-				public boolean status = categoryService.save(category);
+				public boolean status = promotionService.save(dto);
 			}, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,22 +69,37 @@ public class CrudApiController {
 
 	}
 	
-	//super admin, admin
+	//shop
 	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> categoryEdit(@RequestBody @Valid CategoryDto category, BindingResult bindingResult) {
+	public ResponseEntity<Object> edit(
+			Authentication auth, 
+			@RequestBody @Valid PromotionDto dto, 
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
-			uniqueValidator.validate(category, bindingResult);
+			var shopId = ownerService.findByUserUsername(auth.getName()).getOwnerId();
+			if(dto.getPromotionId() == null || promotionService.findById(dto.getPromotionId())==null || promotionService.findById(dto.getPromotionId()).getShopownerOwnerId() != shopId) {
+				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			}	
+			
+			if(dto.getStartDate()!=null && dto.getEndDate()!=null) {
+				if(dto.getStartDate().compareTo(dto.getEndDate())>0) {
+					bindingResult.rejectValue("startDate", "StartDate");
+					bindingResult.rejectValue("endDate", "EndDate");
+				}
+			}
+			
 			if (bindingResult.hasErrors()) {
 				return new ResponseEntity<Object>(ValidateHelper.getErrorResponseBody(bindingResult), HttpStatus.BAD_REQUEST);
 			}
 			// validate
 	
-			// edit category
-			category.setUpdatedAt(new Date());
-			// edit category
+			// edit 
+			dto.setUpdatedAt(new Date());
+			// edit 
 			return new ResponseEntity<Object>(new Object() {
-				public boolean status = categoryService.save(category);
+				public boolean status = promotionService.save(dto);
 			}, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -91,19 +108,22 @@ public class CrudApiController {
 
 	}
 	
-	//super admin
+	//shop
 	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> categoryDelete(Authentication auth, @RequestParam(value = "id", required = true) int id) {
+	public ResponseEntity<Object> delete(
+			Authentication auth, 
+			@RequestParam(value = "id", required = true) int id
+			) {
 		try {
-//			//validate
-			String userRole = auth.getAuthorities().iterator().next().toString();
-			if (!userRole.contains("SUPER")) {
-				return new ResponseEntity<Object>(HttpStatus.FORBIDDEN);  
+			// validate
+			var promotion = promotionService.findById(id);
+			var shopId = ownerService.findByUserUsername(auth.getName()).getOwnerId();
+			if (promotion == null || promotion.getShopownerOwnerId() != shopId) {
+				return new ResponseEntity<Object>(HttpStatus.FORBIDDEN);
 			}
-//			//validate
-	
+			// validate
 			return new ResponseEntity<Object>(new Object() {
-				public boolean status = categoryService.delete(id);
+				public boolean status = promotionService.delete(id);
 			}, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();

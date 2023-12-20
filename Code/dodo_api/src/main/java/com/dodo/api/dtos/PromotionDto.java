@@ -42,11 +42,8 @@ public class PromotionDto implements java.io.Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date updatedAt;
-	@NotBlank
-	@NotNull
 	private Integer shopownerOwnerId;
 	private String shopownerShopName;
-	@NotBlank
 	@NotNull
 	private Integer productProductId;
 	private String productProductName;

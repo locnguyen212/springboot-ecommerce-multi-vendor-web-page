@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -131,7 +133,12 @@ public class PromotionShopownerController {
 	@PostMapping({ "edit" })
 	public String edit(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @ModelAttribute("promotion") @Valid Promotion promotion, BindingResult bindingResult) {
 		try {
+			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
 			//validate
+			if(promotion.getPromotionId() == null || promotionService.findById(promotion.getPromotionId())==null || promotionService.findById(promotion.getPromotionId()).getShopowner().getOwnerId() != shopId) {
+				return "redirect:/error/400";
+			}	
+			
 			if(promotion.getStartDate()!=null && promotion.getEndDate()!=null) {
 				if(promotion.getStartDate().compareTo(promotion.getEndDate())>0) {
 					bindingResult.rejectValue("startDate", "StartDate");

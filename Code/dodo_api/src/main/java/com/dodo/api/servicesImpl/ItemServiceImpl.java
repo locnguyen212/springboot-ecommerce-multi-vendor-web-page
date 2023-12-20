@@ -89,15 +89,17 @@ public class ItemServiceImpl implements IItemService {
 	}
 
 	@Override
-	public void saveCartToDb(UserDto user, List<ItemDto> cartItems) {
+	public boolean saveCartToDb(UserDto user, List<ItemDto> cartItems) {
 		try {
 			for (ItemDto item : cartItems) {
 				item.setUserUserId(user.getUserId());
 			}
 			List<Item> items = modelMapper.map(cartItems, new TypeToken<List<Item>>() {}.getType());
 			repository.saveAll(items);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
 	}
 

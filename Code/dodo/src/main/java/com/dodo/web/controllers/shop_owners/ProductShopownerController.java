@@ -190,6 +190,10 @@ public class ProductShopownerController {
 			// validate
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
 			var baseProduct = productService.findById(product.getProductId());
+			if(baseProduct == null || baseProduct.getShopowner().getOwnerId()!=shopId) {
+				return "redirect:/error/400";
+			}
+			
 			if((product.getProductName()!=null || !product.getProductName().isBlank()) && (baseProduct!=null && !baseProduct.getProductName().equalsIgnoreCase(product.getProductName()))){
 				var pro = productService.findByProductNameAndShopownerOwnerId(product.getProductName(), shopId);	
 				if(pro!=null){

@@ -27,15 +27,16 @@ public class ProductDto implements java.io.Serializable {
 	private String productName;
 	private String description;
 	@NotNull
-	@Min(value = 1, message = "Price must be greater than 0")
+	@Min(value = 1, message = "Price must be greater than 1")
 	private Double price;
 	@NotNull
-	@Min(value = 1, message = "Stock quantity must be greater than 0")
+	@Min(value = 1, message = "Stock quantity must be greater than 1")
 	private Integer stockQuantity;
 	private String productImage;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date expiryDate;
+	@NotNull
 	private Boolean status;
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
@@ -43,11 +44,8 @@ public class ProductDto implements java.io.Serializable {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date updatedAt;
-	@NotBlank
-	@NotNull
 	private Integer shopownerOwnerId;
 	private String shopownerShopName;
-	@NotBlank
 	@NotNull
 	private Integer categoryCategoryId;
 	private String categoryCategoryName;

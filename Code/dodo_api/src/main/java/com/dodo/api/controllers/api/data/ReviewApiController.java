@@ -62,7 +62,7 @@ public class ReviewApiController {
 	}
 	
 	//allow all
-	@GetMapping(value = { "find-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@GetMapping(value = { "find-by-shop-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReviewDto>> findByShopId(@RequestParam(value = "id", required = true) int id) {
 		try {
 			return new ResponseEntity<List<ReviewDto>>(reviewService.findByShopId(id), HttpStatus.OK);

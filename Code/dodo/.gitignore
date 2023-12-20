@@ -44,4 +44,4 @@ build/
 /.metadata/
 
 ### logs ###
-logs/
+/logs/

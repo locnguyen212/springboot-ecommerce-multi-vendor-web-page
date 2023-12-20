@@ -55,7 +55,18 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 			            		, "/login/**"
 			            		, "/api/auth/**"
 			            		, "/api/register/**"
-			            		, "/upload/**").permitAll()
+			            		, "/upload/**"
+			            		, "/v2/api-docs" //open api start
+			                    , "/v3/api-docs"
+			                    , "/v3/api-docs/**"
+			                    , "/swagger-resources"
+			                    , "/swagger-resources/**"
+			                    , "/configuration/ui"
+			                    , "/configuration/security"
+			                    , "/swagger-ui/**"
+			                    , "/webjars/**"
+			                    , "/swagger-ui.html" //open api end
+			                    ).permitAll()
 			            .anyRequest().authenticated()	            
 		        )
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -44,7 +44,7 @@ public class LoginController {
 			}, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Object>("Incorrect login information!",HttpStatus.BAD_REQUEST);
 		}
 	}
 }

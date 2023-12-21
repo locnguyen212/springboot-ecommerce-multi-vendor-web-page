@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrdercancellationDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -36,6 +37,8 @@ public class OrderCancellationApiController {
 	@Autowired
 	IUserService userService;
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrdercancellationDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -47,6 +50,8 @@ public class OrderCancellationApiController {
 
 	}
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-order-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<OrdercancellationDto> findByOrderOrderId(
 			Authentication auth,
@@ -68,6 +73,8 @@ public class OrderCancellationApiController {
 
 	}
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-current-in-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrdercancellationDto>> findByShopownerOwnerId(Authentication auth) {
 		try {
@@ -87,6 +94,8 @@ public class OrderCancellationApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-logged-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrdercancellationDto>> findByUserUsername(Authentication auth) {
 		try {

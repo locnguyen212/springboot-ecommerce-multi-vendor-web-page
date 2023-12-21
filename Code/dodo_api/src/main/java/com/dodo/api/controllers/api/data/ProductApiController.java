@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ProductDto;
 import com.dodo.api.modelview.ProductView;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -31,6 +32,7 @@ public class ProductApiController {
 	IProductService productService;
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductDto> findById(
 			@RequestParam(value = "productId", required = true) int id
@@ -45,6 +47,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-shop-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductDto>> findByShopownerOwnerId(
 			Authentication auth, 
@@ -59,6 +62,8 @@ public class ProductApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-product-without-promotion-by-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductDto>> findProductWithoutPromotionByShopownerId(Authentication auth) {
 		try {
@@ -71,6 +76,8 @@ public class ProductApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-active-product-by-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductDto>> findByShopownerOwnerIdAndStatusActive(Authentication auth) {
 		try {
@@ -83,6 +90,8 @@ public class ProductApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-by-name-and-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductDto> findByProductNameAndShopownerOwnerId(
 			Authentication auth,
@@ -99,6 +108,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "get-total-quantity-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> getTotalQuantityByProductId(
 			Authentication auth,
@@ -114,6 +124,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-product-custom" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ProductDto> findByProductIdCustom(
 			@RequestParam(value = "productId", required = true) int id,
@@ -131,6 +142,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-keyword" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductDto>> findByKeyword(
 			@RequestParam(value = "keyword", required = true) String keyword
@@ -145,6 +157,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-product-view-by-product-name-and-category-name" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductView>> findProductViewByProductNameAndCategoryName(
 			@RequestParam(value = "productName", required = true) String productName,
@@ -160,6 +173,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-status-custom" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ProductDto>> findByStatusCustom() {
 		try {
@@ -172,6 +186,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-product-view-by-name-and-category-name-paginate" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<ProductView>> findProductViewPageByProductNameAndCategoryName(
 			@RequestParam(value = "productName", required = true) String productName,
@@ -189,6 +204,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-product-view-by-category-id-paginate" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<ProductView>> findProductViewPageByCategoryId(
 			@RequestParam(value = "categoryId", required = true) int id,
@@ -205,6 +221,7 @@ public class ProductApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-shop-id-custom-paginate" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<ProductView>> getListProductByShop(
 			@RequestParam(value = "shopId", required = true) int id,

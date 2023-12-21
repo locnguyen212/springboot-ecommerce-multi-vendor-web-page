@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ShopownerDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -24,6 +25,7 @@ public class ShopownerApiController {
 	IShopOwnerService ownerService;
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ShopownerDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -35,6 +37,8 @@ public class ShopownerApiController {
 
 	}
 
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-status" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ShopownerDto>> findByStatus(@RequestParam(value = "status", required = true) Boolean status) {
 		try {

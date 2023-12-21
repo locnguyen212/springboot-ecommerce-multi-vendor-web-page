@@ -127,8 +127,12 @@ public class CartUsersController {
 	}
 
 	@PostMapping("/updateCart")
-	public String updateCartItem(ModelMap modelMap, @RequestParam int productId, @RequestParam Integer quantity,
-			HttpSession session) {
+	public String updateCartItem(
+			ModelMap modelMap, 
+			@RequestParam int productId, 
+			@RequestParam Integer quantity,
+			HttpSession session
+			) {
 		User user = (User) session.getAttribute("user");
 		modelMap.addAttribute("message", "");
 		if (user != null) {

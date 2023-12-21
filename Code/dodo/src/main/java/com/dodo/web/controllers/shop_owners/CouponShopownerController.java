@@ -54,8 +54,13 @@ public class CouponShopownerController {
 	}
 
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@ModelAttribute("coupon") @Valid Shopownercoupon coupon, BindingResult bindingResult) {
+	public String create(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("coupon") @Valid Shopownercoupon coupon, 
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
 			if (bindingResult.hasErrors()) {
@@ -80,8 +85,12 @@ public class CouponShopownerController {
 	}
 
 	@GetMapping({ "edit/{id}" })
-	public String edit(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id) {
+	public String edit(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id
+			) {
 		try {
 			// validate
 			var coupon = couponService.findById(id);
@@ -100,10 +109,19 @@ public class CouponShopownerController {
 	}
  
 	@PostMapping({ "edit" })
-	public String editCoupon(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@ModelAttribute("coupon") @Valid Shopownercoupon coupon, BindingResult bindingResult) {
+	public String editCoupon(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("coupon") @Valid Shopownercoupon coupon, 
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
+			if(coupon.getShopOwnerCouponId() == null || couponService.findById(coupon.getShopOwnerCouponId())==null) {
+				return "redirect:/error/400";
+			}
+			
 			if (coupon.getCouponCode() == null || coupon.getCouponCode().isBlank()) {
 				bindingResult.rejectValue("couponCode", "CouponCode");
 			}
@@ -129,8 +147,12 @@ public class CouponShopownerController {
 	}
 
 	@GetMapping({ "delete/{id}" })
-	public String deleteCoupon(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id) {
+	public String deleteCoupon(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id
+			) {
 		try {
 			// validate
 			var coupon = couponService.findById(id);
@@ -156,8 +178,12 @@ public class CouponShopownerController {
 	}
 
 	@GetMapping({ "switch/{id}" })
-	public String done(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id) {
+	public String done(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id
+			) {
 		try {
 			// validate
 			var coupon = couponService.findById(id);

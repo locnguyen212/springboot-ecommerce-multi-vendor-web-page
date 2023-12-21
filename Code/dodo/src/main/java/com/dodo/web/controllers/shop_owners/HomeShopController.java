@@ -203,22 +203,4 @@ public class HomeShopController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		return formatter.format(date);
 	}
-
-	@GetMapping("/logout")
-	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			RedirectAttributes redirectAttributes) {
-		// Xóa các thông tin trong session
-		session.invalidate();
-
-		// Sử dụng Spring Security để logout
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if (auth != null) {
-			new SecurityContextLogoutHandler().logout(request, response, auth);
-		}
-
-		// Thêm thông báo thành công
-		redirectAttributes.addFlashAttribute("successMessage", "Bạn đã đăng xuất thành công!");
-
-		return "redirect:/login";
-	}
 }

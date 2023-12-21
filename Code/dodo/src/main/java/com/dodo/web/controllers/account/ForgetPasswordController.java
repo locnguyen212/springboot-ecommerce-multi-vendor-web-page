@@ -46,7 +46,12 @@ public class ForgetPasswordController {
 	}	
 	
 	@PostMapping({"reset"})
-	public String reset(ModelMap modelMap, RedirectAttributes redirectAttributes, @ModelAttribute("mail") @Valid Mail mail, BindingResult bindingResult) {	
+	public String reset(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@ModelAttribute("mail") @Valid Mail mail, 
+			BindingResult bindingResult
+			) {	
 		try {
 			//validate
 			var user = userService.findByEmail(mail.getEmail());
@@ -88,7 +93,12 @@ public class ForgetPasswordController {
 	}
 	
 	@GetMapping({"reset/{id}/{token}"})
-	public String reset(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id, @PathVariable("token") String token) {	
+	public String reset(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id, 
+			@PathVariable("token") String token
+			) {	
 		try {
 			//validate
 			var user = userService.findById(id);	
@@ -112,7 +122,12 @@ public class ForgetPasswordController {
 	}	
 	
 	@PostMapping({"change-password"})
-	public String changePassword(ModelMap modelMap, RedirectAttributes redirectAttributes, @RequestParam("password") String password, @RequestParam("id") int id) {	
+	public String changePassword(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam("password") String password, 
+			@RequestParam("id") int id
+			) {	
 		try {
 			//validate
 			var user = userService.findById(id);

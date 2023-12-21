@@ -51,7 +51,11 @@ public class ProductUsersController {
 	private boolean reviewPlaced = false;
 
 	@GetMapping({ "detail" })
-	public String getListProductByIdCategory(ModelMap modelMap, @RequestParam("id") int id, HttpSession session) {
+	public String getListProductByIdCategory(
+			ModelMap modelMap, 
+			@RequestParam("id") int id, 
+			HttpSession session
+			) {
 		try {
 			// Product product = productService.getProductDetail(id);
 			Product product = productService.findProductById(id, true, null, true);
@@ -111,8 +115,12 @@ public class ProductUsersController {
 	}
 
 	@GetMapping({ "review" })
-	public String order(HttpSession session, ModelMap modelMap, @RequestParam("productId") int idP,
-			@RequestParam("orderId") int idOd) {
+	public String order(
+			HttpSession session, 
+			ModelMap modelMap, 
+			@RequestParam("productId") int idP,
+			@RequestParam("orderId") int idOd
+			) {
 		User checkUser = (User) session.getAttribute("user");
 		if (checkUser != null) {
 
@@ -147,8 +155,12 @@ public class ProductUsersController {
 	}
 
 	@PostMapping({ "review" })
-	public String submitReview(@ModelAttribute Review review, HttpSession session, ModelMap modelMap,
-			@RequestParam("image") MultipartFile file) {
+	public String submitReview(
+			@ModelAttribute Review review, 
+			HttpSession session, 
+			ModelMap modelMap,
+			@RequestParam("image") MultipartFile file
+			) {
 		try {
 			User checkUser = (User) session.getAttribute("user");
 			if (checkUser != null) {
@@ -197,8 +209,13 @@ public class ProductUsersController {
 	}
 
 	@GetMapping("/searchByKeyWord")
-	public String searchProduct(ModelMap modelMap, @RequestParam("productName") String productName,
-			@RequestParam("categoryName") String categoryName, @RequestParam(defaultValue = "1") String page, HttpSession session) {
+	public String searchProduct(
+			ModelMap modelMap, 
+			@RequestParam("productName") String productName,
+			@RequestParam("categoryName") String categoryName, 
+			@RequestParam(defaultValue = "1") String page, 
+			HttpSession session
+			) {
 		int pageSize = 8;
 		int pageNo = Integer.parseInt(page);
 		// List<ProductView> listSearchProducts =
@@ -230,8 +247,11 @@ public class ProductUsersController {
 	}
 
 	@GetMapping("/category")
-	public String searchProductByCategory(ModelMap modelMap, @RequestParam("id") String categoryId,
-			@RequestParam(defaultValue = "1") String page) {
+	public String searchProductByCategory(
+			ModelMap modelMap, 
+			@RequestParam("id") String categoryId,
+			@RequestParam(defaultValue = "1") String page
+			) {
 		int id = Integer.parseInt(categoryId);
 		int pageSize = 8;
 		int pageNo = Integer.parseInt(page);

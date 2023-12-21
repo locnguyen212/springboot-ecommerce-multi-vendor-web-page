@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IOrderService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -32,6 +33,7 @@ public class OrderCrudApiController {
 	IUserService userService;
 	
 	// user, shop
+	@Operation(summary = "Role: user, shop")
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(
 			Authentication auth, 
@@ -56,6 +58,7 @@ public class OrderCrudApiController {
 	}
 	
 	// user, shop
+	@Operation(summary = "Role: user, shop")
 	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(
 			@RequestBody @Valid OrderDto dto, 

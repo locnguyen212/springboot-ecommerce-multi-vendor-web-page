@@ -44,9 +44,12 @@ public class CategoryAdminController {
 	CategoryUniqueValidator uniqueValidator;
 
 	@GetMapping({ "index", "", "/" })
-	public String index(ModelMap modelMap, @RequestParam(value = "status", defaultValue = "0") int status,
+	public String index(
+			ModelMap modelMap, 
+			@RequestParam(value = "status", defaultValue = "0") int status,
 			@RequestParam(value = "page", defaultValue = "1") int page,
-			@RequestParam(value = "size", defaultValue = "8") int size) {
+			@RequestParam(value = "size", defaultValue = "8") int size
+			) {
 		Page<Category> categoryPage = categoryService.findPaginated(PageRequest.of(page - 1, size),
 				categoryService.findByStatusNotNull());
 		if (status == 1) {
@@ -81,10 +84,14 @@ public class CategoryAdminController {
 	}
 
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, RedirectAttributes redirectAttributes,
+	public String create(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "image", required = false) MultipartFile file,
-			@ModelAttribute("category") @Valid Category category, BindingResult bindingResult,
-			Authentication authentication) {
+			@ModelAttribute("category") @Valid Category category, 
+			BindingResult bindingResult,
+			Authentication authentication
+			) {
 		try {
 			// validate
 			uniqueValidator.validate(category, bindingResult);
@@ -146,11 +153,19 @@ public class CategoryAdminController {
 	}
 
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes,
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
 			@RequestParam(value = "image", required = false) MultipartFile file,
-			@ModelAttribute("category") @Valid Category category, BindingResult bindingResult) {
+			@ModelAttribute("category") @Valid Category category, 
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
+			if(category.getCategoryId() == null || categoryService.findById(category.getCategoryId()) == null) {
+				return "redirect:/error/400";  
+			}
+			
 			uniqueValidator.validate(category, bindingResult);
 			if (bindingResult.hasErrors()) {
 				modelMap.put("parentCategories", parentCategoryService.findAll());
@@ -182,8 +197,12 @@ public class CategoryAdminController {
 	}
 
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id,
-			Authentication authentication) {
+	public String delete(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id,
+			Authentication authentication
+			) {
 		try {
 			//validate
 			String userRole = authentication.getAuthorities().iterator().next().toString();
@@ -213,8 +232,11 @@ public class CategoryAdminController {
 	}
 
 	@GetMapping({ "edit-parent-category" })
-	public String editSelectedCategory(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@RequestParam(value = "selectedCategories", required = false) List<Integer> selectedCategories) {
+	public String editSelectedCategory(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value = "selectedCategories", required = false) List<Integer> selectedCategories
+			) {
 		// validate
 		if (selectedCategories == null || selectedCategories.size() <= 1) {
 			redirectAttributes.addFlashAttribute("alertSelected", true);
@@ -227,9 +249,12 @@ public class CategoryAdminController {
 	}
 
 	@PostMapping({ "edit-parent-category" })
-	public String editSelectedCategory(ModelMap modelMap, RedirectAttributes redirectAttributes,
+	public String editSelectedCategory(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
 			@RequestParam("selectedCategories") List<Integer> selectedCategories,
-			@RequestParam("selectedParentCategory") Integer selectedParentCategory) {
+			@RequestParam("selectedParentCategory") Integer selectedParentCategory
+			) {
 		try {
 			var parentCategory = new Parentcategory();
 			parentCategory.setParentCategoryId(selectedParentCategory);
@@ -252,8 +277,12 @@ public class CategoryAdminController {
 	}
 	
 	@GetMapping({ "waiting-for-approval-category" })
-	public String waitingForApprovalAction(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@RequestParam(value = "action", required = true) String action, @RequestParam(value = "id", required = true) int id) {
+	public String waitingForApprovalAction(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam(value = "action", required = true) String action, 
+			@RequestParam(value = "id", required = true) int id
+			) {
 		try {
 			//validate
 			if(!action.equalsIgnoreCase("approve") && !action.equalsIgnoreCase("refuse")) {

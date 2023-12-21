@@ -31,7 +31,12 @@ public class SalesdataAdminController {
 	IOrderService orderService;
 	 
 	@GetMapping({"index", "", "/"})
-	public String index(ModelMap modelMap, Authentication authentication, @RequestParam(value = "month", defaultValue = "0") int month, @RequestParam(value = "year", defaultValue = "0") int year) {	
+	public String index(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			@RequestParam(value = "month", defaultValue = "0") int month, 
+			@RequestParam(value = "year", defaultValue = "0") int year
+			) {	
 		modelMap.put("years", orderService.findSalesdataYear());
 		modelMap.put("year", year);
 		modelMap.put("months", List.of(0,1,2,3,4,5,6,7,8,9,10,11,12));
@@ -53,7 +58,12 @@ public class SalesdataAdminController {
 	}
 	
 	@GetMapping({"export"})
-	public void export(ModelMap modelMap, HttpServletResponse response, @RequestParam("month") int month, @RequestParam("year") int year) {			
+	public void export(
+			ModelMap modelMap, 
+			HttpServletResponse response, 
+			@RequestParam("month") int month, 
+			@RequestParam("year") int year
+			) {			
 		try {
 			response.setContentType("application/octet-stream");
 	        var dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");

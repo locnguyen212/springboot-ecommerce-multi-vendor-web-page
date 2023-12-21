@@ -23,6 +23,7 @@ import com.dodo.api.dtos.CategoryDto;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.CategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -43,6 +44,7 @@ public class CategoryCrudApiController {
 	CategoryUniqueValidator uniqueValidator;
 
 	//super admin, admin, shop
+	@Operation(summary = "Role: super admin, admin, shop")
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(
 			Authentication auth, 
@@ -58,10 +60,16 @@ public class CategoryCrudApiController {
 			// validate
 	
 			// create 
+			String userRole = auth.getAuthorities().iterator().next().toString();
 			var userId = userService.findByUsername(auth.getName()).getUserId();
 			dto.setStatus(true);
 			dto.setUserUserId(userId);
 			dto.setCreatedAt(new Date());
+			if(userRole.contains("SHOPOWNER")) {
+				dto.setStatus(null);
+			}else if(userRole.contains("ADMIN")){
+				dto.setStatus(true);
+			}
 			// create 
 			return new ResponseEntity<Object>(new Object() {
 				public boolean status = categoryService.save(dto);
@@ -74,6 +82,7 @@ public class CategoryCrudApiController {
 	}
 	
 	//super admin, admin
+	@Operation(summary = "Role: super admin, admin")
 	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(
 			@RequestBody @Valid CategoryDto dto, 
@@ -105,7 +114,8 @@ public class CategoryCrudApiController {
 	}
 	
 	//super admin
-	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@Operation(summary = "Role: super admin")
+	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> delete(
 			Authentication auth, 
 			@RequestParam(value = "id", required = true) int id

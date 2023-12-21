@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.modelview.dtos.CartViewDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -30,6 +31,8 @@ public class ItemApiController {
 	@Autowired
 	IItemService itemService;
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ItemDto>> getAllByUser(Authentication auth) {
 		try {
@@ -42,6 +45,8 @@ public class ItemApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "count-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> countItemsByUserId(Authentication auth) {
 		try {
@@ -53,6 +58,8 @@ public class ItemApiController {
 		}
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-product-id-and-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ItemDto> findByProductIdAndUserId(
 			Authentication auth, 
@@ -67,6 +74,8 @@ public class ItemApiController {
 		}
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@PostMapping(value = { "get-cart-view-from-items" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CartViewDto>> getCartViewFromItems(Authentication auth, @RequestParam("itemIds") List<Integer> itemIds) {
 		try {

@@ -16,6 +16,7 @@ import com.dodo.api.IServices.INotificationService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.NotificationDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -28,6 +29,7 @@ public class NotificationApiController {
 	@Autowired
 	IUserService userService;
 
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "count-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Integer> countByUserId(Authentication auth) {
 		try {
@@ -40,6 +42,7 @@ public class NotificationApiController {
 
 	}
 
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<NotificationDto>> findByUserId(
 			Authentication auth, 
@@ -57,6 +60,7 @@ public class NotificationApiController {
 
 	}
 
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-logged-in-user-custom" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<NotificationDto>> findByUserIdAndTypeAndIsRead(
 			Authentication auth, 

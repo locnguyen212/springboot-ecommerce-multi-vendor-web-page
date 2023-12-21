@@ -77,7 +77,13 @@ public class PromotionShopownerController {
 	}
       	  
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @ModelAttribute("promotion") @Valid Promotion promotion, BindingResult bindingResult) {
+	public String create(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes, 
+			@ModelAttribute("promotion") @Valid Promotion promotion, 
+			BindingResult bindingResult
+			) {
 		try {
 			//validate
 			if(promotion.getStartDate()!=null && promotion.getEndDate()!=null) {
@@ -112,7 +118,12 @@ public class PromotionShopownerController {
 	}
 	 
 	@GetMapping({ "edit/{id}" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id, Authentication authentication) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id,
+			Authentication authentication
+			) {
 		try {
 			//validate
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
@@ -131,7 +142,13 @@ public class PromotionShopownerController {
 	}
 	
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @ModelAttribute("promotion") @Valid Promotion promotion, BindingResult bindingResult) {
+	public String edit(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes, 
+			@ModelAttribute("promotion") @Valid Promotion promotion,
+			BindingResult bindingResult
+			) {
 		try {
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
 			//validate
@@ -173,8 +190,12 @@ public class PromotionShopownerController {
 	}
 	
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id) {
+	public String delete(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id
+			) {
 		try {
 			// validate
 			var promotion = promotionService.findById(id);

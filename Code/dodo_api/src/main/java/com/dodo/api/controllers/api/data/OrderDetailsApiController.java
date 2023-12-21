@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderdetailDto;
 import com.dodo.api.modelview.dtos.ReviewModelViewDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -33,6 +34,8 @@ public class OrderDetailsApiController {
 	@Autowired
 	IUserService userService;
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-order-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderdetailDto>> findByOrderOrderId(
 			Authentication auth, 
@@ -55,6 +58,8 @@ public class OrderDetailsApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role:user, shop")
 	@GetMapping(value = { "get-review-model-view" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReviewModelViewDto>> getReviewModelView(Authentication auth) {
 		try {

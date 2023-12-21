@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.UserDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -24,6 +25,7 @@ public class UserApiController {
 	IUserService userService;
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -35,6 +37,8 @@ public class UserApiController {
 
 	}
 
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-all" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserDto>> findAll() {
 		try {
@@ -47,6 +51,7 @@ public class UserApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-email" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> findByEmail(@RequestParam(value = "email", required = true) String email) {
 		try {
@@ -59,6 +64,7 @@ public class UserApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-username" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDto> findByUsername(@RequestParam(value = "name", required = true) String name) {
 		try {
@@ -70,7 +76,8 @@ public class UserApiController {
 
 	}
 	
-
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-role-user-and-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserDto>> findByRoleUserAndShopowner() {
 		try {

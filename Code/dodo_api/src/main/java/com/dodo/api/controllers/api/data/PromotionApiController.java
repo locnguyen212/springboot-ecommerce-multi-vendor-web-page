@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IPromotionService;
 import com.dodo.api.dtos.PromotionDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -23,6 +24,8 @@ public class PromotionApiController {
 	@Autowired
 	IPromotionService promotionService;
 
+	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<PromotionDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -35,6 +38,7 @@ public class PromotionApiController {
 	}
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-product-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PromotionDto>> findByProductProductId(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -46,10 +50,12 @@ public class PromotionApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<PromotionDto>> findByShopownerOwnerId(@RequestParam(value = "id", required = true) int id) {
 		try {
-			return new ResponseEntity<List<PromotionDto>>(promotionService.findByShopownerOwnerId	(id), HttpStatus.OK);
+			return new ResponseEntity<List<PromotionDto>>(promotionService.findByShopownerOwnerId(id), HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<List<PromotionDto>>(HttpStatus.BAD_REQUEST);

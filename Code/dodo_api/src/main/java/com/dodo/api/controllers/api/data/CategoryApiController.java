@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.ICategoryService;
 import com.dodo.api.dtos.CategoryDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -25,6 +26,8 @@ public class CategoryApiController {
 	@Autowired
 	ICategoryService categoryService;
 	
+	//shop, admin, super admin
+	@Operation(summary = "Role: super admin, admin, shop")
 	@GetMapping(value = { "find-all-paginate" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Page<CategoryDto>> findAllPaginate(
 			@RequestParam(value = "page", defaultValue = "1") int page, 
@@ -39,6 +42,7 @@ public class CategoryApiController {
 
 	}
 	
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-all" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CategoryDto>> findAll() {
 		try {
@@ -50,6 +54,8 @@ public class CategoryApiController {
 
 	}
    
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-status" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CategoryDto>> findByStatus(@RequestParam(value = "status", required = true) Boolean status) {
 		try {
@@ -61,6 +67,8 @@ public class CategoryApiController {
 
 	}
 	
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-status-not-null" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CategoryDto>> findByStatusNotNull() {
 		try {
@@ -72,6 +80,7 @@ public class CategoryApiController {
 
 	}
 	
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -83,6 +92,7 @@ public class CategoryApiController {
 
 	}
 	
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-name" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CategoryDto> findByCategoryName(@RequestParam(value = "name", required = true) String name) {
 		try {
@@ -94,6 +104,8 @@ public class CategoryApiController {
 
 	}
 	
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-user-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CategoryDto>> findByUserUserId(@RequestParam(value = "id", required = true) int id) {
 		try {

@@ -88,9 +88,15 @@ public class AccountUserController {
 	}
 
 	@PostMapping({ "account-detail" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@RequestParam("image") MultipartFile file, @ModelAttribute("user") @Valid User user,
-			BindingResult bindingResult, HttpSession session, Authentication authentication) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam("image") MultipartFile file, 
+			@ModelAttribute("user") @Valid User user,
+			BindingResult bindingResult, 
+			HttpSession session, 
+			Authentication authentication
+			) {
 		try {
 			// validate
 			var baseUser = userService.findById(user.getUserId());
@@ -145,9 +151,13 @@ public class AccountUserController {
 	}
 
 	@PostMapping({ "change-password" })
-	public String changePassword(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@ModelAttribute("changePassword") @Valid ChangePassword changePassword, BindingResult bindingResult,
-			Authentication authentication) {
+	public String changePassword(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("changePassword") @Valid ChangePassword changePassword, 
+			BindingResult bindingResult,
+			Authentication authentication
+			) {
 		try {
 			// validate
 			var baseUser = userService.findByUsername(authentication.getName());
@@ -196,7 +206,11 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("order-detail/{orderId}")
-	public String orderDetail(ModelMap modelMap, @PathVariable("orderId") int id, Authentication authentication) {			
+	public String orderDetail(
+			ModelMap modelMap, 
+			@PathVariable("orderId") int id, 
+			Authentication authentication
+			) {			
 		try {
 			//validate
 			var orderDetail = orderDetailService.findByOrderOrderId(id);
@@ -233,7 +247,11 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("wishlist/remove/{id}")
-	public String wishlistRemove(ModelMap modelMap, @PathVariable("id") int id, Authentication authentication) {
+	public String wishlistRemove(
+			ModelMap modelMap, 
+			@PathVariable("id") int id, 
+			Authentication authentication
+			) {
 		try {
 			//validate
 			var wishlist = wishlistService.findById(id);
@@ -266,7 +284,12 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("order-cancel/{orderId}")
-	public String orderCancel(ModelMap modelMap, @PathVariable("orderId") int id, Authentication authentication, RedirectAttributes redirectAttributes) {	
+	public String orderCancel(
+			ModelMap modelMap, 
+			@PathVariable("orderId") int id, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes
+			) {	
 		try {
 			//validate
 			var order = orderService.findById(id);
@@ -300,7 +323,12 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("receive-order/{orderId}")
-	public String receiveOrder(ModelMap modelMap, @PathVariable("orderId") int id, Authentication authentication, RedirectAttributes redirectAttributes) {
+	public String receiveOrder(
+			ModelMap modelMap, 
+			@PathVariable("orderId") int id, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes
+			) {
 		try {
 			//validate
 			var order = orderService.findById(id);
@@ -330,8 +358,11 @@ public class AccountUserController {
 	}
 	
 	@PostMapping({ "order-cancel" })
-	public String orderCancel(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@ModelAttribute("orderCancel") @Valid Ordercancellation orderCancel, BindingResult bindingResult,
+	public String orderCancel(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("orderCancel") @Valid Ordercancellation orderCancel, 
+			BindingResult bindingResult,
 			Authentication authentication) {
 		try {
 			// validate			
@@ -376,7 +407,12 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("addition-notification")
-	public String additionNotification(ModelMap modelMap, Authentication authentication, @RequestParam("lastestRow") int lastestRow, @RequestParam("isRead") String isRead) {
+	public String additionNotification(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			@RequestParam("lastestRow") int lastestRow, 
+			@RequestParam("isRead") String isRead
+			) {
 		var userId = userService.findByUsername(authentication.getName()).getUserId();
 		
 		//check if all notifications are present
@@ -396,7 +432,11 @@ public class AccountUserController {
 	}
 	
 	@GetMapping("change-notification")
-	public String changeNotification(ModelMap modelMap, Authentication authentication, @RequestParam("isRead") String isRead) {
+	public String changeNotification(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			@RequestParam("isRead") String isRead
+			) {
 		var userId = userService.findByUsername(authentication.getName()).getUserId();
 		if(isRead.equalsIgnoreCase("all")) {
 			modelMap.put("notifications", notificationService.findByUserId(userId, 0, 5));

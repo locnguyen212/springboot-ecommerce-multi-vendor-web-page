@@ -41,7 +41,12 @@ public class OrderCancellationShopownerController {
 	}
 	 
 	@GetMapping({ "accept/{id}" })
-	public String accept(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @PathVariable("id") int id) {
+	public String accept(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id
+			) {
 		try {
 			//validate
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
@@ -73,7 +78,12 @@ public class OrderCancellationShopownerController {
 	}
 	
 	@GetMapping({ "refuse/{id}" })
-	public String refuse(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @PathVariable("id") int id) {
+	public String refuse(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id
+			) {
 		try {
 			//validate
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();

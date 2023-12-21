@@ -34,8 +34,10 @@ public class ProductRestController {
 	private IWishlistService wishlistService;
 
 	@GetMapping("/searchHeader")
-	public List<ProductView> searchHeader(@RequestParam("productName") String productName,
-			@RequestParam("categoryName") String categoryName) {
+	public List<ProductView> searchHeader(
+			@RequestParam("productName") String productName,
+			@RequestParam("categoryName") String categoryName
+			) {
 		try {
 			List<ProductView> listSearchProducts = productService.findProductViewByProductName(productName,
 					categoryName);
@@ -47,8 +49,10 @@ public class ProductRestController {
 	}
 
 	@PostMapping("/addWishList")
-	public ResponseEntity<String> AddWishList(@RequestParam("productId") Integer pId,
-			@RequestParam("userId") Integer uId) {
+	public ResponseEntity<String> AddWishList(
+			@RequestParam("productId") Integer pId,
+			@RequestParam("userId") Integer uId
+			) {
 		try {
 			Product p = productService.findById(pId);
 			User u = userService.findById(uId);

@@ -66,7 +66,14 @@ public class ShopRegistUserController {
 	}
 	
 	@PostMapping({"register"})
-	public String register(ModelMap modelMap, RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile file, @ModelAttribute("shopowner") @Valid Shopowner shopowner, BindingResult bindingResult, HttpSession session, Authentication authentication) {		
+	public String register(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam("image") MultipartFile file, 
+			@ModelAttribute("shopowner") @Valid Shopowner shopowner, 
+			BindingResult bindingResult, HttpSession session, 
+			Authentication authentication
+			) {		
 		try {
 			//validate
 			shopownerUniqueValidator.validate(shopowner, bindingResult);

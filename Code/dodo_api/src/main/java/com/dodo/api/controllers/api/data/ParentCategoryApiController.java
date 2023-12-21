@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dodo.api.IServices.IParentCategoryService;
 import com.dodo.api.dtos.ParentcategoryDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -23,6 +24,8 @@ public class ParentCategoryApiController {
 	@Autowired
 	IParentCategoryService parentCategoryService;
 
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-by-name" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ParentcategoryDto> findByName(
 			@RequestParam(value = "name", required = true) String name
@@ -36,6 +39,8 @@ public class ParentCategoryApiController {
 
 	}
 	
+	//admin, super admin
+	@Operation(summary = "Role: super admin, admin")
 	@GetMapping(value = { "find-all" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ParentcategoryDto>> findByName() {
 		try {

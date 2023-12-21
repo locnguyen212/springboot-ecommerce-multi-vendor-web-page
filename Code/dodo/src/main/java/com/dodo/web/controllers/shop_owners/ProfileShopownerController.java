@@ -38,7 +38,13 @@ public class ProfileShopownerController {
 	}
 
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes, @RequestParam(value = "image", required = false) MultipartFile file, @RequestParam("description") String description) {
+	public String edit(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam(value = "image", required = false) MultipartFile file, 
+			@RequestParam("description") String description
+			) {
 		try {
 			var shop = shopownerService.findByUserUsername(authentication.getName());
 			// file handling

@@ -64,7 +64,7 @@ public class CategoryShopownerController {
 	}
   
 	@GetMapping({ "create" })
-	public String createCoupon(ModelMap modelMap, Authentication authentication) {
+	public String create(ModelMap modelMap, Authentication authentication) {
 		var category = new Category();
 		category.setUser(userService.findByUsername(authentication.getName()));
 		
@@ -75,8 +75,12 @@ public class CategoryShopownerController {
 	}
 
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@ModelAttribute("category") @Valid Category category, BindingResult bindingResult) {
+	public String create(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("category") @Valid Category category, 
+			BindingResult bindingResult
+			) {
 		try {
 			//validate
 			uniqueValidator.validate(category, bindingResult);

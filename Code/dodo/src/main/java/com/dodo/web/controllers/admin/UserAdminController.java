@@ -79,9 +79,14 @@ public class UserAdminController {
 	}
 
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@RequestParam("image") MultipartFile file, @ModelAttribute("user") @Valid User user,
-			BindingResult bindingResult, Authentication authentication) {
+	public String create(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam("image") MultipartFile file, 
+			@ModelAttribute("user") @Valid User user,
+			BindingResult bindingResult, 
+			Authentication authentication
+			) {
 		try {
 			// validate
 			emailUniqueValidator.validate(user, bindingResult);
@@ -131,7 +136,12 @@ public class UserAdminController {
 	}
 	
 	@GetMapping({ "switch-status/{id}" })
-	public String switchStatus(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id, Authentication authentication) {	
+	public String switchStatus(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id, 
+			Authentication authentication
+			) {	
 		try {
 			//validate			
 			var user = userService.findById(id);			
@@ -192,12 +202,22 @@ public class UserAdminController {
 	}    
 
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@RequestParam("image") MultipartFile file, @ModelAttribute("user") @Valid User user,
-			BindingResult bindingResult, HttpSession session, Authentication authentication) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@RequestParam("image") MultipartFile file, 
+			@ModelAttribute("user") @Valid User user,
+			BindingResult bindingResult, 
+			HttpSession session, 
+			Authentication authentication
+			) {
 		try {
 			// validate
 			var baseUser = userService.findById(user.getUserId());
+			if(baseUser == null) {
+				return "redirect:/error/400";
+			}
+			
 			if (!user.getPassword().isBlank()) {
 				userPasswordValidator.validate(user, bindingResult);
 				user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -245,28 +265,27 @@ public class UserAdminController {
 	}   
 
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id, Authentication authentication) {
+	public String delete(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id, 
+			Authentication authentication
+			) {
 		try {
 			//validate
 			String userRole = authentication.getAuthorities().iterator().next().toString();
-			String userName = authentication.getName();
-			var logedInUserId = userService.findByUsername(userName).getUserId();
+			var loggedInUserId = userService.findByUsername(authentication.getName()).getUserId();
+			var deletedUser = userService.findById(id);
 			
-			if(!userRole.contains("SUPER") || logedInUserId == id) {
-				return "redirect:/error/404";
-			}
-			
-			var baseUser = userService.findById(id);
-			if(baseUser == null) {
-				return "redirect:/error/404";
+			if(deletedUser == null || !userRole.contains("SUPER") || loggedInUserId == id) {
+				return "redirect:/error/400";
 			}
 			//validate
 			
 			// actual delete
 			if (userService.delete(id)) {
 				// delete file
-				FileHelper.deleteImageFile(baseUser.getAvatar());
+				FileHelper.deleteImageFile(deletedUser.getAvatar());
 				// delete file
 
 				redirectAttributes.addFlashAttribute("successDeleted", true);

@@ -41,6 +41,17 @@ public class WishlistServiceImpl implements IWishlistService {
 			return null;
 		}	
 	}
+	
+
+	@Override
+	public WishlistDto findByProductProductIdAndUserUserId(int productId, int userId) {
+		try {
+			return modelMapper.map(repository.findByProductProductIdAndUserUserId(productId, userId), WishlistDto.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	@Override
 	public boolean save(WishlistDto dto) {
@@ -75,6 +86,7 @@ public class WishlistServiceImpl implements IWishlistService {
 		}
 	}
 	//====LOC====
+
 
 	
 }

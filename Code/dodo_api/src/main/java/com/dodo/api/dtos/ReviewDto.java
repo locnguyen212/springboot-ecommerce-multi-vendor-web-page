@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,9 @@ import lombok.ToString;
 public class ReviewDto implements java.io.Serializable {
 
 	private Integer reviewId;
+	@NotNull
 	private Integer rating;
+	@NotBlank
 	private String comment;
 	private Date reviewDate;
 	private Integer helpfulCount;
@@ -33,9 +37,11 @@ public class ReviewDto implements java.io.Serializable {
 	@JsonFormat(pattern = "dd/MM/yyyy", timezone = "Asia/Ho_Chi_Minh")
 	private Date updatedAt;
 	private String reviewImage;
+	@NotNull
 	private Integer productProductId;
 	private String productProductName;
 	private Integer userUserId;
 	private String userUsername;
+	@NotNull
 	private Integer orderdetailsOrderDetailId;
 }

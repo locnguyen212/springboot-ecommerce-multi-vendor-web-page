@@ -66,8 +66,11 @@ public class ShopListUserController2 {
 	}
 
 	@GetMapping("/v_shop")
-	public String viewShop(@RequestParam("shopId") String id, ModelMap modelMap,
-			HttpSession session, @RequestParam(defaultValue = "1") String page) {
+	public String viewShop(
+			@RequestParam("shopId") String id, 
+			ModelMap modelMap,
+			HttpSession session, 
+			@RequestParam(defaultValue = "1") String page) {
 		Integer idShop = Integer.parseInt(id);
 		var shopInfo = shopOwnerService.findById(idShop);
 		int pageSize = 4;

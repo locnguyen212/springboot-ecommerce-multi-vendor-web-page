@@ -23,6 +23,7 @@ import com.dodo.api.helpers.FileHelper;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.ParentCategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -37,6 +38,7 @@ public class ParentCategoryCrudApiController {
 	ParentCategoryUniqueValidator uniqueValidator;
 
 	//super admin, admin
+	@Operation(summary = "Form Data Only, Cannot Send JSON; Role: super admin, admin")
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(
 			Authentication auth, 
@@ -74,6 +76,7 @@ public class ParentCategoryCrudApiController {
 	}
 	
 	//super admin, admin
+	@Operation(summary = "Form Data Only, Cannot Send JSON; Role: super admin, admin")
 	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(
 			Authentication auth, 
@@ -94,7 +97,7 @@ public class ParentCategoryCrudApiController {
 			// validate
 			
 			//file handling
-			if (file != null || file.getSize() != 0) {
+			if (file != null && file.getSize() != 0) {
 				var fileName = FileHelper.saveImageFile(file);
 				FileHelper.deleteImageFile(dto.getParentCategoryImagePath());
 				dto.setParentCategoryImagePath(fileName);
@@ -115,6 +118,7 @@ public class ParentCategoryCrudApiController {
 	}
 	
 	//super admin
+	@Operation(summary = "Role: super admin")
 	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> delete(
 			Authentication auth, 

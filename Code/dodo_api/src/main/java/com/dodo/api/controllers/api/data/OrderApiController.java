@@ -18,6 +18,7 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.OrderDto;
 import com.dodo.api.modelview.dtos.OrderViewDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -32,29 +33,9 @@ public class OrderApiController {
 
 	@Autowired
 	IUserService userService;
-
-	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<OrderDto> findById(
-			Authentication auth, 
-			@RequestParam(value = "orderId", required = true) int id
-			) {
-		try {
-			//validate
-			var userId = userService.findByUsername(auth.getName()).getUserId();
-			var order = orderService.findById(id);
-			if(order == null || order.getUserUserId() != userId) {
-				return new ResponseEntity<OrderDto>(HttpStatus.FORBIDDEN);
-			}
-			//validate
-			
-			return new ResponseEntity<OrderDto>(orderService.findById(id), HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<OrderDto>(HttpStatus.BAD_REQUEST);
-		}
-
-	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-order-status-and-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderDto>> findByUserUsernameAndOrderStatus(
 			Authentication auth, 
@@ -69,6 +50,8 @@ public class OrderApiController {
 
 	}
 	
+	//super admin
+	@Operation(summary = "Role:super admin")
 	@GetMapping(value = { "find-sales-data-by-year" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderViewDto>> findSalesdataByYear(
 			@RequestParam(value = "year", required = true) int year
@@ -82,6 +65,8 @@ public class OrderApiController {
 
 	}
 	
+	//super admin
+	@Operation(summary = "Role: super admin")
 	@GetMapping(value = { "find-sales-data-by-year-and-month" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderViewDto>> findSalesdataByYearAndMonth(
 			@RequestParam(value = "year", required = true) int year,
@@ -96,6 +81,8 @@ public class OrderApiController {
 
 	}
 	
+	//super admin
+	@Operation(summary = "Role: super admin")
 	@GetMapping(value = { "find-sales-data-years" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Integer>> findSalesdataYear() {
 		try {	
@@ -107,6 +94,8 @@ public class OrderApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-by-order-status-and-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderDto>> findByShopownerOwnerIdAndOrderStatus(
 			Authentication auth, 
@@ -122,6 +111,8 @@ public class OrderApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-by-order-status-not-in-and-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderDto>> findByShopownerIdAndStatusOther(
 			Authentication auth, 
@@ -137,6 +128,8 @@ public class OrderApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-payment-status-and-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderDto>> findByPaymentStatusAndUserUserId(
 			Authentication auth, 
@@ -152,6 +145,8 @@ public class OrderApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-order-status-not-in-and-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<OrderDto>> findByUserIdAndStatusNotIn(
 			Authentication auth, 

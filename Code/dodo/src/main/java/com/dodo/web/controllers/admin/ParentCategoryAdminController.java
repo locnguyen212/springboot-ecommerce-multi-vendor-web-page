@@ -46,8 +46,13 @@ public class ParentCategoryAdminController {
 	}
 
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile file,
-			@ModelAttribute("parentCategory") @Valid Parentcategory parentCategory, BindingResult bindingResult) {
+	public String create(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam("image") MultipartFile file,
+			@ModelAttribute("parentCategory") @Valid Parentcategory parentCategory, 
+			BindingResult bindingResult
+			) {
 		try {
 			//validate
 			uniqueValidator.validate(parentCategory, bindingResult);
@@ -101,10 +106,19 @@ public class ParentCategoryAdminController {
 	}
 	
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile file,
-			@ModelAttribute("parentCategory") @Valid Parentcategory parentCategory, BindingResult bindingResult) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam("image") MultipartFile file,
+			@ModelAttribute("parentCategory") @Valid Parentcategory parentCategory, 
+			BindingResult bindingResult
+			) {
 		try {
 			//validate
+			if(parentCategory.getParentCategoryId() == null || parentCategoryService.findById(parentCategory.getParentCategoryId()) == null) {
+				return "redirect:/error/400";
+			}
+			
 			uniqueValidator.validate(parentCategory, bindingResult);
 			if (bindingResult.hasErrors()) {
 				return "admins/parentCategory/edit";
@@ -135,7 +149,11 @@ public class ParentCategoryAdminController {
 	}
 	
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id) {
+	public String delete(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id
+			) {
 		try {
 			var baseParentCategory = parentCategoryService.findById(id);
 			

@@ -20,6 +20,7 @@ import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ItemDto;
 import com.dodo.api.dtos.ProductDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -36,6 +37,7 @@ public class ItemCrudApiController {
 	IUserService userService;
 
 	// user, shop
+	@Operation(summary = "Role: user, shop")
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(
 			Authentication auth, 
@@ -87,6 +89,7 @@ public class ItemCrudApiController {
 	}
 
 	// user, shop
+	@Operation(summary = "Role: user, shop")
 	@PutMapping(value = {"edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(
 			Authentication auth, 
@@ -123,6 +126,7 @@ public class ItemCrudApiController {
 	}
 
 	// user, shop
+	@Operation(summary = "Role: user, shop")
 	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> delete(
 			Authentication auth, 

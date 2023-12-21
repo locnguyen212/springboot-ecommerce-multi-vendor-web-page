@@ -80,9 +80,14 @@ public class ProductShopownerController {
 	}
  
 	@PostMapping({ "create" })
-	public String create(ModelMap modelMap, Authentication authentication, @RequestParam("image") MultipartFile file,
-			RedirectAttributes redirectAttributes, @ModelAttribute("product") @Valid Product product,
-			BindingResult bindingResult) {
+	public String create(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			@RequestParam("image") MultipartFile file,
+			RedirectAttributes redirectAttributes, 
+			@ModelAttribute("product") @Valid Product product,
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();			
@@ -128,8 +133,12 @@ public class ProductShopownerController {
 	}
 
 	@GetMapping({ "switch-status/{id}" })
-	public String switchStatus(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id,
-			Authentication authentication) {
+	public String switchStatus(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id,
+			Authentication authentication
+			) {
 		try {
 			// validate
 			var product = productService.findById(id);
@@ -164,8 +173,13 @@ public class ProductShopownerController {
 	}
                    
 	@GetMapping({ "edit/{id}" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes, Authentication authentication,
-			@PathVariable("id") int id, HttpSession session) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			Authentication authentication,
+			@PathVariable("id") int id, 
+			HttpSession session
+			) {
 		try {
 			var product = productService.findById(id);
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
@@ -183,11 +197,20 @@ public class ProductShopownerController {
 	}
  
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, Authentication authentication, @RequestParam(value="image", required = false) MultipartFile file,
-			RedirectAttributes redirectAttributes, @ModelAttribute("product") @Valid Product product,
-			BindingResult bindingResult) {
+	public String edit(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			@RequestParam(value="image", required = false) MultipartFile file,
+			RedirectAttributes redirectAttributes, 
+			@ModelAttribute("product") @Valid Product product,
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
+			if(product.getProductId() == null || productService.findById(product.getProductId()) == null) {
+				return "redirect:/error/400";
+			}
+			
 			var shopId = shopOwnerService.findByUserUsername(authentication.getName()).getOwnerId();
 			var baseProduct = productService.findById(product.getProductId());
 			if(baseProduct == null || baseProduct.getShopowner().getOwnerId()!=shopId) {
@@ -231,8 +254,12 @@ public class ProductShopownerController {
 	}
 	
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, Authentication authentication, RedirectAttributes redirectAttributes,
-			@PathVariable("id") int id) {
+	public String delete(
+			ModelMap modelMap, 
+			Authentication authentication, 
+			RedirectAttributes redirectAttributes,
+			@PathVariable("id") int id
+			) {
 		try {
 			// validate
 			var product = productService.findById(id);

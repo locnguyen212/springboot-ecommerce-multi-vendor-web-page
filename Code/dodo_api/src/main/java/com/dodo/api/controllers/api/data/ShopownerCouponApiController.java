@@ -16,6 +16,7 @@ import com.dodo.api.IServices.IShopOwnerCouponService;
 import com.dodo.api.IServices.IShopOwnerService;
 import com.dodo.api.dtos.ShopownercouponDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -28,6 +29,8 @@ public class ShopownerCouponApiController {
 	@Autowired
 	IShopOwnerService ownerService;
 
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ShopownercouponDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -39,6 +42,8 @@ public class ShopownerCouponApiController {
 
 	}
 	
+	//shop
+	@Operation(summary = "Role: shop")
 	@GetMapping(value = { "find-by-current-shop" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ShopownercouponDto>> findByShopownerOwnerId(Authentication auth) {
 		try {

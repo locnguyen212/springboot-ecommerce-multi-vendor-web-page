@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("login")
-@Tag(name = "Auth Login")
+@Tag(name = "Login")
 public class LoginController {
 	@Autowired
 	IUserService userService;
@@ -30,7 +30,7 @@ public class LoginController {
 	@Autowired
 	private JwtHelper jwtHelper;
 	 
-	@PostMapping(value = { "/" , "" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
+	@PostMapping(value = { "" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE, consumes = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> login(@RequestBody LoginInfo login) {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword()));

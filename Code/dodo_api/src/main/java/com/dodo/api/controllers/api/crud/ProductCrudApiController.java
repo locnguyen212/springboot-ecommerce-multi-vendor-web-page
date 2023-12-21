@@ -25,6 +25,7 @@ import com.dodo.api.helpers.FileHelper;
 import com.dodo.api.helpers.ValidateHelper;
 import com.dodo.api.validators.ParentCategoryUniqueValidator;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -39,6 +40,7 @@ public class ProductCrudApiController {
 	IShopOwnerService ownerService;
 
 	//shop
+	@Operation(summary = "Form Data Only, Cannot Send JSON; Role: shop")
 	@PostMapping(value = { "create" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> create(
 			Authentication auth, 
@@ -84,6 +86,7 @@ public class ProductCrudApiController {
 	}
 	
 	//shop
+	@Operation(summary = "Form Data Only, Cannot Send JSON; Role: shop")
 	@PutMapping(value = { "edit" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> edit(
 			Authentication auth, 
@@ -112,7 +115,7 @@ public class ProductCrudApiController {
 			// validate
 			
 			//file handling
-			if (file != null || file.getSize() != 0) {
+			if (file != null && file.getSize() != 0) {
 				var fileName = FileHelper.saveImageFile(file);
 				FileHelper.deleteImageFile(dto.getProductImage());
 				dto.setProductImage(fileName);
@@ -133,6 +136,7 @@ public class ProductCrudApiController {
 	}
 	
 	//shop
+	@Operation(summary = "Role: shop")
 	@DeleteMapping(value = { "delete" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> delete(
 			Authentication auth, 

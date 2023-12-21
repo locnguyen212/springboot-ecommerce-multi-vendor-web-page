@@ -61,7 +61,13 @@ public class RegisterController {
 	}	
 	
 	@PostMapping({"sign-up"})
-	public String register(ModelMap modelMap, RedirectAttributes redirectAttributes, @RequestParam("image") MultipartFile file, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {		
+	public String register(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@RequestParam("image") MultipartFile file, 
+			@ModelAttribute("user") @Valid User user, 
+			BindingResult bindingResult
+			) {		
 		try {
 			//validate
 			emailUniqueValidator.validate(user, bindingResult);

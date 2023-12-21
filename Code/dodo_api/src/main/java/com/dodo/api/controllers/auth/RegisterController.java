@@ -30,6 +30,7 @@ import com.dodo.api.validators.UserEmailUniqueValidator;
 import com.dodo.api.validators.UserPasswordValidator;
 import com.dodo.api.validators.UserUsernameUniqueValidator;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -61,14 +62,19 @@ public class RegisterController {
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
+	@Operation(summary = "Form Data Only, Cannot Send JSON")
 	@PostMapping(value = {"sign-up" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> register(@RequestParam(value = "image", required = true) MultipartFile file, @ModelAttribute("user") @Valid UserDto user, BindingResult bindingResult) {
+	public ResponseEntity<Object> register(
+			@RequestParam(value = "image", required = true) MultipartFile file, 
+			@ModelAttribute("user") @Valid UserDto user, 
+			BindingResult bindingResult
+			) {
 		try {
 			// validate
 			emailUniqueValidator.validate(user, bindingResult);
 			usernameUniqueValidator.validate(user, bindingResult);
 			userPasswordValidator.validate(user, bindingResult);
-			if (file.getSize() == 0 || file == null) {
+			if (file == null || file.getSize() == 0) {
 				bindingResult.rejectValue("avatar", "Upload", null, "Avatar is required");
 			}
 			if (bindingResult.hasErrors()) {

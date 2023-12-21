@@ -58,7 +58,11 @@ public class OrderUsersController {
 	private boolean orderPlaced = false;
 
 	@PostMapping("/index")
-	public String order(@RequestParam("listItemId") String listItemId, HttpSession session, ModelMap modelMap) {
+	public String order(
+			@RequestParam("listItemId") String listItemId, 
+			HttpSession session, 
+			ModelMap modelMap
+			) {
 		modelMap.addAttribute("message", null);
 		User checkUser = (User) session.getAttribute("user");
 		if (listItemId == "") {
@@ -106,8 +110,11 @@ public class OrderUsersController {
 	}
 
 	@PostMapping("/checkout")
-	public String checkout(@RequestParam("listProductId") String listProductId, HttpSession session,
-			ModelMap modelMap) {
+	public String checkout(
+			@RequestParam("listProductId") String listProductId, 
+			HttpSession session,
+			ModelMap modelMap
+			) {
 		modelMap.addAttribute("message", null);
 		User checkUser = (User) session.getAttribute("user");
 		if (listProductId == "") {

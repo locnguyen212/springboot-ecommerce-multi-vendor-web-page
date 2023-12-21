@@ -16,6 +16,7 @@ import com.dodo.api.IServices.IReviewService;
 import com.dodo.api.IServices.IUserService;
 import com.dodo.api.dtos.ReviewDto;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -29,6 +30,7 @@ public class ReviewApiController {
 	IUserService userService;
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ReviewDto> findById(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -41,6 +43,7 @@ public class ReviewApiController {
 	}
 
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-product-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReviewDto>> findByProductProductId(@RequestParam(value = "id", required = true) int id) {
 		try {
@@ -52,6 +55,8 @@ public class ReviewApiController {
 
 	}
 	
+	//user, shop
+	@Operation(summary = "Role: user, shop")
 	@GetMapping(value = { "find-by-logged-in-user" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReviewDto>> findByUserUserId(Authentication auth) {
 		try {
@@ -65,6 +70,7 @@ public class ReviewApiController {
 	}
 	
 	//allow all
+	@Operation(summary = "Role: allow anonymous")
 	@GetMapping(value = { "find-by-shop-id" }, produces = MimeTypeUtils.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ReviewDto>> findByShopId(@RequestParam(value = "id", required = true) int id) {
 		try {

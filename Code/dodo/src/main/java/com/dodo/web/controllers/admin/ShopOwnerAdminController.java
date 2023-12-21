@@ -64,8 +64,12 @@ public class ShopOwnerAdminController {
 	}
 
 	@GetMapping({ "active/{id}" })
-	public String active(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id,
-			Authentication authentication) {
+	public String active(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id,
+			Authentication authentication
+			) {
 		try {
 			var shop = shopOwnerService.findById(id);
 
@@ -96,8 +100,12 @@ public class ShopOwnerAdminController {
 	}
 	 
 	@GetMapping({ "deactive/{id}" })
-	public String deactive(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id,
-			Authentication authentication) {
+	public String deactive(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id,
+			Authentication authentication
+			) {
 		try {
 			var shop = shopOwnerService.findById(id);
 
@@ -157,8 +165,12 @@ public class ShopOwnerAdminController {
 	}
 
 	@PostMapping({ "edit" })
-	public String edit(ModelMap modelMap, RedirectAttributes redirectAttributes,
-			@ModelAttribute("shopowner") Shopowner shopowner, @RequestParam("statusField") int status) {
+	public String edit(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes,
+			@ModelAttribute("shopowner") Shopowner shopowner,
+			@RequestParam("statusField") int status
+			) {
 		try {
 			// status == 1 : active
 			// status == 2 : deactive
@@ -234,7 +246,11 @@ public class ShopOwnerAdminController {
 	}
 
 	@GetMapping({ "delete/{id}" })
-	public String delete(ModelMap modelMap, RedirectAttributes redirectAttributes, @PathVariable("id") int id) {
+	public String delete(
+			ModelMap modelMap, 
+			RedirectAttributes redirectAttributes, 
+			@PathVariable("id") int id
+			) {
 		try {
 			var baseShop = shopOwnerService.findById(id);
 			var user = baseShop.getUser();

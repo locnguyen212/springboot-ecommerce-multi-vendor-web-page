@@ -79,7 +79,7 @@ public class ShopOwnerAdminController {
 			}
 			// validate
 			var user = shop.getUser();
-			user.setRole(new Role(3));
+			user.setRole(Role.builder().roleId(3).build());
 			user.setUpdatedAt(new Date());
 			userService.save(user);
 			
@@ -115,7 +115,7 @@ public class ShopOwnerAdminController {
 			}
 			// validate
 			var user = shop.getUser();
-			user.setRole(new Role(4));
+			user.setRole(Role.builder().roleId(4).build());
 			user.setUpdatedAt(new Date());
 			userService.save(user);
 			
@@ -205,7 +205,7 @@ public class ShopOwnerAdminController {
 			} else if (status == 4) {
 				shopowner.setStatus(true);
 				var user = userService.findById(shopowner.getUser().getUserId());
-				user.setRole(new Role(3));
+				user.setRole(Role.builder().roleId(3).build());
 				userService.save(user);
 				// Send mail
 //				mailService.send(fromEmail, toEmail, "Approve shop noti", MailHelper.getEmailShopApproveNoti(shopowner.getShopName()));
@@ -254,7 +254,7 @@ public class ShopOwnerAdminController {
 		try {
 			var baseShop = shopOwnerService.findById(id);
 			var user = baseShop.getUser();
-			user.setRole(new Role(4));
+			user.setRole(Role.builder().roleId(4).build());
 			userService.save(user);
 
 			// actual delete

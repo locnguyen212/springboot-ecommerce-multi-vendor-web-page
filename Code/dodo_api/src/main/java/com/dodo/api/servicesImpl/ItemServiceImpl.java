@@ -1,6 +1,7 @@
 package com.dodo.api.servicesImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +33,7 @@ public class ItemServiceImpl implements IItemService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<ItemDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -75,7 +76,7 @@ public class ItemServiceImpl implements IItemService {
 			return modelMapper.map(repository.getAllItemByUser(userId), new TypeToken<List<ItemDto>>() {
 			}.getType());
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -140,7 +141,7 @@ public class ItemServiceImpl implements IItemService {
 			return dto;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

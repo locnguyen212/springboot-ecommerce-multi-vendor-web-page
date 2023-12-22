@@ -1,6 +1,7 @@
 package com.dodo.api.servicesImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements IUserService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<UserDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -128,7 +129,7 @@ public class UserServiceImpl implements IUserService {
 			return modelMapper.map(repository.findByRoleUserAndShopowner(), new TypeToken<List<UserDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

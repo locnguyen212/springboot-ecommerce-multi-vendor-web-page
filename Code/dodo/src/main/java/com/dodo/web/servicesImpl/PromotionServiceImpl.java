@@ -1,5 +1,6 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class PromotionServiceImpl implements IPromotionService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -65,7 +66,7 @@ public class PromotionServiceImpl implements IPromotionService {
 			return repository.findByProductProductId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class PromotionServiceImpl implements IPromotionService {
 			return repository.findByShopownerOwnerId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	
@@ -85,7 +86,7 @@ public class PromotionServiceImpl implements IPromotionService {
 			return repository.findProductIdGotPromotionByShopownerId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	

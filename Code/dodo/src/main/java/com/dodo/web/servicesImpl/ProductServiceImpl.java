@@ -1,5 +1,6 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class ProductServiceImpl implements IProductService {
 			return productRepository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -90,7 +91,7 @@ public class ProductServiceImpl implements IProductService {
 		try {
 			return productRepository.getAllAndStatus(true, null, true);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -140,7 +141,7 @@ public class ProductServiceImpl implements IProductService {
 			return productRepository.findByShopownerOwnerId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -151,7 +152,7 @@ public class ProductServiceImpl implements IProductService {
 			return productRepository.findByIdsNotInAndShopownerIdAndStatusActive(productWithPromotionIds, shopownerId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -161,7 +162,7 @@ public class ProductServiceImpl implements IProductService {
 			return productRepository.findByShopownerOwnerIdAndStatusActive(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

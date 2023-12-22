@@ -70,7 +70,12 @@ public class ItemCrudApiController {
 				if (product == null) {
 					return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 				} else {
-					ItemDto newItem = new ItemDto(quantity, new Date(), productId, user.getUserId());
+					ItemDto newItem = ItemDto.builder()
+												.quantity(quantity)
+												.createdAt(new Date())
+												.productProductId(productId)
+												.userUserId(user.getUserId())
+												.build();
 					
 					return new ResponseEntity<Object>(new Object() {
 						public boolean status = itemService.save(newItem);

@@ -1,5 +1,6 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class WishlistServiceImpl implements IWishlistService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -64,7 +65,7 @@ public class WishlistServiceImpl implements IWishlistService {
 			return repository.findByUserUserId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}	
 	//====LOC====

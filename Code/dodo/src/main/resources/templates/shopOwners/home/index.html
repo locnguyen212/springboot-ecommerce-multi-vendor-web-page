@@ -1,608 +1,232 @@
 <!DOCTYPE html>
 <html
-    th:replace="~{/shopOwners/layout/index :: mainContent('Home', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
+	th:replace="~{/shopOwners/layout/index :: mainContent('Home', ~{:: #content-wrapper}, ~{:: #jsScript}, ~{:: #style})}">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <th:block id="jsScript">
-        <script th:inline="javascript">
-            document.addEventListener('DOMContentLoaded', (event) => {
-                var cancelledCount = /*[[${cancelledCount}]]*/ 0;
-                var deliveredCount = /*[[${deliveredCount}]]*/ 0;
+<th:block id="jsScript">
 
-                if (cancelledCount !== null && deliveredCount !== null && (cancelledCount !== 0 || deliveredCount !== 0)) {
-                    var total = cancelledCount + deliveredCount;
-                    var cancelledPercentage = ((cancelledCount / total) * 100).toFixed(2);
-                    var deliveredPercentage = ((deliveredCount / total) * 100).toFixed(2);
+</th:block>
+<th:block id="style">
 
-                    // console.log("Cancelled Count: " + cancelledCount);
-                    // console.log("Delivered Count: " + deliveredCount);
-
-                    var labels = [
-                        'Cancelled: ' + cancelledCount + ' products ', // Nhãn cho số lượng sản phẩm bị hủy
-                        'Delivered: ' + deliveredCount + ' products '    // Nhãn cho số lượng sản phẩm được giao thành công
-                    ];
-
-
-                    var ctx = document.getElementById('myChart2').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                backgroundColor: ["#5A6ACF", "#8593ED"],
-                                data: [cancelledPercentage, deliveredPercentage],
-                                borderWidth: 6
-                            }]
-                        },
-                        options: {
-                            aspectRatio: 1,
-                            cutoutPercentage: 85,
-                            responsive: true,
-                            legend: {
-                                position: 'left'
-                            }
-                        }
-                    });
-                } else {
-                    document.getElementById('chartErrorMessage').style.display = 'block';
-                }
-            });
-
-        </script>
-
-        <script th:inline="javascript">
-            document.addEventListener("DOMContentLoaded", function () {
-                var cancelledCount2 = /*[[${cancelledCount2}]]*/ 0;
-                var deliveredCount2 = /*[[${deliveredCount2}]]*/ 0;
-                var waitingForApprovalCount = /*[[${waitingForApprovalCount}]]*/ 0;
-                var inProcessCount = /*[[${inProcessCount}]]*/ 0;
-                var packagingCount = /*[[${packagingCount}]]*/ 0;
-
-                var allCounts = [cancelledCount2, deliveredCount2, waitingForApprovalCount, inProcessCount, packagingCount];
-
-                // Kiểm tra xem liệu cần vẽ biểu đồ hay không dựa trên điều kiện dữ liệu
-                var shouldDrawChart = allCounts.some(function (count) {
-                    return count > 0; // Kiểm tra nếu giá trị lớn hơn 0
-                });
-
-                // Lấy thẻ canvas
-                var ctx = document.getElementById('lineChart2').getContext('2d');
-
-                if (shouldDrawChart) {
-                    // Vẽ biểu đồ cột nếu có dữ liệu
-                    var columnChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Cancelled', 'Delivered', 'Waiting For Approval', 'In Process', 'Packaging'],
-                            datasets: [{
-                                label: 'Order Status Distribution',
-                                data: [cancelledCount2, deliveredCount2, waitingForApprovalCount, inProcessCount, packagingCount],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 0.6)',
-                                    'rgba(54, 162, 235, 0.6)',
-                                    'rgba(255, 206, 86, 0.6)',
-                                    'rgba(75, 192, 192, 0.6)',
-                                    'rgba(255, 0, 0, 0.6)'
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(255, 0, 0, 1)'
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            },
-                            plugins: {
-                                legend: {
-                                    display: false
-                                }
-                            },
-                            indexAxis: 'y', // Đổi trục hiển thị từ dọc thành ngang
-                            elements: {
-                                bar: {
-                                    borderWidth: 2,
-                                    minBarLength: 1 // Thiết lập chiều cao tối thiểu cho cột
-                                }
-                            }
-                        }
-                    });
-
-                } else {
-                    // Hiển thị thông báo khi không có dữ liệu
-                    var chartErrorMessage = document.getElementById('chartErrorMessage2');
-                    if (chartErrorMessage) {
-                        chartErrorMessage.style.display = 'block';
-                    }
-                }
-            });
-        </script>
-        <script th:inline="javascript">
-            document.addEventListener('DOMContentLoaded', (event) => {
-                var paidOrders = /*[[${paidOrders}]]*/ 0;
-                var unpaidOrders = /*[[${unpaidOrders}]]*/ 0;
-
-                if (paidOrders !== null && unpaidOrders !== null && (paidOrders !== 0 || unpaidOrders !== 0)) {
-                    var total = paidOrders + unpaidOrders;
-                    var paidPercentage = ((paidOrders / total) * 100).toFixed(2);
-                    var unpaidPercentage = ((unpaidOrders / total) * 100).toFixed(2);
-
-                    var labels = [
-                        'Paid: ' + paidOrders + ' products ' + paidPercentage + '%',
-                        'Unpaid: ' + unpaidOrders + ' products ' + unpaidPercentage + '%'
-                    ];
-
-                    var ctx = document.getElementById('paymentChart').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                backgroundColor: ["#5A6ACF", "#8593ED"],
-                                data: [paidPercentage, unpaidPercentage],
-                                borderWidth: 6
-                            }]
-                        },
-                        options: {
-                            aspectRatio: 1,
-                            cutoutPercentage: 85,
-                            responsive: true,
-                            legend: {
-                                position: 'left'
-                            }
-                        }
-                    });
-                } else {
-                    document.getElementById('chartErrorMessage3').style.display = 'block';
-                }
-            });
-        </script>
-
-
-        <script th:inline="javascript">
-            document.addEventListener('DOMContentLoaded', (event) => {
-                var productLabels = /*[[${productLabels}]]*/ null;
-                var productQuantities = /*[[${productQuantities}]]*/ null;
-
-                if (productLabels !== null && productQuantities !== null && productLabels.length > 0 && productQuantities.length > 0) {
-                    var ctx = document.getElementById('myChart3').getContext('2d');
-                    var chart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: productLabels,
-                            datasets: [{
-                                label: 'Most Ordered Products',
-                                data: productQuantities,
-                                backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                                borderColor: 'rgba(54, 162, 235, 1)',
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
-                        }
-                    });
-                } else {
-                    document.getElementById('chartErrorMessage4').style.display = 'block';
-                }
-            });
-        </script>
-        <script th:inline="javascript">
-            document.addEventListener('DOMContentLoaded', () => {
-
-            });
-
-
-        </script>
-    </th:block>
-    <th:block id="style">
-        <style>
-            canvas {
-                max-width: 100%;
-                height: auto;
-            }
-        </style>
-    </th:block>
+</th:block>
 </head>
 
 <body>
-    <!-- <th:block id="content-wrapper">
-        <div class="dashboard__content bgc-gmart-gray">
-            <div class="row pb50">
-                <div class="col-lg-12">
-                    <div class="dashboard_title_area">
-                        <h2>Dashboard</h2>
-                        <p class="para">Lorem ipsum dolor sit amet, consectetur.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Total Earnings</div>
-                            <div class="title">$859.25k <span class="badge style1 text-center">2.2%</span></div>
-                            <div class="subtitle2"><span>$50</span> New Sales</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Order</div>
-                            <div class="title">66,894</div>
-                            <div class="subtitle2"><span>40+</span> New Order</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Customer</div>
-                            <div class="title">583.35M</div>
-                            <div class="subtitle2"><span>90+</span> New Customer</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">My Balance</div>
-                            <div class="title">$365.89k <span class="badge style2 text-center">2.2%</span></div>
-                            <div class="subtitle2"><span>290</span> Balance</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-8">
-                    <div class="application_statics mb30">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <div class="report_widget d-block d-sm-flex justify-content-center justify-content-sm-between">
-                            <h4 class="title pl30">Earning Statistics</h4>
-                            <ul class="mb0 ml30-520">
-                                <li class="list-inline-item report_export mb15-520"><a href="#">Export Report</a></li>
-                                <li class="list-inline-item">
-                                    <div class="dropdown bootstrap-select show-tick"><select
-                                            class="selectpicker show-tick">
-                                            <option>This Week</option>
-                                            <option>This Month</option>
-                                            <option>This Year</option>
-                                        </select><button type="button" tabindex="-1"
-                                            class="btn dropdown-toggle btn-light" data-bs-toggle="dropdown"
-                                            role="combobox" aria-owns="bs-select-1" aria-haspopup="listbox"
-                                            aria-expanded="false" title="This Week">
-                                            <div class="filter-option">
-                                                <div class="filter-option-inner">
-                                                    <div class="filter-option-inner-inner">This Week</div>
-                                                </div>
-                                            </div>
-                                        </button>
-                                        <div class="dropdown-menu ">
-                                            <div class="inner show" role="listbox" id="bs-select-1" tabindex="-1">
-                                                <ul class="dropdown-menu inner show" role="presentation"></ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <canvas id="myChartweave" style="height: 337px; display: block; width: 674px;" width="842"
-                            height="421" class="chartjs-render-monitor"></canvas>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="circle_chart_box">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <h4 class="title mb30">Earning</h4>
-                        <canvas id="myChart" style="height: 230px; display: block; width: 280px;" width="350"
-                            height="287" class="chartjs-render-monitor">$56,033</canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-8">
-                    <div class="application_statics">
-                        <h4 class="title pl30 mb30">Recent Orders</h4>
-                        <div class="account_user_deails dashboard_page">
-                            <div class="order_table table-responsive">
-                                <table class="table">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Product</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">Payment</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Total</th>
-                                            <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style1">Delivered</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style2">Cancel</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style3">In Progress</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style1">Delivered</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style2">Cancel</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">#1923</th>
-                                            <td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
-                                            <td>Aug 15, 2020</td>
-                                            <td>Paid</td>
-                                            <td class="status"><span class="style3">In Progress</span></td>
-                                            <td>$56.00</td>
-                                            <td class="action"><span class="details">...</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+	<th:block id="content-wrapper">
+		<div class="dashboard__content bgc-gmart-gray">
+			<div class="row pb50">
+				<div class="col-lg-12">
+					<div class="dashboard_title_area">
+						<h2>Dashboard</h2>
+						<p class="para">Lorem ipsum dolor sit amet, consectetur.</p>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6 col-xxl-3">
+					<div class="d-flex justify-content-between statistics_funfact">
+						<div class="details">
+							<div class="subtitle1">Total Earnings</div>
+							<div class="title">
+								$859.25k <span class="badge style1 text-center">2.2%</span>
+							</div>
+							<div class="subtitle2">
+								<span>$50</span> New Sales
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xxl-3">
+					<div class="d-flex justify-content-between statistics_funfact">
+						<div class="details">
+							<div class="subtitle1">Order</div>
+							<div class="title">66,894</div>
+							<div class="subtitle2">
+								<span>40+</span> New Order
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xxl-3">
+					<div class="d-flex justify-content-between statistics_funfact">
+						<div class="details">
+							<div class="subtitle1">Customer</div>
+							<div class="title">583.35M</div>
+							<div class="subtitle2">
+								<span>90+</span> New Customer
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-xxl-3">
+					<div class="d-flex justify-content-between statistics_funfact">
+						<div class="details">
+							<div class="subtitle1">My Balance</div>
+							<div class="title">
+								$365.89k <span class="badge style2 text-center">2.2%</span>
+							</div>
+							<div class="subtitle2">
+								<span>290</span> Balance
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-8">
+					<div class="application_statics mb30">
+						<div class="chartjs-size-monitor">
+							<div class="chartjs-size-monitor-expand">
+								<div class=""></div>
+							</div>
+							<div class="chartjs-size-monitor-shrink">
+								<div class=""></div>
+							</div>
+						</div>
+						<div
+							class="report_widget d-block d-sm-flex justify-content-center justify-content-sm-between">
+							<h4 class="title pl30">Earning Statistics</h4>
+							<ul class="mb0 ml30-520">
+								<li class="list-inline-item report_export mb15-520"><a
+									href="#">Export Report</a></li>
+								<li class="list-inline-item">
+									<div class="dropdown bootstrap-select show-tick">
+										<select class="selectpicker show-tick">
+											<option>This Week</option>
+											<option>This Month</option>
+											<option>This Year</option>
+										</select>
+										<button type="button" tabindex="-1"
+											class="btn dropdown-toggle btn-light"
+											data-bs-toggle="dropdown" role="combobox"
+											aria-owns="bs-select-1" aria-haspopup="listbox"
+											aria-expanded="false" title="This Week">
+											<div class="filter-option">
+												<div class="filter-option-inner">
+													<div class="filter-option-inner-inner">This Week</div>
+												</div>
+											</div>
+										</button>
+										<div class="dropdown-menu ">
+											<div class="inner show" role="listbox" id="bs-select-1"
+												tabindex="-1">
+												<ul class="dropdown-menu inner show" role="presentation"></ul>
+											</div>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<canvas id="myChartweave"
+							style="height: 337px; display: block; width: 674px;" width="842"
+							height="421" class="chartjs-render-monitor"></canvas>
+					</div>
+				</div>
+				<div class="col-xl-4">
+					<div class="circle_chart_box">
+						<div class="chartjs-size-monitor">
+							<div class="chartjs-size-monitor-expand">
+								<div class=""></div>
+							</div>
+							<div class="chartjs-size-monitor-shrink">
+								<div class=""></div>
+							</div>
+						</div>
+						<h4 class="title mb30">Earning</h4>
+						<canvas id="myChart"
+							style="height: 230px; display: block; width: 280px;" width="350"
+							height="287" class="chartjs-render-monitor">$56,033</canvas>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xl-8">
+					<div class="application_statics">
+						<h4 class="title pl30 mb30">Recent Orders</h4>
+						<div class="account_user_deails dashboard_page">
+							<div class="order_table table-responsive">
+								<table class="table">
+									<thead class="table-light">
+										<tr>
+											<th scope="col">ID</th>
+											<th scope="col">Product</th>
+											<th scope="col">Date</th>
+											<th scope="col">Payment</th>
+											<th scope="col">Status</th>
+											<th scope="col">Total</th>
+											<th scope="col">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style1">Delivered</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style2">Cancel</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style3">In
+													Progress</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style1">Delivered</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style2">Cancel</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+										<tr>
+											<th scope="row">#1923</th>
+											<td>Lenovo IdeaPad 3 15.6" Laptop - Sand</td>
+											<td>Aug 15, 2020</td>
+											<td>Paid</td>
+											<td class="status"><span class="style3">In
+													Progress</span></td>
+											<td>$56.00</td>
+											<td class="action"><span class="details">...</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-    </th:block> -->
+	</th:block>
 
-    <th:block id="content-wrapper">
-        <div class="dashboard__content bgc-gmart-gray">
-            <div class="row pb50">
-                <div class="col-lg-12">
-                    <div class="dashboard_title_area">
-                        <h2>Dashboard</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <!-- Trong HTML -->
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Total Earnings</div>
-                            <div class="title">
-                                <span class="badge style1 text-center"></span>
-                                <span th:if="${totalEarnings != null}" th:text="${totalEarnings + '$'}"></span>
-                                <span th:if="${totalEarnings == null}">(No income yet)</span>
-                            </div>
-                            <div class="subtitle2"><span></span>Total Earnings</div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Order</div>
-                            <div class="title" th:text="${totalOrders != null ? totalOrders : 'No orders'}"></div>
-                            <div class="subtitle2">
-                                <span th:if="${numberOfNewOrders > 0}"
-                                    style="font-size: 1.5em">[[${numberOfNewOrders}]]+</span>
-                                <span th:if="${numberOfNewOrders == 0}" style="color: navy;">No</span>
-                                <span th:style="${numberOfNewOrders == 0} ? 'color: navy;' : ''"> New Order Today</span>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Order Cancel</div>
-                            <div th:if="${totalEarningsCancelledAll2 != null}">
-                                <p>Total amount from canceled orders: <span
-                                        th:text="'$' + ${totalEarningsCancelledAll2}"></span></p>
-                            </div>
-                            <div class="title" th:if="${totalEarningsCancelledAll2 == null}">
-                                <p>No cancelled orders found</p>
-                            </div>
-
-                            <div class="title1"
-                                th:if="${numberOfCancelledOrdersToday != null && numberOfCancelledOrdersToday > 0}">
-                                <span
-                                    th:text="${'Total cancelled orders today: ' + numberOfCancelledOrdersToday + ' - Total amount: ' + totalEarningsCancelledAll + '$'}"></span>
-                            </div>
-
-                            <div class="title" th:if="${numberOfCancelledOrdersToday == 0}">
-                                No Cancelled today
-                            </div>
-                            <div class="subtitle2">
-                                <span th:if="${numberOfCancelledOrdersToday != 0}"
-                                    th:text="${numberOfCancelledOrdersToday ?: 0  + ' Order canceled today'}"></span>
-                                <span th:if="${numberOfCancelledOrdersToday == 0}">There have been no cancellations
-                                    today</span>
-                            </div>
-                        </div>
-                    </div>
-                    <style>
-                        .details {
-                            font-size: 18px;
-                            color: green;
-                            /* Thay đổi mã màu tùy thích */
-                        }
-
-                        .title,
-                        .subtitle1,
-                        .subtitle2 {
-                            font-size: 18px;
-                            color: green;
-                            /* Thay đổi mã màu tùy thích */
-                        }
-                    </style>
-                </div>
-                <div class="col-lg-6 col-xxl-3">
-                    <div class="d-flex justify-content-between statistics_funfact">
-                        <div class="details">
-                            <div class="subtitle1">Top selling products</div>
-                            <div th:if="${top3SellingProducts == null or #lists.isEmpty(top3SellingProducts)}">
-                                <span>No product is a bestseller yet</span>
-                            </div>
-                            <div th:each="product, i : ${top3SellingProducts}" class="title">
-                                <div th:class="${i.index == 0 ? 'top1' : (i.index == 1 ? 'top2' : 'top3')}">
-                                    <span th:text="${'Top ' + (i.index + 1) + ' bestseller: '}"
-                                        class="top-label"></span>
-                                    <span th:text="${product[1]}" class="product-name"></span>
-                                    <span class="number-of"> - Number of: </span>
-                                    <span th:text="${product[2]}" class="top-number"></span>
-                                </div>
-                                <span class="badge style2 text-center"></span>
-                            </div>
-                            <style>
-                                /* Ví dụ cho cỡ chữ và màu sắc tùy chỉnh */
-                                .top1 {
-                                    font-size: 18px;
-                                    color: red;
-                                }
-
-                                .top2 {
-                                    font-size: 16px;
-                                    color: green;
-                                }
-
-                                .top3 {
-                                    font-size: 14px;
-                                    color: blue;
-                                }
-
-                                .number-of,
-                                .product-name {
-                                    color: pink;
-                                }
-                            </style>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">Column charts can show the distribution of order status</h4>
-                            <canvas id="lineChart2" style="height:230px;"></canvas>
-                            <p id="chartErrorMessage2"
-                                style="display: none; text-align: center; color: red; font-size: 18px;">There is no
-                                value to create a chart yet</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">Delivered and cancellation of order chart (%)</h4>
-                            <canvas id="myChart2" style="height:230px;"></canvas>
-                            <p id="chartErrorMessage"
-                                style="display: none; text-align: center; color: red; font-size: 18px;">There is no
-                                value to create a chart yet</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">A pie chart can show the percentage of paid and unpaid orders (%).
-                            </h4>
-                            <canvas id="paymentChart" style="height:230px;"></canvas>
-
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">A column chart shows the most ordered products.</h4>
-                            <canvas id="myChart3" style="height:230px;"></canvas>
-                            <p id="chartErrorMessage4"
-                                style="display: none; text-align: center; color: red; font-size: 18px;">There is no
-                                value to create a chart yet</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">Chart Shows the changing trend of total revenue over time.</h4>
-                            <canvas id="paymentChart1" style="height:230px;"></canvas>
-                            <p id="chartErrorMessage5"
-                                style="display: none; text-align: center; color: red; font-size: 18px;">There is no
-                                value to create a chart yet</p>
-                        </div>
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="circle_chart_box">
-                            <h4 class="title mb30">A column chart shows the most ordered products.</h4>
-                            <canvas id="myChart4" style="height:230px;"></canvas>
-                            <p id="chartErrorMessage5"
-                                style="display: none; text-align: center; color: red; font-size: 18px;">There is no
-                                value to create a chart yet</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </th:block>
 </body>
 
 </html>

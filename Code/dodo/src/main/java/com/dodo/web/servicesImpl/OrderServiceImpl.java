@@ -1,5 +1,7 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -76,7 +78,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findByUserUsernameAndOrderStatus(username, status);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -86,7 +88,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findSalesdataByYear(year);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -96,7 +98,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findSalesdataByYearAndMonth(year, month);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -106,7 +108,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findSalesdataYear();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -116,7 +118,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findByShopownerOwnerIdAndOrderStatus(id, status);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -126,7 +128,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findByShopownerIdAndStatusOther(id, statusList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -136,7 +138,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findByPaymentStatusAndUserUserId(status, id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -146,7 +148,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findByUserIdAndStatusNotIn(id, statusList);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -158,7 +160,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.getMyOrder(userId, orderStatus);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return new ArrayList<Order>();
 		}
 	}
 
@@ -167,7 +169,7 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			return repository.findByOwnerId(ownerId);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 
 	}
@@ -187,7 +189,7 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			return repository.findOrdersByOwnerIdAndOrderDateBetween(ownerId, start, end);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 
 	}
@@ -197,7 +199,7 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			return repository.getOrdersByShopOwnerIdAndStatus(ownerId, status);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 
 	}
@@ -207,7 +209,7 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			return repository.findOrdersByOwnerIdAndOrderDateBetween2(ownerId, start, end);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 
 	}
@@ -217,7 +219,7 @@ public class OrderServiceImpl implements IOrderService {
 		try {
 			return repository.findAllCancelledOrders(ownerId);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 
 	}

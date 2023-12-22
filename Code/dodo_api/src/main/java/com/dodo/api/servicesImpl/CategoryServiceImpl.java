@@ -35,7 +35,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<CategoryDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	
@@ -99,7 +99,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return modelMapper.map(repository.findByStatus(status), new TypeToken<List<CategoryDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	
@@ -109,7 +109,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return modelMapper.map(repository.findByStatusNotNull(), new TypeToken<List<CategoryDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	
@@ -140,7 +140,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return modelMapper.map(repository.findByUserUserId(id), new TypeToken<List<CategoryDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	//====LOC====

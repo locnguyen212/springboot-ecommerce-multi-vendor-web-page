@@ -1,6 +1,7 @@
 package com.dodo.web.servicesImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class ItemServiceImpl implements IItemService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -64,7 +65,7 @@ public class ItemServiceImpl implements IItemService {
 		try {
 			return repository.getAllItemByUser(userId);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -129,7 +130,7 @@ public class ItemServiceImpl implements IItemService {
 			return cartViews;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	

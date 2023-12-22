@@ -1,5 +1,7 @@
 package com.dodo.api.configurations;
 
+import static com.dodo.api.staticVariable.SecurityRequestMatcherUrl.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +25,7 @@ import com.dodo.api.filters.JwtAuthenticationFilter;
 //để sử dụng security, ta cần annotation @EnableWebSecurity
 @EnableWebSecurity
 @Configuration
-public class SecurityConfiguration implements WebMvcConfigurer {
+public class SecurityConfiguration implements WebMvcConfigurer {	
 	@Autowired
 	IUserService userService;
 	
@@ -45,28 +47,14 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 		httpSecurity
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/user/become-a-vendor/**").hasAnyRole("USER")
-						.requestMatchers("/api/register/test").hasAnyRole("USER", "SHOPOWNER", "SUPER_ADMIN", "ADMIN")
-						.requestMatchers("/user/account/**").hasAnyRole("SHOPOWNER", "USER")
-			            .requestMatchers("/admin/**").hasAnyRole("SUPER_ADMIN", "ADMIN")
-			            .requestMatchers("/shop-owners/**").hasAnyRole("SHOPOWNER")			          	            
-			            .requestMatchers(
-			            		"/"
-			            		, "/login/**"
-			            		, "/api/auth/**"
-			            		, "/api/register/**"
-			            		, "/upload/**"
-			            		, "/v2/api-docs" //open api start
-			                    , "/v3/api-docs"
-			                    , "/v3/api-docs/**"
-			                    , "/swagger-resources"
-			                    , "/swagger-resources/**"
-			                    , "/configuration/ui"
-			                    , "/configuration/security"
-			                    , "/swagger-ui/**"
-			                    , "/webjars/**"
-			                    , "/swagger-ui.html" //open api end
-			                    ).permitAll()
+						.requestMatchers(USER.getUrls()).hasAnyRole(USER.getRoles())
+			            .requestMatchers(SHOPOWNER.getUrls()).hasAnyRole(SHOPOWNER.getRoles())
+						.requestMatchers(SUPERADMIN.getUrls()).hasAnyRole(SUPERADMIN.getRoles())
+			            .requestMatchers(ADMIN_SUPERADMIN.getUrls()).hasAnyRole(ADMIN_SUPERADMIN.getRoles())	
+						.requestMatchers(USER_SHOPOWNER.getUrls()).hasAnyRole(USER_SHOPOWNER.getRoles())
+			            .requestMatchers(ADMIN_SUPERADMIN_SHOPOWNER.getUrls()).hasAnyRole(ADMIN_SUPERADMIN_SHOPOWNER.getRoles())	
+			            .requestMatchers(ADMIN_SUPERADMIN_SHOPOWNER_USER.getUrls()).hasAnyRole(ADMIN_SUPERADMIN_SHOPOWNER_USER.getRoles())
+			            .requestMatchers(WHITE_LIST.getUrls()).permitAll()
 			            .anyRequest().authenticated()	            
 		        )
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

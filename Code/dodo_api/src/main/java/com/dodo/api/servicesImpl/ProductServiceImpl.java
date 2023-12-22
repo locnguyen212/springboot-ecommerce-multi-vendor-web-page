@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -35,7 +36,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findAll(), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -78,7 +79,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findByKeyword(keyword), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -89,7 +90,7 @@ public class ProductServiceImpl implements IProductService {
 			return productRepository.findProductViewByProductNameAndCategoryName(productName, categoryName, topLimit);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -109,7 +110,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findByStatusCustom(true, null, true), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -164,7 +165,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findByShopownerOwnerId(id), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -175,7 +176,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findByIdsNotInAndShopownerIdAndStatusActive(productWithPromotionIds, shopownerId), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -185,7 +186,7 @@ public class ProductServiceImpl implements IProductService {
 			return modelMapper.map(productRepository.findByShopownerOwnerIdAndStatusActive(id), new TypeToken<List<ProductDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

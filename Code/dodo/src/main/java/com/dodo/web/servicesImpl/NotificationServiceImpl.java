@@ -1,5 +1,6 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return repository.getList(userId);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -39,7 +40,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return repository.findByUserIdAndTypeAndAll(userId, type, skip, take);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -48,7 +49,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return repository.findByUserId(userId, skip, take);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -67,7 +68,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return repository.findByUserIdAndTypeAndIsRead(userId, type, isRead, skip, take);
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

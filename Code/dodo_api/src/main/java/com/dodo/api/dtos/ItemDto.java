@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class ItemDto implements java.io.Serializable {
 	private Integer itemId;
 	private Integer quantity;
@@ -26,11 +28,4 @@ public class ItemDto implements java.io.Serializable {
 	private String productProductName;
 	private Integer userUserId;
 	private String userUsername;
-	
-	public ItemDto(Integer quantity, Date createdAt, Integer productProductId, Integer userUserId) {
-		this.quantity = quantity;
-		this.createdAt = createdAt;
-		this.productProductId = productProductId;
-		this.userUserId = userUserId;
-	}	
 }

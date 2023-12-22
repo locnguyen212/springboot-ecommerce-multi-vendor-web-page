@@ -1,5 +1,7 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +29,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -79,7 +81,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return repository.findByStatus(status);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	
@@ -89,7 +91,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return repository.findByStatusNotNull();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	
@@ -120,7 +122,7 @@ public class CategoryServiceImpl implements ICategoryService {
 			return repository.findByUserUserId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	

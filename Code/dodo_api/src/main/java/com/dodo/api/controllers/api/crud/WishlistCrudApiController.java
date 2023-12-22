@@ -56,7 +56,7 @@ public class WishlistCrudApiController {
 			//validate
 	
 			// create 
-			var wishlist = new WishlistDto().builder()
+			var wishlist = WishlistDto.builder()
 					.productProductId(id)
 					.userUserId(userId)
 					.createdAt(new Date())

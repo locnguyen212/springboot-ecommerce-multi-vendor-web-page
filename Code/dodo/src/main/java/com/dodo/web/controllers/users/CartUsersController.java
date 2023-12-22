@@ -99,7 +99,12 @@ public class CartUsersController {
 				if (product == null) {
 					modelMap.addAttribute("message", "Product does not exist");
 				} else {
-					Item newItem = new Item(user, product, quantity, timestamp);
+					Item newItem = Item.builder()
+							.user(user)
+							.product(product)
+							.quantity(quantity)
+							.createdAt(timestamp)
+							.build();
 					userItems.add(newItem);
 				}
 			}

@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,7 @@ public class ParentCategoryServiceImpl implements IParentCategoryService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<ParentcategoryDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

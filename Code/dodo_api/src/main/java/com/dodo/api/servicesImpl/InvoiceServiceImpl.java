@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -72,7 +73,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByOrderOrderId(id), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -82,7 +83,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByProductProductId(id), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -92,7 +93,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByProductProductName(name), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -102,7 +103,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByShopownerOwnerId(id), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -112,7 +113,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByShopownerShopName(name), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -122,7 +123,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByUserUserId(id), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -132,7 +133,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByUserUsernameAndIsPaid(name, isPaid), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -142,7 +143,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByDateRange(from, to), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	
@@ -152,7 +153,7 @@ public class InvoiceServiceImpl implements IInvoiceService {
 			return modelMapper.map(repository.findByShopownerOwnerIdAndIsPaid(id, isPaid), new TypeToken<List<InvoiceDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	

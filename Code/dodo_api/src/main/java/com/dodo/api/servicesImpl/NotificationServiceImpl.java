@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -25,7 +26,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return modelMapper.map(repository.getList(userId), new TypeToken<List<NotificationDto>>() {}.getType());
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -43,7 +44,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return modelMapper.map(repository.findByUserId(userId, skip, take), new TypeToken<List<NotificationDto>>() {}.getType());
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -61,7 +62,7 @@ public class NotificationServiceImpl implements INotificationService {
 		try {
 			return modelMapper.map(repository.findByUserIdAndTypeAndIsRead(userId, type, isRead, skip, take), new TypeToken<List<NotificationDto>>() {}.getType());
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

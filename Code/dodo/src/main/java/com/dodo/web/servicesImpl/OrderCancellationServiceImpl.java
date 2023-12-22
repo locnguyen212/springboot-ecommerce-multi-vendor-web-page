@@ -1,5 +1,6 @@
 package com.dodo.web.servicesImpl;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return repository.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -75,7 +76,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return repository.findByShopownerOwnerId(id);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -85,7 +86,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return repository.findByUserUsername(name);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	// ====LOC====

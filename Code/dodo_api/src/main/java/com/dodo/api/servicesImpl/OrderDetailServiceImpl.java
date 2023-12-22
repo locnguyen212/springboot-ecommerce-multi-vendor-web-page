@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<OrderdetailDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -76,7 +77,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 			return modelMapper.map(repository.findByOrderOrderId(id), new TypeToken<List<OrderdetailDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -94,7 +95,7 @@ public class OrderDetailServiceImpl implements IOrderDetailService {
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	// ====LOC====

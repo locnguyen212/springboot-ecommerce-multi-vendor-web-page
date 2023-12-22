@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class OrderServiceImpl implements IOrderService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<OrderDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -86,7 +87,7 @@ public class OrderServiceImpl implements IOrderService {
 			return modelMapper.map(repository.findByUserUsernameAndOrderStatus(username, status), new TypeToken<List<OrderDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -104,7 +105,7 @@ public class OrderServiceImpl implements IOrderService {
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -122,7 +123,7 @@ public class OrderServiceImpl implements IOrderService {
 					.collect(Collectors.toList());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -132,7 +133,7 @@ public class OrderServiceImpl implements IOrderService {
 			return repository.findSalesdataYear();
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -142,7 +143,7 @@ public class OrderServiceImpl implements IOrderService {
 			return modelMapper.map(repository.findByShopownerOwnerIdAndOrderStatus(id, status), new TypeToken<List<OrderDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -152,7 +153,7 @@ public class OrderServiceImpl implements IOrderService {
 			return modelMapper.map(repository.findByShopownerIdAndStatusOther(id, statusList), new TypeToken<List<OrderDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -162,7 +163,7 @@ public class OrderServiceImpl implements IOrderService {
 			return modelMapper.map(repository.findByPaymentStatusAndUserUserId(status, id), new TypeToken<List<OrderDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 

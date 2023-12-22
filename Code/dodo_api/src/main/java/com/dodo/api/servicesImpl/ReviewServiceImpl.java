@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,7 @@ public class ReviewServiceImpl implements IReviewService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<ReviewDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -71,7 +72,7 @@ public class ReviewServiceImpl implements IReviewService {
 			return modelMapper.map(repository.findByProductProductId(id), new TypeToken<List<ReviewDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -81,7 +82,7 @@ public class ReviewServiceImpl implements IReviewService {
 			return modelMapper.map(repository.findByUserUserId(id), new TypeToken<List<ReviewDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 	//====LOC====
@@ -91,7 +92,7 @@ public class ReviewServiceImpl implements IReviewService {
 		try {
 			return modelMapper.map(repository.findByShopId(shopId), new TypeToken<List<ReviewDto>>() {}.getType());
 		} catch (Exception e) {
-			return null;
+			return Collections.emptyList();
 		}
 	}
 }

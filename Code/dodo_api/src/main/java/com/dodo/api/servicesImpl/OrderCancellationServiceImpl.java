@@ -1,5 +1,6 @@
 package com.dodo.api.servicesImpl;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -28,7 +29,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return modelMapper.map(repository.findAll(), new TypeToken<List<OrdercancellationDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}
 	}
 
@@ -81,7 +82,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return modelMapper.map(repository.findByShopownerOwnerId(id), new TypeToken<List<OrdercancellationDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 
@@ -91,7 +92,7 @@ public class OrderCancellationServiceImpl implements IOrderCancellationService {
 			return modelMapper.map(repository.findByUserUsername(name), new TypeToken<List<OrdercancellationDto>>() {}.getType());
 		} catch (Exception e) {
 			e.printStackTrace();
-			return null;
+			return Collections.emptyList();
 		}	
 	}
 	//====LOC====

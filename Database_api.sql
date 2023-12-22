@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2023 at 05:53 AM
+-- Generation Time: Dec 22, 2023 at 08:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -401,6 +401,7 @@ CREATE TABLE `promotion` (
   `StartDate` date DEFAULT NULL,
   `EndDate` date DEFAULT NULL,
   `Description` text DEFAULT NULL,
+  `Status` bit(1) DEFAULT NULL,
   `CreatedAt` timestamp NULL DEFAULT current_timestamp(),
   `UpdatedAt` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -409,11 +410,11 @@ CREATE TABLE `promotion` (
 -- Dumping data for table `promotion`
 --
 
-INSERT INTO `promotion` (`PromotionID`, `ProductID`, `ShopownerId`, `DiscountAmount`, `StartDate`, `EndDate`, `Description`, `CreatedAt`, `UpdatedAt`) VALUES
-(7, 3, 1, 10.00, '2023-12-01', '2023-12-16', '<p>test</p>', '2023-12-02 12:24:57', NULL),
-(8, 1, 1, 1.00, '2023-11-14', '2023-11-14', '<p>test 2</p>', '2023-12-02 12:26:00', '2023-12-02 12:26:39'),
-(9, 5, 2, 20.00, '2023-11-13', '2023-11-13', '', '2023-12-02 12:43:37', NULL),
-(10, 11, 3, 11.00, '2023-12-01', '2023-12-01', '', '2023-12-04 13:28:29', NULL);
+INSERT INTO `promotion` (`PromotionID`, `ProductID`, `ShopownerId`, `DiscountAmount`, `StartDate`, `EndDate`, `Description`, `Status`, `CreatedAt`, `UpdatedAt`) VALUES
+(7, 3, 1, 10.00, '2023-12-01', '2023-12-16', '<p>test</p>', b'1', '2023-12-02 12:24:57', '2023-12-22 06:24:38'),
+(8, 1, 1, 1.00, '2023-11-14', '2023-11-14', '<p>test 2</p>', b'1', '2023-12-02 12:26:00', '2023-12-22 06:24:40'),
+(9, 5, 2, 20.00, '2023-11-13', '2023-11-13', '', b'1', '2023-12-02 12:43:37', '2023-12-22 06:24:42'),
+(10, 11, 3, 11.00, '2023-12-01', '2023-12-01', '', b'1', '2023-12-04 13:28:29', '2023-12-22 06:24:43');
 
 -- --------------------------------------------------------
 
@@ -586,11 +587,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserID`, `Username`, `Password`, `Email`, `FirstName`, `LastName`, `Address`, `PhoneNumber`, `Avatar`, `Gender`, `Dob`, `status`, `RoleID`, `CreatedAt`, `UpdatedAt`, `Token`, `RefreshToken`, `ForgetPasswordToken`) VALUES
-(1, 'superadmin', '$2a$10$FCTHw8dWPvGbCdr0yIMGp.ZyG8Thzr.z0TArYhFvcxiq2a9LuUxp2', 'superadmin@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '123-456-7890', 'avatar1.jpg', 'female', '1990-01-15', 1, 1, '2023-10-15 15:16:04', '2023-11-29 15:20:50', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzAyODg5OTk4LCJleHAiOjE3MDI4OTAyOTh9.QZv8m73xHhxoteTcl85xF5CDjCxPNHnejrrpP-mIpFI', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzAyODg5OTk4LCJleHAiOjE3MDI4OTA1OTh9.1YCS4kfwP6zxI8Qlx_-7dsz_4YCpxUsib60h3gKIOUc', NULL),
+(1, 'superadmin', '$2a$10$FCTHw8dWPvGbCdr0yIMGp.ZyG8Thzr.z0TArYhFvcxiq2a9LuUxp2', 'superadmin@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '123-456-7890', 'avatar1.jpg', 'female', '1990-01-15', 1, 1, '2023-10-15 15:16:04', '2023-11-29 15:20:50', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzAzMTcxMzI2LCJleHAiOjE3MDMxNzMxMjZ9.PNXDl90I2ahCrwxT6kpoOhUUBHV9IO4at2YlGt8x8KY', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzdXBlcmFkbWluIiwiaWF0IjoxNzAzMTcxMzI2LCJleHAiOjE3MDMyNTc3MjZ9.lOr0BFH96b593SnSiyRLbrnYB0tOXufCkp84i63Hygc', NULL),
 (2, 'admin', '$2a$10$FCTHw8dWPvGbCdr0yIMGp.ZyG8Thzr.z0TArYhFvcxiq2a9LuUxp2', 'admin@example.com', 'Jane', 'Smith', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '987-654-3210', 'avatar2.jpg', 'male', '1995-03-20', 1, 2, '2023-10-15 15:16:04', '2023-11-29 15:20:55', NULL, '', NULL),
 (3, 'shop1', '$2a$10$FCTHw8dWPvGbCdr0yIMGp.ZyG8Thzr.z0TArYhFvcxiq2a9LuUxp2', 'shop1@example.com', 'Mike', 'Johnson', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', 'avatar3.jpg', 'male', '1985-07-10', 1, 3, '2023-10-15 15:16:04', '2023-12-04 13:09:20', NULL, '', NULL),
-(4, 'shop2', '$2a$10$xCpWxzZY3/tVzIpeSu7jD.VtietutgJhcxKpJu9g3wl6OVrQYf1WO', 'shop2@example.com', 'Mike', 'Johnson', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '08ddcbf5f1b54bb5b9894d9e060d9b38.png', 'male', '1985-07-10', 1, 3, '2023-10-14 17:00:00', '2023-11-29 15:21:04', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMiIsImlhdCI6MTcwMjg5Mjk2MywiZXhwIjoxNzAyODk0NzYzfQ.w-bh5qYK-4k2qJV-1bv4InfQ7O9qhCBqQCVjmoK1Kz0', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMiIsImlhdCI6MTcwMjg5Mjk2MywiZXhwIjoxNzAyOTc5MzYzfQ.QbozpyffOyZsEwbWDs4la7nKa3qENA5cj6ffHzmi-Mk', NULL),
-(5, 'shop3', '$2a$10$QJuQE1g56zTVSKdXfh724eCp6GH5B0vkRB9.hFcajtB8Wc97Rq7XW', 'shop3@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '5a3a4fb4796b4858a22d77ba61abc073.png', 'female', '2023-10-09', 1, 3, '2023-11-02 17:00:00', '2023-11-29 15:21:09', NULL, '', NULL),
+(4, 'shop2', '$2a$10$xCpWxzZY3/tVzIpeSu7jD.VtietutgJhcxKpJu9g3wl6OVrQYf1WO', 'shop2@example.com', 'Mike', 'Johnson', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '08ddcbf5f1b54bb5b9894d9e060d9b38.png', 'male', '1985-07-10', 1, 3, '2023-10-14 17:00:00', '2023-11-29 15:21:04', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMiIsImlhdCI6MTcwMzA1NDA4MiwiZXhwIjoxNzAzMDU1ODgyfQ.VhDOnw6mdulAqQo6mQmtccAw2vhkdzr16--Ckx3v5tg', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMiIsImlhdCI6MTcwMzA1NDA4MiwiZXhwIjoxNzAzMTQwNDgyfQ.DQANKTt3FRb1Fb76USMbeVQiZLLWUIObZVIXuQNUPtA', NULL),
+(5, 'shop3', '$2a$10$QJuQE1g56zTVSKdXfh724eCp6GH5B0vkRB9.hFcajtB8Wc97Rq7XW', 'shop3@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '5a3a4fb4796b4858a22d77ba61abc073.png', 'female', '2023-10-09', 1, 3, '2023-11-02 17:00:00', '2023-11-29 15:21:09', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMyIsImlhdCI6MTcwMzIzMDk0NSwiZXhwIjoxNzAzMjMyNzQ1fQ.AcW_MAXD2xdU7lWQLF7q2VQS98dMJTtbTZpzlugQDHs', 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzaG9wMyIsImlhdCI6MTcwMzIzMDk0NSwiZXhwIjoxNzAzMzE3MzQ1fQ.tgQN40FLxZeETmHh1YfOSY4PwC1J_keZg-UvtzQAAIc', NULL),
 (6, 'user1', '$2a$10$Sqnpewl0sUl9XHjGdnMcduVQG/WRV0RIdxE6t5hjp1SQq3B8oJxm.', 'user1@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '633a4fb4796b4858a22d77ba61abc073.png', 'female', '2023-10-09', 1, 4, '2023-11-02 17:00:00', '2023-12-02 12:30:12', NULL, '', NULL),
 (7, 'user2', '$2a$10$QJuQE1g56zTVSKdXfh724eCp6GH5B0vkRB9.hFcajtB8Wc97Rq7XW', 'user2@example.com', 'John', 'Doe', '622 D. Cong Hoa Ward 13, Tan Binh, Ho Chi Minh City', '555-123-4567', '5a5a4fb4796b4858a22d77ba61abc073.png', 'female', '2023-10-09', 1, 4, '2023-11-02 17:00:00', '2023-11-30 05:03:42', NULL, '', NULL),
 (9, 'shop4', '$2a$10$wOs47r7lRvmGqeyJAeBLKe5UHXW5EsKHRTvH5OIn.DuVnzb/D/q9G', '222thienvo@gmail.com', 'SHOP', 'DO', 'address12', '987654321kkkk', '9bc3a3956b9a4dd19845f5c643909982.png', 'female', '2023-12-03', 1, 3, '2023-12-04 12:29:26', '2023-12-04 13:09:44', NULL, '', NULL),

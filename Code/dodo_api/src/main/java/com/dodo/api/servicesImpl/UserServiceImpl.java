@@ -142,6 +142,16 @@ public class UserServiceImpl implements IUserService {
 			return false;
 		}
 	}
+	
+	@Override
+	public boolean isTokenValid(String username, String token, String refreshToken) {
+		try {
+			return repository.isTokenValid(username, token, refreshToken) == 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 	// LOGIN
 	@Override
@@ -164,6 +174,7 @@ public class UserServiceImpl implements IUserService {
 		}
 	}
 	// LOGIN
+
 
 	// ====LOC====
 

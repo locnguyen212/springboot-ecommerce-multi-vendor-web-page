@@ -38,15 +38,15 @@ public class RefreshController {
 			
 			var username = jwtHelper.getUsernameFromExpiredToken(oldToken);
 
-			if(username == null) {
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+			if(username == null || !userService.isTokenValid(username, oldToken, oldRefreshToken)) {
+				return new ResponseEntity<Object>("Invalid username or token or refresh token",HttpStatus.BAD_REQUEST);
 			}
 			
 			UserDetails userDetails = userService.loadUserByUsername(username);
 			var user = userService.findByUsernameModel(username);
 			
 			if(user == null || !user.getRefreshToken().equals(oldRefreshToken) || !jwtHelper.isTokenValid(oldRefreshToken, userDetails)) {
-				return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<Object>("Invalid username or token or refresh token, or refresh token expired", HttpStatus.BAD_REQUEST);
 			}
 			
 			var newToken = jwtHelper.generateToken(user);

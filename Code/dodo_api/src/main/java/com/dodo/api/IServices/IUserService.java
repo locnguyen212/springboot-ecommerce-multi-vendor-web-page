@@ -20,5 +20,6 @@ public interface IUserService extends UserDetailsService {
 	public UserDto findByUsername(String name);
 	public User findByUsernameModel(String name);
 	public List<UserDto> findByRoleUserAndShopowner();	
+	public boolean isTokenValid(String username, String token, String refreshToken);
 	//====LOC====
 }
